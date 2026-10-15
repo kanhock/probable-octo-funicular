@@ -24,6 +24,7 @@
   --code-bg: #F6F8FA;
   --flame: #F2701D;
   --xp: #7A4DE0;
+  --hero1: #2B66CF; --hero2: #7A4DE0; --glow1: rgb(43 102 207 / .14); --glow2: rgb(122 77 224 / .12);
   --grass: #E2F1DA; --grass2: #CFE7C4; --road: #74808C; --road-edge: #5C6874; --road-line: #F4F7F9; --trail: #FFD43B;
   --tree: #4FA66C; --tree2: #3C8C57; --trunk: #8A5A3B; --rock: #B7C0C8; --flower: #F27BA6;
   --shadow: 0 1px 2px rgb(20 32 43 / .06), 0 6px 20px rgb(20 32 43 / .06);
@@ -32,13 +33,13 @@
   --f-display: "Unbounded", "Golos Text", system-ui, sans-serif;
   --f-body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-code: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --r: 14px;
+  --r: 18px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0D1318; --panel: #151D25; --ink: #E2E9EF; --muted: #8E9DAA; --line: #26323D;
     --accent: #6FA2FF; --accent-ink: #0D1318; --hl: #FFD43B; --hl-soft: #3A3317; --prev-soft: #16302A;
-    --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
+    --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --hero1: #24498F; --hero2: #5435A8; --glow1: rgb(111 162 255 / .10); --glow2: rgb(168 137 255 / .09); --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
     --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25); --chip-l: 68%; --chip-s: 75%;
     color-scheme: dark;
   }
@@ -46,7 +47,7 @@
 :root[data-theme="dark"] {
   --bg: #0D1318; --panel: #151D25; --ink: #E2E9EF; --muted: #8E9DAA; --line: #26323D;
   --accent: #6FA2FF; --accent-ink: #0D1318; --hl: #FFD43B; --hl-soft: #3A3317; --prev-soft: #16302A;
-  --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
+  --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --hero1: #24498F; --hero2: #5435A8; --glow1: rgb(111 162 255 / .10); --glow2: rgb(168 137 255 / .09); --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
   --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25); --chip-l: 68%; --chip-s: 75%;
   color-scheme: dark;
 }
@@ -168,6 +169,128 @@ h2 { font: 600 17px/1.25 var(--f-display); }
 .badge.locked b { color: var(--muted); }
 
 
+
+/* ---------- app shell: glow, tab bar ---------- */
+.glow { position: fixed; inset: 0 0 auto 0; height: 420px; pointer-events: none; z-index: 0;
+  background: radial-gradient(60% 70% at 15% 0%, var(--glow1), transparent 70%), radial-gradient(50% 60% at 90% 10%, var(--glow2), transparent 70%); }
+main, .bar { position: relative; z-index: 1; }
+.bar { position: sticky; }
+body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px)); }
+.boot { padding: 80px 0; text-align: center; color: var(--muted); }
+.tabbar { position: fixed; z-index: 20; left: 50%; transform: translateX(-50%); bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+  width: min(420px, calc(100% - 24px)); display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 6px;
+  background: color-mix(in srgb, var(--panel) 78%, transparent); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 10px 30px rgb(0 0 0 / .14); }
+.tabbar a { display: grid; justify-items: center; gap: 2px; padding: 8px 0 6px; border-radius: 18px; text-decoration: none; color: var(--muted); font: 600 11px var(--f-body); transition: background .2s, color .2s; }
+.tabbar a svg { width: 22px; height: 22px; }
+.tabbar a.on { color: var(--accent-ink); background: linear-gradient(135deg, var(--hero1), var(--hero2)); color: #FFFFFF; }
+.page-h { margin: 4px 0 16px; }
+
+/* ---------- avatar ---------- */
+.ava { display: inline-grid; place-items: center; border-radius: 50%; flex: none; overflow: hidden; background: color-mix(in srgb, var(--shirt) 24%, var(--panel)); box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--shirt) 45%, transparent); }
+.ava svg { width: 92%; height: 92%; }
+.ava .hero-idle { animation: none; }
+
+/* ---------- home hello card ---------- */
+.hello { position: relative; overflow: hidden; color: #FFFFFF; border-radius: 26px; padding: 16px 16px 14px; background: linear-gradient(135deg, var(--hero1), var(--hero2)); box-shadow: 0 12px 30px color-mix(in srgb, var(--hero2) 30%, transparent); }
+.hello::after { content: ""; position: absolute; right: -40px; top: -60px; width: 180px; height: 180px; border-radius: 50%; background: rgb(255 255 255 / .09); }
+.hello-top { position: relative; z-index: 1; display: flex; align-items: center; gap: 12px; }
+.hello .ava { background: rgb(255 255 255 / .9); box-shadow: none; }
+.hello-t { flex: 1; min-width: 0; }
+.hello .hi { font: 700 20px/1.2 var(--f-display); }
+.hello .lv { font-size: 13.5px; opacity: .9; margin-top: 2px; }
+.goal { position: relative; width: 46px; height: 46px; flex: none; }
+.goal .ring { width: 46px; height: 46px; }
+.goal span { position: absolute; inset: 0; display: grid; place-items: center; font: 700 11px var(--f-code); }
+.xpbar.glass { position: relative; z-index: 1; margin-top: 14px; background: rgb(255 255 255 / .25); }
+.xpbar.glass > i { background: #FFFFFF; }
+.hello-meta { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 8px; font: 500 12px var(--f-code); opacity: .9; margin-top: 6px; }
+.roadhead .seg { margin: 0; flex: 1; max-width: 240px; }
+.roadhead .seg button { font: 600 14px var(--f-body); border: 0; border-radius: 10px; padding: 7px 8px; }
+.roadhead { margin: 18px 0 12px; }
+
+/* ---------- awards ---------- */
+.lvcard { display: flex; align-items: center; gap: 16px; color: #FFFFFF; border-radius: 26px; padding: 16px; background: linear-gradient(135deg, var(--hero1), var(--hero2)); }
+.lvcard .lvl .n { color: #FFFFFF; }
+.lvcard .lvl .n small { color: rgb(255 255 255 / .8); }
+.lvcard .lvname { margin: 0; }
+.lvcard .xpmeta { color: rgb(255 255 255 / .85); }
+.bento { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+.bento .stat { border-radius: 20px; padding: 14px; }
+.ladder { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.ladder li { display: grid; grid-template-columns: 30px 1fr auto; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 8px 12px; color: var(--muted); }
+.ladder .ln-n { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font: 700 12px var(--f-code); background: var(--line); color: var(--muted); }
+.ladder li.got { color: var(--ink); }
+.ladder li.got .ln-n { background: var(--xp); color: #FFFFFF; }
+.ladder li.now { border-color: var(--xp); box-shadow: 0 0 0 2px color-mix(in srgb, var(--xp) 25%, transparent); }
+.ladder small { font: 500 12px var(--f-code); }
+
+/* ---------- profile ---------- */
+.me { display: flex; align-items: center; gap: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 24px; padding: 16px; box-shadow: var(--shadow); }
+.me-n { font: 700 20px var(--f-display); }
+.me-s { color: var(--muted); font-size: 13px; margin: 2px 0 8px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+.sw-b { width: 26px; height: 26px; border-radius: 50%; border: 0; background: var(--sw); cursor: pointer; box-shadow: 0 0 0 2px var(--panel), 0 0 0 3px transparent; transition: transform .15s; }
+.sw-b.on { box-shadow: 0 0 0 3px var(--panel), 0 0 0 5px var(--sw); }
+.swatches.big .sw-b { width: 36px; height: 36px; }
+.notes { display: grid; gap: 8px; }
+.nt { display: grid; gap: 4px; text-decoration: none; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 10px 14px; }
+.nt small { font: 600 11px var(--f-code); color: var(--accent); }
+.nt span { font-size: 14px; white-space: pre-wrap; }
+.empty-card { background: var(--panel); border: 1px dashed var(--line); border-radius: 16px; padding: 14px; color: var(--muted); font-size: 14px; }
+.store { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 14px 14px; }
+.store-row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.store-row span { color: var(--muted); }
+.store-row b { text-align: right; font-weight: 600; }
+.store-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.store textarea { width: 100%; margin-top: 10px; font: 12px var(--f-code); border: 1px solid var(--line); border-radius: 12px; padding: 10px; background: var(--code-bg); color: var(--ink); }
+.bk-msg { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.btn { border: 1px solid var(--line); background: var(--panel); border-radius: 14px; padding: 10px 16px; font-weight: 600; cursor: pointer; transition: transform .12s; }
+.btn:active { transform: scale(.97); }
+.btn.primary { border: 0; color: #FFFFFF; background: linear-gradient(135deg, var(--hero1), var(--hero2)); }
+.btn.danger { color: var(--err); border-color: color-mix(in srgb, var(--err) 45%, var(--line)); }
+.btn.ghost { border: 0; background: transparent; color: var(--accent); }
+.btn.wide { width: 100%; padding: 14px; font-size: 16px; }
+.fine { color: var(--muted); font-size: 12.5px; line-height: 1.45; margin: 12px 2px; }
+.fine.center { text-align: center; }
+
+/* ---------- lesson note ---------- */
+.note-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px; margin-bottom: 16px; }
+.nc-h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.nc-h h3 { font: 600 13px var(--f-display); }
+.nc-h span { font: 500 11px var(--f-code); color: var(--ok); }
+.note-card textarea { width: 100%; resize: vertical; min-height: 72px; font: 15px/1.45 var(--f-body); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: var(--bg); color: var(--ink); }
+
+/* ---------- auth ---------- */
+.auth { max-width: 420px; margin: 0 auto; padding-top: 8px; }
+.auth-hero { position: relative; overflow: hidden; border-radius: 28px; color: #FFFFFF; padding: 18px 18px 20px; background: linear-gradient(135deg, var(--hero1), var(--hero2)); box-shadow: 0 16px 36px color-mix(in srgb, var(--hero2) 32%, transparent); }
+.auth-road { position: relative; height: 120px; margin: -6px -18px 4px; }
+.auth-road svg:first-child { width: 100%; height: 120px; display: block; }
+.auth-road .rd-edge { stroke-width: 26; } .auth-road .rd { stroke-width: 20; }
+.auth-walker { position: absolute; left: 50%; top: 2px; width: 56px; height: 70px; transform: translateX(-50%); animation: hop 2.4s ease-in-out infinite; }
+@keyframes hop { 50% { transform: translateX(-50%) translateY(-4px); } }
+.auth-title { font: 700 26px/1.1 var(--f-display); }
+.auth-sub { opacity: .9; font-size: 14px; margin-top: 4px; }
+.auth-card { background: var(--panel); border: 1px solid var(--line); border-radius: 26px; padding: 18px; margin-top: -14px; position: relative; box-shadow: var(--shadow); display: grid; gap: 10px; }
+.auth-card h2 { font-size: 18px; text-align: center; }
+.fld { font-size: 13px; color: var(--muted); font-weight: 600; margin-top: 4px; }
+.inp { width: 100%; font: 17px var(--f-body); padding: 12px 14px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); }
+.inp:focus { outline: none; border-color: var(--accent); }
+.auth-err { min-height: 18px; text-align: center; color: var(--err); font-size: 13px; }
+.who { display: grid; gap: 8px; }
+.who-b { display: flex; align-items: center; gap: 12px; text-align: left; border: 1px solid var(--line); background: var(--bg); border-radius: 18px; padding: 10px 12px; cursor: pointer; }
+.who-b .who-t { flex: 1; display: grid; }
+.who-b small { color: var(--muted); }
+.who-b i { font-style: normal; font-size: 22px; color: var(--muted); }
+.dots { display: flex; justify-content: center; gap: 14px; margin: 6px 0 0; }
+.dots i { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); transition: background .15s, transform .15s; }
+.dots i.on { background: var(--accent); border-color: var(--accent); transform: scale(1.1); }
+.dots.shake { animation: shake .35s ease; }
+.pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px; }
+.key { border: 0; background: var(--bg); border-radius: 18px; padding: 14px 0; font: 600 24px var(--f-display); cursor: pointer; transition: transform .1s, background .1s; }
+.key:active { transform: scale(.94); background: var(--line); }
+.key.txt { font: 600 14px var(--f-body); color: var(--muted); }
+
 /* ---------- road map ---------- */
 .seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 4px; gap: 4px; margin: 4px 0 14px; }
 .seg button { border: 0; background: transparent; border-radius: 10px; padding: 8px; font-weight: 600; cursor: pointer; color: var(--muted); }
@@ -194,7 +317,7 @@ h2 { font: 600 17px/1.25 var(--f-display); }
 .h-shadow { fill: rgb(0 0 0 / .2); }
 .h-leg { stroke: #2C3E57; stroke-width: 4.5; stroke-linecap: round; }
 .h-pack { fill: #FFD43B; stroke: #C9A21E; stroke-width: 1; }
-.h-body { fill: #3776AB; }
+.h-body { fill: var(--shirt, #3776AB); }
 .h-arm { stroke: #F2C29B; stroke-width: 3.6; stroke-linecap: round; }
 .h-skin { fill: #F2C29B; } .h-hair { fill: #3B2A20; } .h-eye { fill: #14202B; }
 .hero-idle { animation: idle 1.6s ease-in-out infinite; }
@@ -414,7 +537,13 @@ h2 { font: 600 17px/1.25 var(--f-display); }
   <span class="pill flame" id="p-streak" title="Серия дней"></span>
   <span class="pill xp" id="p-xp" title="Опыт"></span>
 </header>
-<main id="app"></main>
+<div class="glow" aria-hidden="true"></div>
+<main id="app"><div class="boot">Загрузка…</div></main>
+<nav class="tabbar" id="tabbar" hidden aria-label="Разделы приложения">
+  <a href="#home" data-t="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M7 3c0 5 10 4 10 9s-10 4-10 9"/><circle cx="17" cy="12" r="2.4" fill="currentColor"/></svg><span>Путь</span></a>
+  <a href="#awards" data-t="awards"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h4l1.5 4L14 2h3l-3.3 7.1A6.5 6.5 0 1 1 9.9 9z" opacity=".55"/><circle cx="12" cy="15" r="5.5" fill="currentColor"/></svg><span>Награды</span></a>
+  <a href="#profile" data-t="profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4.2" fill="currentColor"/><path fill="currentColor" d="M4 21c0-4.4 3.6-7.5 8-7.5s8 3.1 8 7.5z"/></svg><span>Профиль</span></a>
+</nav>
 <div class="toasts" id="toasts" aria-live="polite"></div>
 <canvas id="confetti" hidden></canvas>
 
@@ -440,20 +569,129 @@ h2 { font: 600 17px/1.25 var(--f-display); }
   const XP = { l: 20, q: 10, v: 5 };
   const LEVELS = [[0, "Новичок"], [60, "Исследователь"], [150, "Ученик"], [300, "Кодер"], [500, "Питонист"], [800, "Инженер"], [1200, "Архитектор"], [1700, "Мастер Python"], [2400, "Гуру"]];
   const DAILY_GOAL = 3;
-  let S = { aw: {}, tried: {}, open: [] };
-  try {
-    const raw = localStorage.getItem("pyscheme-v2");
-    if (raw) S = Object.assign(S, JSON.parse(raw));
-    else {
-      const old = JSON.parse(localStorage.getItem("pyscheme-done") || "[]");
-      old.forEach(id => { S.aw["l:" + id] = today(); });
+  const blankState = () => ({ aw: {}, tried: {}, open: [], view: "road", walk: {} });
+  let S = blankState();
+  let USER = null, USERS = {}, PROG = {}, NOTES = {};
+  const COLORS = ["#3776AB", "#E5484D", "#12A594", "#F76B15", "#8E4EC6", "#D6409F"];
+
+  // ---------- local database: IndexedDB on this device (falls back to localStorage, then memory) ----------
+  const DB = (() => {
+    const STORES = ["users", "progress", "notes", "meta"];
+    let idb = null, mode = "mem";
+    const mem = {};
+    const lk = (st, k) => "pydb:" + st + ":" + k;
+    function useLS() { try { localStorage.setItem("pydb:t", "1"); localStorage.removeItem("pydb:t"); mode = "ls"; } catch (e) { mode = "mem"; } }
+    function open() {
+      return new Promise(resolve => {
+        let fin = false;
+        const done = () => { if (!fin) { fin = true; resolve(); } };
+        setTimeout(() => { if (!idb) useLS(); done(); }, 2500);
+        try {
+          const r = indexedDB.open("pyscheme", 1);
+          r.onupgradeneeded = () => STORES.forEach(n => { if (!r.result.objectStoreNames.contains(n)) r.result.createObjectStore(n); });
+          r.onsuccess = () => { if (fin) return; idb = r.result; mode = "idb"; done(); };
+          r.onerror = () => { useLS(); done(); };
+        } catch (e) { useLS(); done(); }
+      });
     }
-  } catch (e) {}
-  function save() { try { localStorage.setItem("pyscheme-v2", JSON.stringify(S)); } catch (e) {} }
+    function req(st, rw, fn) {
+      return new Promise((res, rej) => {
+        const t = idb.transaction(st, rw ? "readwrite" : "readonly");
+        const r = fn(t.objectStore(st));
+        t.oncomplete = () => res(r && r.result);
+        t.onerror = () => rej(t.error);
+      });
+    }
+    async function get(st, k) {
+      if (mode === "idb") return req(st, false, o => o.get(k));
+      if (mode === "ls") { try { const v = localStorage.getItem(lk(st, k)); return v == null ? undefined : JSON.parse(v); } catch (e) { return undefined; } }
+      return (mem[st] || {})[k];
+    }
+    async function put(st, k, v) {
+      if (mode === "idb") return req(st, true, o => o.put(v, k));
+      if (mode === "ls") { try { localStorage.setItem(lk(st, k), JSON.stringify(v)); } catch (e) {} return; }
+      (mem[st] = mem[st] || {})[k] = v;
+    }
+    async function del(st, k) {
+      if (mode === "idb") return req(st, true, o => o.delete(k));
+      if (mode === "ls") { try { localStorage.removeItem(lk(st, k)); } catch (e) {} return; }
+      if (mem[st]) delete mem[st][k];
+    }
+    async function all(st) {
+      if (mode === "idb") return new Promise((res, rej) => {
+        const out = [], t = idb.transaction(st), c = t.objectStore(st).openCursor();
+        c.onsuccess = () => { const cur = c.result; if (cur) { out.push([cur.key, cur.value]); cur.continue(); } };
+        t.oncomplete = () => res(out); t.onerror = () => rej(t.error);
+      });
+      if (mode === "ls") {
+        const out = [], pre = "pydb:" + st + ":";
+        try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith(pre)) out.push([k.slice(pre.length), JSON.parse(localStorage.getItem(k))]); } } catch (e) {}
+        return out;
+      }
+      return Object.entries(mem[st] || {});
+    }
+    return { open, get, put, del, all, get mode() { return mode; } };
+  })();
+
+  let saveT = null;
+  function save() {
+    if (!USER) return;
+    PROG[USER.id] = S;
+    clearTimeout(saveT);
+    saveT = setTimeout(() => DB.put("progress", USER.id, S).catch(() => {}), 200);
+  }
+  document.addEventListener("visibilitychange", () => { if (document.hidden && USER) { clearTimeout(saveT); DB.put("progress", USER.id, S).catch(() => {}); } });
+
+  async function hashPin(salt, pin) {
+    const text = salt + ":" + pin;
+    try {
+      if (window.crypto && crypto.subtle) {
+        const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+        return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+      }
+    } catch (e) {}
+    let x = 0x811c9dc5;
+    for (const ch of text) { x ^= ch.charCodeAt(0); x = Math.imul(x, 16777619) >>> 0; }
+    return "f" + x.toString(16);
+  }
+  const newId = () => "u" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  async function login(uid) {
+    USER = USERS[uid];
+    S = Object.assign(blankState(), PROG[uid] || (await DB.get("progress", uid)) || {});
+    NOTES = {};
+    (await DB.all("notes")).forEach(([k, v]) => { const [u, lid] = String(k).split("|"); if (u === uid && v && v.text) NOTES[lid] = v; });
+    await DB.put("meta", "session", uid);
+    if (!location.hash || location.hash === "#") history.replaceState(null, "", "#home");
+    render();
+  }
+  async function logout() { await DB.del("meta", "session"); USER = null; S = blankState(); NOTES = {}; authState = { step: "pick" }; go("home"); render(); }
+  async function createUser(name, color, pin) {
+    const salt = Math.random().toString(36).slice(2, 10);
+    const u = { id: newId(), name, color, salt, pin: await hashPin(salt, pin), created: today() };
+    let st = blankState();
+    if (!Object.keys(USERS).length) {
+      // first profile on this device inherits progress made before profiles existed
+      try {
+        const raw = localStorage.getItem("pyscheme-v2");
+        if (raw) st = Object.assign(st, JSON.parse(raw));
+        else JSON.parse(localStorage.getItem("pyscheme-done") || "[]").forEach(id => { st.aw["l:" + id] = today(); });
+      } catch (e) {}
+    }
+    USERS[u.id] = u; PROG[u.id] = st;
+    await DB.put("users", u.id, u);
+    await DB.put("progress", u.id, st);
+    return u;
+  }
+  async function deleteUser(uid) {
+    await DB.del("users", uid); await DB.del("progress", uid);
+    for (const [k] of await DB.all("notes")) if (String(k).startsWith(uid + "|")) await DB.del("notes", k);
+    delete USERS[uid]; delete PROG[uid];
+    if (USER && USER.id === uid) await logout(); else render();
+  }
   function today(d) { const x = d || new Date(); return x.getFullYear() + "-" + String(x.getMonth() + 1).padStart(2, "0") + "-" + String(x.getDate()).padStart(2, "0"); }
   const isDone = id => !!S.aw["l:" + id];
   const doneCount = () => LESSONS.filter(l => isDone(l.id)).length;
-  function xpTotal() { return Object.keys(S.aw).reduce((a, k) => a + (XP[k.split(":")[0]] || 0), 0); }
+  function xpTotal(st) { return Object.keys((st || S).aw).reduce((a, k) => a + (XP[k.split(":")[0]] || 0), 0); }
   function levelOf(xp) {
     let i = 0;
     while (i + 1 < LEVELS.length && xp >= LEVELS[i + 1][0]) i++;
@@ -507,20 +745,32 @@ h2 { font: 600 17px/1.25 var(--f-display); }
     bolt: `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 2 4.5 13.5h6L9.8 22l9-12h-6.2z"/></svg>`,
     target: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg>`,
     medal: `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h4l1.5 4L14 2h3l-3.3 7.1A6.5 6.5 0 1 1 9.9 9z" opacity=".55"/><circle cx="12" cy="15" r="5.5" fill="currentColor"/></svg>`,
+    road: `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M7 3c0 5 10 4 10 9s-10 4-10 9"/><circle cx="17" cy="12" r="2.4" fill="currentColor"/></svg>`,
+    user: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4.2" fill="currentColor"/><path fill="currentColor" d="M4 21c0-4.4 3.6-7.5 8-7.5s8 3.1 8 7.5z"/></svg>`,
     bulb: `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#14202B" d="M12 2a7 7 0 0 0-4 12.7V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.3A7 7 0 0 0 12 2zm-3 18h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg>`,
   };
   function badgeSVG(a, hue) {
     return `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3 42 13.5v21L24 45 6 34.5v-21z" fill="hsl(${hue} 70% 55%)"/><path d="M24 8 37.6 16v16L24 40 10.4 32V16z" fill="hsl(${hue} 80% 68%)"/><text x="24" y="29.5" text-anchor="middle" font-family="Unbounded, sans-serif" font-weight="700" font-size="${a.g.length > 1 ? 11 : 14}" fill="#14202B">${esc(a.g)}</text></svg>`;
   }
-  function ring(frac, color, size = 26, sw = 3.5) {
+  function heroMarkup(ids) {
+    const id = n => ids ? ` id="${n}"` : "";
+    return `<g><g class="hero-idle"><ellipse cx="0" cy="0" rx="11" ry="3.5" class="h-shadow"/><g${id("heroflip")}>
+    <line${id("legL")} x1="-3" y1="-15" x2="-3" y2="-1" class="h-leg"/><line${id("legR")} x1="3" y1="-15" x2="3" y2="-1" class="h-leg"/>
+    <rect x="-12.5" y="-30" width="8" height="12.5" rx="3" class="h-pack"/><rect x="-7" y="-32" width="14" height="18" rx="6" class="h-body"/>
+    <line${id("arm")} x1="1" y1="-27" x2="4" y2="-18" class="h-arm"/><circle cx="0" cy="-39" r="7.5" class="h-skin"/>
+    <path d="M-7.6,-39.5 A7.6,7.6 0 0 1 7.6,-40.5 L5,-40 Q-1,-44 -7.6,-39.5 Z" class="h-hair"/><circle cx="3.8" cy="-39" r="1.15" class="h-eye"/></g></g></g>`;
+  }
+  const avatar = (color, size = 44) => `<span class="ava" style="--shirt:${color};width:${size}px;height:${size}px"><svg viewBox="-22 -50 44 44" aria-hidden="true">${heroMarkup(false)}</svg></span>`;
+  function ring(frac, color, size = 26, sw = 3.5, track = "var(--line)") {
     const r = (size - sw) / 2, c = 2 * Math.PI * r, m = size / 2;
-    return `<svg class="ring" viewBox="0 0 ${size} ${size}" aria-hidden="true"><circle cx="${m}" cy="${m}" r="${r}" fill="none" stroke="var(--line)" stroke-width="${sw}"/>` +
+    return `<svg class="ring" viewBox="0 0 ${size} ${size}" aria-hidden="true"><circle cx="${m}" cy="${m}" r="${r}" fill="none" stroke="${track}" stroke-width="${sw}"/>` +
       (frac > 0 ? `<circle cx="${m}" cy="${m}" r="${r}" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linecap="round" stroke-dasharray="${c * Math.min(1, frac)} ${c}" transform="rotate(-90 ${m} ${m})"/>` : "") +
       (frac >= 1 ? `<path d="M${m - 4.5} ${m} l3 3 l6 -6" fill="none" stroke="${color}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>` : "") + `</svg>`;
   }
 
   // ---------- bar ----------
   function refreshPills(bump) {
+    if (!USER) return;
     const st = streak(), xp = xpTotal();
     const ps = document.getElementById("p-streak"), px = document.getElementById("p-xp");
     ps.innerHTML = ICON.flame + st.n;
@@ -529,9 +779,14 @@ h2 { font: 600 17px/1.25 var(--f-display); }
     px.innerHTML = ICON.bolt + xp;
     if (bump && !reduceMotion) { px.classList.remove("bump"); void px.offsetWidth; px.classList.add("bump"); }
   }
-  function setBar(crumb, showBack) {
+  function setBar(crumb, showBack, tab) {
     document.getElementById("crumb").innerHTML = crumb;
     document.getElementById("back").hidden = !showBack;
+    document.querySelector(".bar").hidden = false;
+    const tb = document.getElementById("tabbar");
+    tb.hidden = !tab;
+    document.body.classList.toggle("with-tabs", !!tab);
+    tb.querySelectorAll("a").forEach(a => a.classList.toggle("on", a.dataset.t === tab));
     refreshPills(false);
   }
   document.getElementById("back").addEventListener("click", () => {
@@ -543,6 +798,7 @@ h2 { font: 600 17px/1.25 var(--f-display); }
   function route() {
     const hs = location.hash.slice(1);
     let m;
+    if (hs === "awards" || hs === "profile") return { type: hs };
     if ((m = hs.match(/^s(\d+)$/))) return { type: "sec", i: +m[1] - 1 };
     if ((m = hs.match(/^l(\d+)-(\d+)$/)) && byId[hs.slice(1)]) return { type: "lesson", id: hs.slice(1) };
     return { type: "home" };
@@ -589,11 +845,6 @@ h2 { font: 600 17px/1.25 var(--f-display); }
 
   // ---------- road map: a walker moves along a winding road of stops ----------
   function seeded(str) { let x = 0; for (const c of str) x = (x * 31 + c.charCodeAt(0)) >>> 0; return () => { x = (x * 1664525 + 1013904223) >>> 0; return x / 4294967296; }; }
-  const HERO = `<g id="hero"><g class="hero-idle"><ellipse cx="0" cy="0" rx="11" ry="3.5" class="h-shadow"/><g id="heroflip">
-    <line id="legL" x1="-3" y1="-15" x2="-3" y2="-1" class="h-leg"/><line id="legR" x1="3" y1="-15" x2="3" y2="-1" class="h-leg"/>
-    <rect x="-12.5" y="-30" width="8" height="12.5" rx="3" class="h-pack"/><rect x="-7" y="-32" width="14" height="18" rx="6" class="h-body"/>
-    <line id="arm" x1="1" y1="-27" x2="4" y2="-18" class="h-arm"/><circle cx="0" cy="-39" r="7.5" class="h-skin"/>
-    <path d="M-7.6,-39.5 A7.6,7.6 0 0 1 7.6,-40.5 L5,-40 Q-1,-44 -7.6,-39.5 Z" class="h-hair"/><circle cx="3.8" cy="-39" r="1.15" class="h-eye"/></g></g></g>`;
   function prop(x, y, t) {
     x = x.toFixed(1); y = y.toFixed(1);
     if (t < .42) return `<g transform="translate(${x},${y})"><rect x="-2.5" y="-6" width="5" height="12" rx="2" class="t-trunk"/><circle cy="-15" r="11" class="t-tree"/><circle cx="-6" cy="-10" r="7" class="t-tree2"/><circle cx="6" cy="-11" r="7" class="t-tree2"/></g>`;
@@ -634,7 +885,7 @@ h2 { font: 600 17px/1.25 var(--f-display); }
     let html = `<svg class="map" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true">${scene}${sign}
       <path class="rd-edge" d="${fullD}"/><path class="rd" d="${fullD}"/><path class="rd-line" d="${fullD}"/><path class="rd-trail" id="trail" d="${walkD}"/>
       ${segs.map(d => `<path class="seg-h" d="${d}"/>`).join("")}${flag}${stopsSVG}</svg>
-      <svg class="herosvg" id="herosvg" viewBox="-24 -54 48 60" width="48" height="60" aria-hidden="true">${HERO}</svg>`;
+      <svg class="herosvg" id="herosvg" style="--shirt:${USER ? USER.color : COLORS[0]}" viewBox="-24 -54 48 60" width="48" height="60" aria-hidden="true">${heroMarkup(true)}</svg>`;
     html += cfg.stops.map((s, i) => {
       const [x, y] = P[i], left = x < W / 2;
       const pos = left ? `left:${x + 32}px` : `right:${W - x + 32}px`;
@@ -701,61 +952,45 @@ h2 { font: 600 17px/1.25 var(--f-display); }
 
   // ---------- home ----------
   const PRAISE = ["Отличная работа!", "Мозг прокачан!", "Так держать!", "Ещё один кирпичик в фундамент!", "Python тебя уважает!", "Красиво разобрался!", "Ты уже думаешь как интерпретатор!"];
-  function renderHome() {
-    setBar("<b>Python по схеме</b>", false);
-    const total = LESSONS.length, nd = doneCount(), xp = xpTotal(), lv = levelOf(xp), st = streak(), tl = todayLessons();
-    const next = LESSONS.find(l => !isDone(l.id)) || LESSONS[0];
-    const ns = next.sec, nsDone = ns.lessons.filter(l => isDone(l.id)).length;
-    const got = unlocked();
-    const R = 32, C = 2 * Math.PI * R;
-    let html = `<section class="dash">
-        <div class="lvl"><svg viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="${R}" fill="none" stroke="var(--line)" stroke-width="7"/><circle cx="38" cy="38" r="${R}" fill="none" stroke="var(--xp)" stroke-width="7" stroke-linecap="round" stroke-dasharray="${C * Math.max(.02, lv.frac)} ${C}"/></svg><div class="n"><div>${lv.n}<small>УРОВЕНЬ</small></div></div></div>
-        <div><div class="eyebrow">Твой уровень</div><div class="lvname">${esc(lv.name)}</div>
-          <div class="xpbar"><i style="width:${Math.round(lv.frac * 100)}%"></i></div>
-          <div class="xpmeta">${xp} XP${lv.next ? ` · ещё ${lv.hi - xp} до «${esc(lv.next)}»` : " · максимальный уровень"}</div></div>
-      </section>
-      <div class="stats">
-        <div class="stat flame${st.active ? "" : " cold"}"><div class="big">${ICON.flame}${st.n}</div><small>${st.n ? plural(st.n, "день", "дня", "дней") + " подряд" : "серия дней"}</small></div>
-        <div class="stat goal"><div class="big">${ring(tl / DAILY_GOAL, "var(--ok)", 22, 3.5)}${Math.min(tl, DAILY_GOAL)}/${DAILY_GOAL}</div><small>${tl >= DAILY_GOAL ? "цель дня выполнена" : "уроков сегодня"}</small></div>
-        <div class="stat badges"><div class="big">${ICON.medal}${got.size}</div><small>из ${ACH.length} наград</small></div>
-      </div>`;
-    if (st.n > 0 && !st.active) html += `<div class="nudge">Серия <b>${plural(st.n, "день", "дня", "дней")}</b> ждёт тебя: пройди один урок сегодня, чтобы её сохранить.</div>`;
-    html += `<a class="cta sh press" style="--sh:${secHue(next.si)}" href="#l${next.id}">
-        <small>${nd ? "Продолжить" : "Начни отсюда"} · раздел ${next.si + 1}</small>
-        <span class="t">${esc(next.title)}</span>
-        <span class="sub">${esc(ns.title)} · урок ${next.li + 1} из ${ns.lessons.length} · +${XP.l} XP</span>
-        <span class="mini">${ns.lessons.map(l => `<i class="${isDone(l.id) ? "on" : l === next ? "cur" : ""}"></i>`).join("")}</span>
-        <span class="go" aria-hidden="true">▶</span></a>
-      <div class="howto">
-        <div><b><span class="sw" style="background:var(--hl)"></span>Жёлтая</b>строка выполнится сейчас</div>
-        <div><b><span class="sw" style="background:var(--ok)"></span>Зелёная</b>строка только что выполнилась</div>
-        <div><b>→ Стрелка</b>имя ссылается на объект</div>
-      </div>`;
-    const view = S.view || "road";
-    html += `<div class="seg" role="tablist"><button role="tab" aria-selected="${view === "road"}" data-v="road" class="${view === "road" ? "on" : ""}">Дорога</button><button role="tab" aria-selected="${view === "tree"}" data-v="tree" class="${view === "tree" ? "on" : ""}">Схема</button></div>`;
-    if (view === "road") html += `<div class="roadhead"><h2>Дорога знаний</h2><button id="findme">Где я?</button></div><div class="road" id="road"></div>`;
-    else {
-    html += `<div class="tree"><div class="root">PYTHON <span>${nd} / ${total}</span></div>`;
+  function treeHTML() {
+    let html = `<div class="tree"><div class="root">PYTHON <span>${doneCount()} / ${LESSONS.length}</span></div>`;
     DATA.sections.forEach((s, si) => {
-      const ls = s.lessons, d = ls.filter(l => isDone(l.id)).length;
-      const open = S.open.includes(si);
+      const ls = s.lessons, d = ls.filter(l => isDone(l.id)).length, open = S.open.includes(si);
       html += `<div class="sec sh${d === ls.length ? " full" : ""}" style="--sh:${secHue(si)}"><button class="head press" data-sec="${si}" aria-expanded="${open}">
         <span class="num">${si + 1}</span><span class="nm">${esc(s.title)}</span><span class="cnt">${d}/${ls.length}</span>${ring(d / ls.length, "var(--c)")}</button>`;
       if (open) {
         html += `<div class="items">`;
         s.items.forEach(it => {
           const l = ls.find(l => l.covers.includes(it));
-          if (!l) return;
-          html += `<a href="#l${l.id}">${isDone(l.id) ? '<span class="ok">✓</span>' : ""}<span>${esc(it)}</span><span class="tag">урок ${l.li + 1}</span></a>`;
+          if (l) html += `<a href="#l${l.id}">${isDone(l.id) ? '<span class="ok">✓</span>' : ""}<span>${esc(it)}</span><span class="tag">урок ${l.li + 1}</span></a>`;
         });
         html += `<a href="#s${si + 1}"><span><b>путь раздела →</b></span></a></div>`;
       }
       html += `</div>`;
     });
-    html += `</div>`;
-    }
-    html += `<div class="badges-h"><h2>Награды</h2><span>${got.size} из ${ACH.length}</span></div><div class="badges">` +
-      ACH.map((a, i) => `<div class="badge${got.has(a.id) ? "" : " locked"}">${badgeSVG(a, 40 + i * 33)}<b>${esc(a.t)}</b><small>${esc(a.d)}</small></div>`).join("") + `</div>`;
+    return html + `</div>`;
+  }
+  function renderHome() {
+    setBar("<b>Путь</b>", false, "home");
+    const nd = doneCount(), xp = xpTotal(), lv = levelOf(xp), st = streak(), tl = todayLessons();
+    const next = LESSONS.find(l => !isDone(l.id)) || LESSONS[0];
+    const ns = next.sec;
+    const view = S.view || "road";
+    let html = `<section class="hello">
+        <div class="hello-top">${avatar(USER.color, 52)}<div class="hello-t"><div class="hi">Привет, ${esc(USER.name)}!</div><div class="lv">Уровень ${lv.n} · ${esc(lv.name)}</div></div>
+          <div class="goal" title="Цель дня">${ring(tl / DAILY_GOAL, "#FFFFFF", 46, 5, "rgb(255 255 255 / .28)")}<span>${Math.min(tl, DAILY_GOAL)}/${DAILY_GOAL}</span></div></div>
+        <div class="xpbar glass"><i style="width:${Math.round(lv.frac * 100)}%"></i></div>
+        <div class="hello-meta"><span>${xp} XP</span><span>${lv.next ? `ещё ${lv.hi - xp} до «${esc(lv.next)}»` : "максимальный уровень"}</span></div>
+      </section>`;
+    if (st.n > 0 && !st.active) html += `<div class="nudge">Серия <b>${plural(st.n, "день", "дня", "дней")}</b> ждёт: пройди урок сегодня, чтобы её сохранить.</div>`;
+    html += `<a class="cta sh press" style="--sh:${secHue(next.si)}" href="#l${next.id}">
+        <small>${nd ? "Продолжить" : "Начни отсюда"} · раздел ${next.si + 1}</small>
+        <span class="t">${esc(next.title)}</span>
+        <span class="sub">${esc(ns.title)} · урок ${next.li + 1} из ${ns.lessons.length}</span>
+        <span class="mini">${ns.lessons.map(l => `<i class="${isDone(l.id) ? "on" : l === next ? "cur" : ""}"></i>`).join("")}</span>
+        <span class="go" aria-hidden="true">▶</span></a>
+      <div class="roadhead"><div class="seg" role="tablist"><button role="tab" aria-selected="${view === "road"}" data-v="road" class="${view === "road" ? "on" : ""}">Дорога</button><button role="tab" aria-selected="${view === "tree"}" data-v="tree" class="${view === "tree" ? "on" : ""}">Схема</button></div>${view === "road" ? `<button id="findme">Где я?</button>` : ""}</div>`;
+    html += view === "road" ? `<div class="road" id="road"></div>` : treeHTML();
     app.innerHTML = html;
     app.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => { S.view = b.dataset.v; save(); renderHome(); }));
     if (view === "road") {
@@ -776,11 +1011,154 @@ h2 { font: 600 17px/1.25 var(--f-display); }
     }));
   }
 
+  function renderAwards() {
+    setBar("<b>Награды</b>", false, "awards");
+    const xp = xpTotal(), lv = levelOf(xp), st = streak(), got = unlocked();
+    const cnt = p => Object.keys(S.aw).filter(k => k[0] === p).length;
+    let html = `<h1 class="page-h">Награды</h1>
+      <section class="lvcard"><div class="lvl"><svg viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="32" fill="none" stroke="rgb(255 255 255 / .28)" stroke-width="7"/><circle cx="38" cy="38" r="32" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-dasharray="${201 * Math.max(.02, lv.frac)} 201"/></svg><div class="n"><div>${lv.n}<small>УРОВЕНЬ</small></div></div></div>
+        <div><div class="lvname">${esc(lv.name)}</div><div class="xpmeta">${xp} XP${lv.next ? ` · ещё ${lv.hi - xp} до «${esc(lv.next)}»` : ""}</div></div></section>
+      <div class="bento">
+        <div class="stat flame${st.active ? "" : " cold"}"><div class="big">${ICON.flame}${st.n}</div><small>${plural(st.n, "день", "дня", "дней")} подряд</small></div>
+        <div class="stat goal"><div class="big">${ring(todayLessons() / DAILY_GOAL, "var(--ok)", 22, 3.5)}${Math.min(todayLessons(), DAILY_GOAL)}/${DAILY_GOAL}</div><small>цель дня</small></div>
+        <div class="stat"><div class="big">${doneCount()}</div><small>уроков из ${LESSONS.length}</small></div>
+        <div class="stat"><div class="big">${cnt("q")}</div><small>тестов с 1-й попытки</small></div>
+      </div>
+      <div class="badges-h"><h2>Значки</h2><span>${got.size} из ${ACH.length}</span></div><div class="badges">` +
+      ACH.map((a, i) => `<div class="badge${got.has(a.id) ? "" : " locked"}">${badgeSVG(a, 40 + i * 33)}<b>${esc(a.t)}</b><small>${esc(a.d)}</small></div>`).join("") + `</div>
+      <div class="badges-h"><h2>Лестница уровней</h2><span>${lv.n} из ${LEVELS.length}</span></div><ol class="ladder">` +
+      LEVELS.map(([need, name], i) => `<li class="${i + 1 <= lv.n ? "got" : ""}${i + 1 === lv.n ? " now" : ""}"><span class="ln-n">${i + 1}</span><b>${esc(name)}</b><small>${need} XP</small></li>`).join("") + `</ol>`;
+    app.innerHTML = html;
+  }
+
+  function renderProfile() {
+    setBar("<b>Профиль</b>", false, "profile");
+    const notes = Object.entries(NOTES).filter(([id, n]) => byId[id] && n.text).sort((a, b) => (b[1].updated || "").localeCompare(a[1].updated || ""));
+    const modeName = { idb: "IndexedDB (база в браузере)", ls: "localStorage (резервный режим)", mem: "временная память (данные не сохранятся)" }[DB.mode];
+    let html = `<h1 class="page-h">Профиль</h1>
+      <section class="me">${avatar(USER.color, 72)}<div><div class="me-n">${esc(USER.name)}</div><div class="me-s">${esc(levelOf(xpTotal()).name)} · с ${esc(new Date((USER.created || today()) + "T12:00").toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" }))}</div>
+        <div class="swatches" role="radiogroup" aria-label="Цвет героя">${COLORS.map(c => `<button role="radio" aria-checked="${c === USER.color}" aria-label="Цвет" class="sw-b${c === USER.color ? " on" : ""}" data-c="${c}" style="--sw:${c}"></button>`).join("")}</div></div></section>
+      <div class="badges-h"><h2>Мои заметки</h2><span>${notes.length}</span></div>`;
+    html += notes.length ? `<div class="notes">${notes.map(([id, n]) => `<a class="nt press" href="#l${id}"><small>Урок ${byId[id].si + 1}.${byId[id].li + 1} · ${esc(byId[id].title)}</small><span>${esc(n.text.length > 140 ? n.text.slice(0, 139) + "…" : n.text)}</span></a>`).join("")}</div>`
+      : `<div class="empty-card">Внизу каждого урока есть поле «Моя заметка». Запиши своими словами, что понял, и заметка появится здесь.</div>`;
+    html += `<div class="badges-h"><h2>Хранилище</h2><span>на этом устройстве</span></div>
+      <section class="store"><div class="store-row"><span>Где хранится</span><b>${modeName}</b></div>
+        <div class="store-row"><span>Профилей</span><b>${Object.keys(USERS).length}</b></div>
+        <div class="store-row"><span>Твоих отметок прогресса</span><b>${Object.keys(S.aw).length}</b></div>
+        <div class="store-row"><span>Твоих заметок</span><b>${notes.length}</b></div>
+        <div class="store-btns"><button class="btn" id="bk-copy">Скопировать копию</button><button class="btn" id="bk-restore">Восстановить</button></div>
+        <div id="bk-box" hidden><textarea id="bk-text" rows="5" spellcheck="false" aria-label="Резервная копия"></textarea><div class="store-btns"><button class="btn primary" id="bk-apply" hidden>Восстановить из текста</button></div><div class="bk-msg" id="bk-msg"></div></div>
+      </section>
+      <p class="fine">Профили, прогресс и заметки лежат только в этом браузере на этом устройстве. PIN защищает от случайного входа, но это не банковская защита. Чтобы перенести данные, скопируй резервную копию и вставь её на другом устройстве.</p>
+      <div class="store-btns"><button class="btn" id="logout">Сменить профиль</button><button class="btn danger" id="del">Удалить профиль</button></div>`;
+    app.innerHTML = html;
+    app.querySelectorAll(".sw-b").forEach(b => b.addEventListener("click", async () => { USER.color = b.dataset.c; await DB.put("users", USER.id, USER); renderProfile(); }));
+    const box = document.getElementById("bk-box"), ta = document.getElementById("bk-text"), msg = document.getElementById("bk-msg"), apply = document.getElementById("bk-apply");
+    document.getElementById("bk-copy").onclick = () => {
+      const data = JSON.stringify({ app: "pyscheme", v: 1, user: { name: USER.name, color: USER.color, created: USER.created }, progress: S, notes: NOTES });
+      box.hidden = false; apply.hidden = true; ta.value = data;
+      const ok = () => { msg.textContent = "Скопировано. Сохрани текст в Заметках iPhone."; };
+      const fail = () => { ta.focus(); ta.select(); msg.textContent = "Выдели текст выше и скопируй его вручную."; };
+      try { navigator.clipboard.writeText(data).then(ok, fail); } catch (e) { fail(); }
+    };
+    document.getElementById("bk-restore").onclick = () => { box.hidden = false; apply.hidden = false; ta.value = ""; ta.focus(); msg.textContent = "Вставь сюда текст резервной копии."; };
+    apply.onclick = async () => {
+      try {
+        const d = JSON.parse(ta.value);
+        if (d.app !== "pyscheme" || !d.progress || !d.progress.aw) throw new Error();
+        S = Object.assign(blankState(), d.progress); save();
+        NOTES = d.notes || {};
+        for (const [k] of await DB.all("notes")) if (String(k).startsWith(USER.id + "|")) await DB.del("notes", k);
+        for (const [id, n] of Object.entries(NOTES)) await DB.put("notes", USER.id + "|" + id, n);
+        toast("<b>Данные восстановлены</b>");
+        renderProfile();
+      } catch (e) { msg.textContent = "Это не похоже на резервную копию. Проверь, что текст вставлен целиком."; }
+    };
+    document.getElementById("logout").onclick = logout;
+    const del = document.getElementById("del");
+    del.onclick = () => {
+      if (!del.dataset.sure) { del.dataset.sure = "1"; del.textContent = "Точно удалить? Нажми ещё раз"; return; }
+      deleteUser(USER.id);
+    };
+  }
+
+  // ---------- sign in / sign up ----------
+  let authState = { step: "pick" };
+  function renderAuth() {
+    document.querySelector(".bar").hidden = true;
+    document.getElementById("tabbar").hidden = true;
+    document.body.classList.remove("with-tabs");
+    const A = authState, users = Object.values(USERS);
+    if (A.step === "pick" && !users.length) A.step = "name";
+    const u = A.uid ? USERS[A.uid] : null;
+    const color = A.color || COLORS[0];
+    let card = "";
+    if (A.step === "pick") {
+      card = `<h2>Кто учится?</h2><div class="who">${users.map(x => `<button class="who-b press" data-u="${x.id}">${avatar(x.color, 48)}<span class="who-t"><b>${esc(x.name)}</b><small>${esc(levelOf(xpTotal(PROG[x.id] || blankState())).name)}</small></span><i>›</i></button>`).join("")}</div>
+        <button class="btn ghost" id="new">+ Новый профиль</button>`;
+    } else if (A.step === "name") {
+      card = `<h2>Создай профиль</h2><label class="fld" for="nm">Как тебя зовут?</label><input id="nm" class="inp" maxlength="20" autocomplete="nickname" placeholder="Например, Аня" value="${esc(A.name || "")}">
+        <div class="fld">Цвет твоего героя</div><div class="swatches big" role="radiogroup">${COLORS.map(c => `<button role="radio" aria-checked="${c === color}" aria-label="Цвет" class="sw-b${c === color ? " on" : ""}" data-c="${c}" style="--sw:${c}"></button>`).join("")}</div>
+        <button class="btn primary wide" id="next">Дальше</button>${users.length ? `<button class="btn ghost" id="back2">Назад к профилям</button>` : ""}<div class="auth-err" id="err"></div>`;
+    } else {
+      const title = A.step === "pin1" ? "Придумай PIN из 4 цифр" : A.step === "pin2" ? "Повтори PIN" : `Привет, ${esc(u.name)}! Введи PIN`;
+      card = `<h2>${title}</h2><div class="dots" id="dots">${[0, 1, 2, 3].map(i => `<i class="${(A.pin || "").length > i ? "on" : ""}"></i>`).join("")}</div><div class="auth-err" id="err">${A.err || ""}</div>
+        <div class="pad">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => `<button class="key" data-k="${n}">${n}</button>`).join("")}<button class="key txt" data-k="back">Назад</button><button class="key" data-k="0">0</button><button class="key txt" data-k="del" aria-label="Стереть">⌫</button></div>
+        ${A.step === "login" ? `<button class="btn ghost" id="forgot">Забыл PIN?</button><div id="forgot-box" hidden><p class="fine">PIN нельзя восстановить: данные есть только на этом устройстве. Можно удалить этот профиль и создать новый.</p><button class="btn danger" id="kill">Удалить профиль «${esc(u.name)}»</button></div>` : ""}`;
+    }
+    const heroColor = u ? u.color : color;
+    app.innerHTML = `<section class="auth"><div class="auth-hero"><div class="auth-road" aria-hidden="true"><svg viewBox="0 0 320 120"><path d="M-10,95 C60,95 80,40 160,52 S260,20 330,30" class="rd-edge"/><path d="M-10,95 C60,95 80,40 160,52 S260,20 330,30" class="rd"/><path d="M-10,95 C60,95 80,40 160,52 S260,20 330,30" class="rd-line"/></svg>
+        <svg class="auth-walker" style="--shirt:${heroColor}" viewBox="-24 -54 48 60" aria-hidden="true">${heroMarkup(false)}</svg></div>
+        <div class="auth-title">Python по схеме</div><div class="auth-sub">111 уроков · дорога от переменных до паттернов</div></div>
+      <div class="auth-card">${card}</div><p class="fine center">Всё хранится только на этом устройстве.</p></section>`;
+    const err = m => { A.err = m; const e = document.getElementById("err"); if (e) e.textContent = m; const d = document.getElementById("dots"); if (d && !reduceMotion) { d.classList.remove("shake"); void d.offsetWidth; d.classList.add("shake"); } };
+    app.querySelectorAll(".who-b").forEach(b => b.onclick = () => { authState = { step: "login", uid: b.dataset.u, pin: "" }; renderAuth(); });
+    const nb = document.getElementById("new"); if (nb) nb.onclick = () => { authState = { step: "name" }; renderAuth(); };
+    const b2 = document.getElementById("back2"); if (b2) b2.onclick = () => { authState = { step: "pick" }; renderAuth(); };
+    app.querySelectorAll(".swatches .sw-b").forEach(b => b.onclick = () => { A.name = document.getElementById("nm").value; A.color = b.dataset.c; renderAuth(); });
+    const nx = document.getElementById("next");
+    if (nx) {
+      const nm = document.getElementById("nm");
+      const go2 = () => { const v = nm.value.trim(); if (!v) return err("Напиши имя, хотя бы одну букву."); if (Object.values(USERS).some(x => x.name.toLowerCase() === v.toLowerCase())) return err("Профиль с таким именем уже есть."); A.name = v; A.color = color; A.step = "pin1"; A.pin = ""; A.err = ""; renderAuth(); };
+      nx.onclick = go2; nm.onkeydown = e => { if (e.key === "Enter") go2(); };
+      if (!("ontouchstart" in window)) nm.focus();
+    }
+    const fg = document.getElementById("forgot"); if (fg) fg.onclick = () => { document.getElementById("forgot-box").hidden = false; };
+    const kill = document.getElementById("kill");
+    if (kill) kill.onclick = () => { if (!kill.dataset.sure) { kill.dataset.sure = "1"; kill.textContent = "Точно? Нажми ещё раз"; return; } authState = { step: "pick" }; deleteUser(A.uid); };
+    async function press(k) {
+      if (!["pin1", "pin2", "login"].includes(A.step)) return;
+      if (k === "back") { authState = { step: Object.keys(USERS).length && A.step === "login" ? "pick" : "name", name: A.name, color: A.color }; return renderAuth(); }
+      if (k === "del") A.pin = (A.pin || "").slice(0, -1);
+      else if ((A.pin || "").length < 4) A.pin = (A.pin || "") + k;
+      A.err = "";
+      document.querySelectorAll("#dots i").forEach((d, i) => d.classList.toggle("on", A.pin.length > i));
+      document.getElementById("err").textContent = "";
+      if (A.pin.length < 4) return;
+      if (A.step === "pin1") { A.first = A.pin; A.pin = ""; A.step = "pin2"; return setTimeout(renderAuth, 150); }
+      if (A.step === "pin2") {
+        if (A.pin !== A.first) { A.pin = ""; A.step = "pin1"; renderAuth(); return err("PIN не совпал. Придумай заново."); }
+        const nu = await createUser(A.name, A.color, A.pin);
+        authState = { step: "pick" };
+        toast(`<b>Профиль создан</b><small>Добро пожаловать, ${esc(nu.name)}!</small>`);
+        return login(nu.id);
+      }
+      if (A.step === "login") {
+        if (await hashPin(u.salt, A.pin) === u.pin) { authState = { step: "pick" }; return login(u.id); }
+        A.pin = ""; document.querySelectorAll("#dots i").forEach(d => d.classList.remove("on")); err("Неверный PIN. Попробуй ещё раз.");
+      }
+    }
+    app.querySelectorAll(".key").forEach(b => b.onclick = () => press(b.dataset.k));
+    authKey = e => { if (/^[0-9]$/.test(e.key)) press(e.key); else if (e.key === "Backspace") press("del"); };
+  }
+  let authKey = null;
+  document.addEventListener("keydown", e => { if (!USER && authKey && !e.target.closest("input")) authKey(e); });
+
   // ---------- section path ----------
   function renderSection(si) {
     const s = DATA.sections[si];
     if (!s) return renderHome();
-    setBar(`<b>${si + 1}. ${esc(s.title)}</b>`, true);
+    setBar(`<b>${si + 1}. ${esc(s.title)}</b>`, true, "home");
     const d = s.lessons.filter(l => isDone(l.id)).length;
     const next = s.lessons.find(l => !isDone(l.id));
     let html = `<div class="sh" style="--sh:${secHue(si)}"><div class="sec-head"><div class="eyebrow" style="color:var(--c-ink)">Раздел ${si + 1} из ${DATA.sections.length}</div><h1>${esc(s.title)}</h1>`;
@@ -902,7 +1280,7 @@ h2 { font: 600 17px/1.25 var(--f-display); }
   function renderLesson(id) {
     const L = byId[id];
     const s = L.sec;
-    setBar(`${L.si + 1}. ${esc(s.title)} · <b>${esc(L.title)}</b>`, true);
+    setBar(`${L.si + 1}. ${esc(s.title)} · <b>${esc(L.title)}</b>`, true, null);
     const idx = LESSONS.indexOf(L);
     const prevL = LESSONS[idx - 1], nextL = LESSONS[idx + 1];
     let html = `<div class="sh" style="--sh:${secHue(L.si)}"><div class="lhead"><div class="eyebrow">Урок ${L.si + 1}.${L.li + 1} · ${esc(s.title)}</div><h1>${esc(L.title)}</h1>
@@ -913,6 +1291,8 @@ h2 { font: 600 17px/1.25 var(--f-display); }
     if (L.code) html += vizShell(L);
     if (L.key && L.key.length) html += `<div class="key"><h3>Запомни</h3><ul>${L.key.map(k => `<li>${md(k)}</li>`).join("")}</ul></div>`;
     if (L.quiz) html += quizHTML(L);
+    const note = NOTES[L.id];
+    html += `<section class="note-card"><div class="nc-h"><h3>Моя заметка</h3><span id="note-st">${note && note.text ? "сохранено ✓" : ""}</span></div><textarea id="note" rows="3" placeholder="Запиши своими словами, что понял. Заметка сохранится в профиле.">${esc(note ? note.text : "")}</textarea></section>`;
     const dn = isDone(L.id);
     html += `<button class="done-btn ${dn ? "on" : ""}" id="donebtn">${dn ? "✓ Урок пройден<small>нажми, чтобы снять отметку</small>" : `Я понял — урок пройден<small>+${XP.l} XP</small>`}</button>
       <nav class="pn">${prevL ? `<a class="press" href="#l${prevL.id}"><small>← назад</small><span>${esc(prevL.title)}</span></a>` : ""}${nextL ? `<a class="nx press" href="#l${nextL.id}"><small>дальше →</small><span>${esc(nextL.title)}</span></a>` : ""}</nav></div>`;
@@ -924,6 +1304,18 @@ h2 { font: 600 17px/1.25 var(--f-display); }
       completeSheet(L, res);
     });
     if (L.quiz) wireQuiz(L);
+    const nt = document.getElementById("note"), ns = document.getElementById("note-st");
+    let ntT = null;
+    nt.addEventListener("input", () => {
+      ns.textContent = "сохраняю…";
+      clearTimeout(ntT);
+      ntT = setTimeout(async () => {
+        const text = nt.value.trim(), key = USER.id + "|" + L.id;
+        if (text) { NOTES[L.id] = { text: nt.value, updated: new Date().toISOString() }; await DB.put("notes", key, NOTES[L.id]); }
+        else { delete NOTES[L.id]; await DB.del("notes", key); }
+        ns.textContent = text ? "сохранено ✓" : "";
+      }, 500);
+    });
     if (L.code) startPlayer(L);
     window.scrollTo(0, 0);
   }
@@ -1078,7 +1470,7 @@ h2 { font: 600 17px/1.25 var(--f-display); }
         const n = (L.narr || {})[cur.l];
         narr += `<div class="nx next"><i>${cur.l}</i><span>${n ? md(n) : `Python готовится выполнить строку ${cur.l}.`}</span></div>`;
       }
-      if (st.i === 0) narr += `<div class="hint">Нажимай ▶ и следи, как меняются имена, стрелки и объекты.</div>`;
+      if (st.i === 0) narr += `<div class="hint">Нажимай ▶. Жёлтая строка выполнится сейчас, зелёная только что выполнилась. Стрелки показывают, на какой объект ссылается имя.</div>`;
       const ch = describeChange(L, prev, cur);
       if (ch.length) narr += `<div class="chg">${ch.map(c => `<div>${c}</div>`).join("")}</div>`;
       $("narr").innerHTML = narr;
@@ -1166,11 +1558,24 @@ h2 { font: 600 17px/1.25 var(--f-display); }
   function render() {
     if (player && player.timer) { clearInterval(player.timer); player.timer = null; }
     player = null;
+    if (!USER) { renderAuth(); window.scrollTo(0, 0); return; }
     const r = route();
     if (r.type === "lesson") renderLesson(r.id);
     else if (r.type === "sec") { renderSection(r.i); window.scrollTo(0, 0); }
+    else if (r.type === "awards") { renderAwards(); window.scrollTo(0, 0); }
+    else if (r.type === "profile") { renderProfile(); window.scrollTo(0, 0); }
     else renderHome();
   }
-  render();
+  async function boot() {
+    await DB.open();
+    try {
+      for (const [k, v] of await DB.all("users")) USERS[k] = v;
+      for (const [k, v] of await DB.all("progress")) PROG[k] = v;
+    } catch (e) {}
+    const sid = await DB.get("meta", "session").catch(() => null);
+    if (sid && USERS[sid]) await login(sid); else render();
+    if ("serviceWorker" in navigator && location.protocol === "https:" && document.querySelector('link[rel="manifest"]')) navigator.serviceWorker.register("sw.js").catch(() => {});
+  }
+  boot();
 })();
 </script>

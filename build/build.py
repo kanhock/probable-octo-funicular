@@ -80,8 +80,12 @@ def build():
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
         '<meta name="apple-mobile-web-app-capable" content="yes">\n'
         '<meta name="mobile-web-app-capable" content="yes">\n'
-        '<meta name="apple-mobile-web-app-status-bar-style" content="default">\n'
+        '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n'
         '<meta name="apple-mobile-web-app-title" content="Python схема">\n'
+        '<meta name="theme-color" content="#2B66CF">\n'
+        '<link rel="manifest" href="manifest.webmanifest">\n'
+        '<link rel="apple-touch-icon" href="icons/icon-180.png">\n'
+        '<link rel="icon" type="image/png" href="icons/icon-192.png">\n'
         '<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}'
         'body{margin:0}[hidden]{display:none!important}</style>\n'
     )
@@ -93,6 +97,12 @@ def build():
             + "\n</head>\n<body>\n" + rest[style_end:] + "\n</body>\n</html>\n")
     with open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(full)
+    import hashlib
+    ver = hashlib.sha1(full.encode()).hexdigest()[:10]
+    with open(os.path.join(HERE, "sw.template.js"), encoding="utf-8") as fh:
+        sw = fh.read().replace("__VERSION__", ver)
+    with open(os.path.join(ROOT, "sw.js"), "w", encoding="utf-8") as fh:
+        fh.write(sw)
     n = sum(len(s["lessons"]) for s in sections)
     print(f"sections={len(sections)} lessons={n} size={len(full) / 1024:.0f} KB")
     for p in problems:

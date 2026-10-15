@@ -1,0 +1,17 @@
+{
+  "name": "Python по схеме",
+  "short_name": "Python схема",
+  "description": "Пошаговый визуальный курс Python: дорога знаний, 25 разделов и 111 уроков.",
+  "lang": "ru",
+  "start_url": "./index.html#home",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EDF1F4",
+  "theme_color": "#2B66CF",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
