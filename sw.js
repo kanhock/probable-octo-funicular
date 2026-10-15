@@ -1,5 +1,5 @@
 // Offline support: keep the app shell cached so it opens from the home screen without internet.
-const CACHE = "pyscheme-74fbf3ed24";
+const CACHE = "pyscheme-df5ae97b35";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon-180.png", "./icons/icon-192.png", "./icons/icon-512.png"];
 
 self.addEventListener("install", e => {

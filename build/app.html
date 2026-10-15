@@ -531,6 +531,9 @@ svg.sc text { font-family: var(--f-code); }
 .sc .street { fill: none; stroke: rgb(255 255 255 / .55); stroke-width: 14; }
 .f-mount2 { fill: hsl(var(--zh) 10% 70% / .45); } .f-snow { fill: #FFFFFF; }
 
+.sc .tm2 { fill: #5A6A77; }
+.sc .ghost { fill: none; stroke: #8E9AA6; stroke-width: 1.4; stroke-dasharray: 4 3; }
+.sc .xmark { stroke: #E5484D; stroke-width: 2.4; stroke-linecap: round; }
 /* ---------- road map ---------- */
 .seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 4px; gap: 4px; margin: 4px 0 14px; }
 .seg button { border: 0; background: transparent; border-radius: 10px; padding: 8px; font-weight: 600; cursor: pointer; color: var(--muted); }
@@ -1162,20 +1165,35 @@ svg.sc text { font-family: var(--f-code); }
         G(300, 172, R(0, 0, 50, 58, "f-paper ink", 3) + R(5, 5, 40, 34, "f-blue2", 2) + T(25, 25, "age → 18", "tw", 7.5) + T(25, 51, "снимок", "tx", 7.5), " rotate(6)"),
       spots: { "Переменная": [16, 50], "Ссылка": [84, 70], "Объект": [112, 76], "Значение": [174, 94], "Тип": [108, 130], "Выражение": [88, 226], "Оператор": [88, 197], "Инструкция": [232, 48], "Блок кода": [236, 128], "Состояние": [322, 176] } }),
 
-    // 2. Типы данных
-    () => ({ h: 280, emb: [10, 30, 180, 100], art: bg(280, 250) + R(6, 112, 348, 7, "f-wood ink", 2) + R(6, 236, 348, 7, "f-wood ink", 2) +
-        crate(16, 62, 44, 46, "f-blue", "42", 15, "tw") +
-        G(98, 108, P("M-18,0 h36 l-6,-10 h-24z", "f-grey ink") + L(0, -10, 0, -38, "pole") + E(0, -40, 22, 5, "f-yellow ink") + R(-14, -28, 28, 12, "f-dark ink", 3) + T(0, -19, "3.14…", "tg", 8)) +
-        G(140, 64, R(0, 0, 40, 44, "f-paper ink", 6) + R(14, 8, 12, 28, "f-grey ink", 6) + C(20, 15, 6, "f-green ink") + T(20, -6, "True / False", "tc", 8)) +
-        P("M196,74 C230,92 262,92 296,74", "string") + ["к", "о", "т"].map((ch, i) => C(214 + i * 34, 85 - (i === 1 ? 3 : 0), 12, "f-pink ink") + T(214 + i * 34, 89 - (i === 1 ? 3 : 0), ch, "tx", 11) + T(214 + i * 34, 106, String(i), "tm", 8)).join("") +
-        G(318, 108, R(-16, -14, 32, 14, "f-grey ink", 2) + R(-14, -50, 28, 36, "nonebox", 3) + T(0, -28, "None", "tm", 8)) +
-        [0, 1, 2].map(i => G(16 + i * 42, 232, R(0, -30, 38, 26, "f-orange ink", 3) + C(8, -2, 4, "f-dark") + C(30, -2, 4, "f-dark") + T(19, -36, String(i), "tm", 8) + R(6, -24, 26, 12, "f-paper ink", 2) + T(19, -15, ["'a'", "'b'", "'c'"][i], "tx", 8))).join("") +
-        L(54, 218, 58, 218, "ink-l") + L(96, 218, 100, 218, "ink-l") +
-        [0, 1].map(i => G(150 + i * 38, 232, R(0, -32, 34, 28, "f-teal ink", 3) + C(7, -2, 4, "f-dark") + C(27, -2, 4, "f-dark") + R(12, -24, 10, 9, "f-yellow ink", 2) + P("M14,-24 v-3 a3,3 0 0 1 6,0 v3", "ink-l"))).join("") +
-        P("M240,232 C230,232 228,190 244,186 C252,176 270,176 278,186 C294,190 292,232 282,232Z", "f-paper2 ink") + C(254, 214, 6, "f-blue ink") + C(268, 204, 6, "f-pink ink") + C(270, 222, 6, "f-green ink") +
-        G(300, 236, [0, 1].map(i => [0, 1].map(j => R(i * 26, -84 + j * 40, 24, 38, "f-grey ink", 3) + C(i * 26 + 19, -65 + j * 40, 1.6, "f-dark") + R(i * 26 + 4, -80 + j * 40, 16, 9, "f-paper ink", 2) + T(i * 26 + 12, -73 + j * 40, ["'x'", "'y'"][i] + ["", ""][j], "tx", 6.5)).join("")).join("")) +
-        G(256, 14, R(0, 0, 92, 40, "f-blue2 ink", 4) + P("M8,10 h30 M8,18 h46 M8,26 h22", "bp") + T(66, 31, "Point(x, y)", "tw", 8) + C(46, 0, 3, "f-red ink")),
-      spots: { "int": [16, 60], "float": [76, 64], "bool": [140, 64], "str": [196, 72], "None": [304, 60], "list": [62, 188], "tuple": [150, 202], "set": [242, 190], "dict": [300, 150], "пользовательские типы": [256, 16] } }),
+    // 2. Типы данных — витрины склада: у каждого типа своя ячейка в одном стиле
+    () => {
+      const lock = (x, y, closed) => G(x, y, (closed ? P("M-4,0 v-3 a4,4 0 0 1 8,0 v3", "ink-l") : P("M-4,0 v-3 a4,4 0 0 1 8,0 v-3", "ink-l")) + R(-6, 0, 12, 9, (closed ? "f-yellow" : "f-green") + " ink", 2));
+      const CAT = { "число": "f-blue", "логика": "f-green", "пустота": "f-grey", "ряд": "f-orange", "набор": "f-purple", "словарь": "f-teal", "свой класс": "f-blue2" };
+      const cell = (x, y, title, cat, closed, body, ex, exSize = 8.5) => G(x, y, R(0, 0, 172, 104, "f-paper ink", 12) + R(0, 0, 7, 104, CAT[cat], 0) +
+        T(26, 19, title, "tx", 12, "start", 700) + T(144, 19, cat, "tm2", 7.5, "end", 500) + lock(160, 11, closed) + body + T(12, 96, ex, "tm2", exSize, "start", 500));
+      const wheel = (x, y) => C(x, y, 3.5, "f-dark");
+      const cells = [
+        ["int", "число", true, R(14, 30, 42, 40, "f-blue ink", 6) + T(35, 56, "42", "tw", 16) + R(64, 38, 98, 22, "f-sky ink", 5) + T(113, 53, "2**100 → 1267650600…", "tx", 7) + T(113, 72, "точно, любой длины", "tm2", 7.5), "x = 42"],
+        ["float", "число", true, R(14, 30, 52, 40, "f-teal ink", 6) + T(40, 56, "3.14", "tw", 14) + L(74, 54, 160, 54, "ink-l") + [74, 102, 130, 160].map(t => L(t, 50, t, 58, "ink-l")).join("") + C(132, 54, 4, "f-red ink") + T(117, 44, "≈ 0.3", "tx", 8.5) + T(117, 72, "дробное, приближённо", "tm2", 7.5), "0.1 + 0.2 → 0.30000000000000004", 7],
+        ["bool", "логика", true, R(14, 32, 52, 26, "f-green ink", 13) + C(53, 45, 10, "f-paper ink") + T(40, 72, "True", "tx", 9) + R(86, 32, 52, 26, "f-grey ink", 13) + C(99, 45, 10, "f-paper ink") + T(112, 72, "False", "tx", 9), "bool(0) → False"],
+        ["str", "ряд", true, ["к", "о", "т"].map((ch, i) => R(14 + i * 30, 32, 26, 26, "f-pink ink", 5) + T(27 + i * 30, 50, ch, "tx", 13) + T(27 + i * 30, 70, String(i), "tm2", 8)).join("") + T(108, 44, "s.upper()", "tx", 8, "start") + T(108, 57, "→ новая", "tm2", 7.5, "start"), "s = 'кот';  s[0] → 'к'"],
+        ["None", "пустота", true, R(14, 30, 58, 42, "nonebox", 8) + T(43, 55, "None", "tm2", 11) + T(82, 42, "значения нет", "tx", 8.5, "start") + T(82, 56, "один такой объект", "tm2", 7.5, "start") + T(82, 68, "на всю программу", "tm2", 7.5, "start"), "if x is None: …"],
+        ["list", "ряд", false, [0, 1, 2].map(i => R(14 + i * 34, 36, 30, 22, "f-orange ink", 3) + R(19 + i * 34, 40, 20, 12, "f-paper ink", 2) + T(29 + i * 34, 49.5, ["'a'", "'b'", "'c'"][i], "tx", 7.5) + wheel(20 + i * 34, 60) + wheel(38 + i * 34, 60) + T(29 + i * 34, 31, String(i), "tm2", 7.5)).join("") + R(118, 36, 30, 22, "ghost", 3) + T(133, 51, "+", "tm2", 12) + T(133, 72, "append", "tm2", 7.5), "items.append('d')"],
+        ["tuple", "ряд", true, [0, 1].map(i => R(14 + i * 44, 34, 40, 26, "f-teal ink", 4) + R(23 + i * 44, 39, 22, 14, "f-paper ink", 2) + T(34 + i * 44, 50, ["3", "4"][i], "tx", 9) + wheel(22 + i * 44, 61) + wheel(46 + i * 44, 61) + T(34 + i * 44, 30, String(i), "tm2", 7.5)).join("") + lock(56, 44, true) + T(106, 44, "менять нельзя", "tx", 8, "start") + T(106, 57, "годится в ключ", "tm2", 7.5, "start"), "p = (3, 4)"],
+        ["set", "набор", false, E(58, 50, 46, 22, "f-paper2 ink") + [[36, 46, "a", "f-blue"], [60, 57, "b", "f-pink"], [80, 43, "c", "f-green"]].map(([x, yy, ch, c]) => C(x, yy, 9, c + " ink") + T(x, yy + 3.5, ch, "tx", 9)).join("") + C(138, 46, 9, "f-blue ink") + T(138, 49.5, "a", "tx", 9) + P("M144,33 l8,8 M152,33 l-8,8", "xmark") + T(138, 70, "дубль не пустят", "tm2", 7), "{'a','b','a'} → {'a','b'}", 8],
+        ["dict", "словарь", false, [["'имя'", "'Аня'"], ["'лет'", "17"]].map(([k, v], i) => R(14 + i * 62, 28, 56, 50, "f-grey ink", 4) + R(19 + i * 62, 33, 46, 13, "f-yellow ink", 3) + T(42 + i * 62, 42.5, k, "tx", 7.5) + R(19 + i * 62, 51, 46, 20, "f-paper ink", 3) + T(42 + i * 62, 64, v, "tx", 8.5) + C(65 + i * 62, 60, 1.5, "f-dark")).join("") + T(150, 46, "ключ", "tm2", 7) + T(150, 66, "→ знач.", "tm2", 7), "d['имя'] → 'Аня'"],
+        ["свои типы", "свой класс", false, R(14, 30, 56, 42, "f-blue2 ink", 4) + T(42, 46, "class", "tw", 8) + T(42, 59, "Point", "tw", 8.5) + arrow(74, 51, 92, 51) + R(96, 32, 66, 38, "f-paper2 ink", 6) + T(129, 46, "Point", "tx", 8.5) + T(129, 60, "x=1   y=2", "tx", 8), "p = Point(1, 2)"],
+      ];
+      const items = ["int", "float", "bool", "str", "None", "list", "tuple", "set", "dict", "пользовательские типы"];
+      let art = bg(588, 0) + T(10, 22, "Каждому типу — своя витрина", "tc", 9.5, "start", 600) + lock(214, 12, true) + T(224, 21, "неизменяемый", "tc", 8, "start", 500) + lock(298, 12, false) + T(308, 21, "изменяемый", "tc", 8, "start", 500);
+      const spots = {};
+      cells.forEach(([title, cat, closed, body, ex, exSize], i) => {
+        const x = 6 + (i % 2) * 176, y = 36 + Math.floor(i / 2) * 110;
+        art += cell(x, y, title, cat, closed, body, ex, exSize);
+        spots[items[i]] = [x + 15, y + 14];
+      });
+      return { h: 588, emb: [6, 36, 172, 104], art, spots };
+    },
 
     // 3. Управление выполнением
     () => ({ h: 280, emb: [8, 10, 160, 140], art: bg(280, 0) +
