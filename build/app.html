@@ -24,6 +24,8 @@
   --code-bg: #F6F8FA;
   --flame: #F2701D;
   --xp: #7A4DE0;
+  --grass: #E2F1DA; --grass2: #CFE7C4; --road: #74808C; --road-edge: #5C6874; --road-line: #F4F7F9; --trail: #FFD43B;
+  --tree: #4FA66C; --tree2: #3C8C57; --trunk: #8A5A3B; --rock: #B7C0C8; --flower: #F27BA6;
   --shadow: 0 1px 2px rgb(20 32 43 / .06), 0 6px 20px rgb(20 32 43 / .06);
   --chip-l: 46%;
   --chip-s: 70%;
@@ -36,7 +38,7 @@
   :root:not([data-theme="light"]) {
     --bg: #0D1318; --panel: #151D25; --ink: #E2E9EF; --muted: #8E9DAA; --line: #26323D;
     --accent: #6FA2FF; --accent-ink: #0D1318; --hl: #FFD43B; --hl-soft: #3A3317; --prev-soft: #16302A;
-    --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF;
+    --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
     --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25); --chip-l: 68%; --chip-s: 75%;
     color-scheme: dark;
   }
@@ -44,7 +46,7 @@
 :root[data-theme="dark"] {
   --bg: #0D1318; --panel: #151D25; --ink: #E2E9EF; --muted: #8E9DAA; --line: #26323D;
   --accent: #6FA2FF; --accent-ink: #0D1318; --hl: #FFD43B; --hl-soft: #3A3317; --prev-soft: #16302A;
-  --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF;
+  --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
   --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25); --chip-l: 68%; --chip-s: 75%;
   color-scheme: dark;
 }
@@ -164,6 +166,51 @@ h2 { font: 600 17px/1.25 var(--f-display); }
 .badge small { font-size: 11px; color: var(--muted); line-height: 1.25; }
 .badge.locked svg { filter: grayscale(1); opacity: .35; }
 .badge.locked b { color: var(--muted); }
+
+
+/* ---------- road map ---------- */
+.seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 4px; gap: 4px; margin: 4px 0 14px; }
+.seg button { border: 0; background: transparent; border-radius: 10px; padding: 8px; font-weight: 600; cursor: pointer; color: var(--muted); }
+.seg button.on { background: var(--accent); color: var(--accent-ink); }
+.roadhead { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
+.roadhead button { border: 1px solid var(--line); background: var(--panel); border-radius: 99px; padding: 5px 12px; font: 600 12px var(--f-code); cursor: pointer; white-space: nowrap; }
+.road { position: relative; border-radius: 24px; overflow: hidden; background: linear-gradient(180deg, var(--grass), var(--grass2)); border: 1px solid var(--line); min-height: 200px; }
+.road svg.map { display: block; width: 100%; height: auto; }
+.rd-edge { fill: none; stroke: var(--road-edge); stroke-width: 34; stroke-linecap: round; }
+.rd { fill: none; stroke: var(--road); stroke-width: 28; stroke-linecap: round; }
+.rd-line { fill: none; stroke: var(--road-line); stroke-width: 2.5; stroke-dasharray: 9 11; opacity: .75; }
+.rd-trail { fill: none; stroke: var(--trail); stroke-width: 7; stroke-linecap: round; opacity: .95; }
+.seg-h { fill: none; stroke: none; }
+.t-trunk { fill: var(--trunk); } .t-tree { fill: var(--tree); } .t-tree2 { fill: var(--tree2); } .t-rock { fill: var(--rock); } .t-flower { fill: var(--flower); } .t-flower-c { fill: var(--trail); }
+.t-pole { stroke: var(--trunk); stroke-width: 3; stroke-linecap: round; }
+.t-board { fill: var(--panel); stroke: var(--road-edge); stroke-width: 1.5; }
+.t-sign { font: 700 9px var(--f-display); fill: var(--ink); letter-spacing: .06em; }
+.t-chk1 { fill: #14202B; } .t-chk2 { fill: #FFFFFF; }
+.s-ring { fill: var(--panel); stroke-width: 4; }
+.s-todo { fill: var(--panel); stroke: var(--line); stroke-width: 4; }
+.s-num { font: 700 13px var(--f-display); text-anchor: middle; dominant-baseline: central; }
+.stop-pulse { fill: none; stroke-width: 4; animation: spulse 1.8s ease-in-out infinite; }
+@keyframes spulse { 50% { stroke-opacity: .12; stroke-width: 14; } }
+.h-shadow { fill: rgb(0 0 0 / .2); }
+.h-leg { stroke: #2C3E57; stroke-width: 4.5; stroke-linecap: round; }
+.h-pack { fill: #FFD43B; stroke: #C9A21E; stroke-width: 1; }
+.h-body { fill: #3776AB; }
+.h-arm { stroke: #F2C29B; stroke-width: 3.6; stroke-linecap: round; }
+.h-skin { fill: #F2C29B; } .h-hair { fill: #3B2A20; } .h-eye { fill: #14202B; }
+.hero-idle { animation: idle 1.6s ease-in-out infinite; }
+@keyframes idle { 50% { transform: translateY(-1.5px); } }
+.road .lbl2 { position: absolute; max-width: calc(56% - 20px); text-decoration: none; color: var(--ink); background: color-mix(in srgb, var(--panel) 90%, transparent); border-radius: 12px; padding: 6px 10px; box-shadow: var(--shadow); line-height: 1.25; z-index: 2; }
+.road .lbl2 b { display: block; font-weight: 600; font-size: 13.5px; }
+.road .lbl2 small { display: block; color: var(--muted); font: 500 11px var(--f-code); margin-top: 2px; }
+.road .lbl2.r { text-align: right; }
+.road .lbl2.cur { box-shadow: 0 0 0 2px var(--c), var(--shadow); }
+.road .lbl2.cur small { color: var(--c-ink); }
+.road .lbl2.done b::before { content: "✓ "; color: var(--c-ink); }
+.road .lbl2.fin { background: var(--ink); color: var(--bg); }
+.road .lbl2.fin small { color: var(--bg); opacity: .75; }
+.road .herosvg { position: absolute; left: 0; top: 0; z-index: 3; pointer-events: none; overflow: visible; filter: drop-shadow(0 2px 3px rgb(0 0 0 / .18)); }
+.road .stoplink { position: absolute; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; z-index: 2; }
+.road .bubble { position: absolute; left: 0; top: 0; background: var(--ink); color: var(--bg); font: 600 12px var(--f-body); padding: 5px 11px; border-radius: 99px; white-space: nowrap; text-decoration: none; box-shadow: var(--shadow); z-index: 4; }
 
 /* ---------- section path ---------- */
 .sec-head { display: grid; gap: 8px; }
@@ -539,6 +586,119 @@ h2 { font: 600 17px/1.25 var(--f-display); }
     })(t0);
   }
 
+
+  // ---------- road map: a walker moves along a winding road of stops ----------
+  function seeded(str) { let x = 0; for (const c of str) x = (x * 31 + c.charCodeAt(0)) >>> 0; return () => { x = (x * 1664525 + 1013904223) >>> 0; return x / 4294967296; }; }
+  const HERO = `<g id="hero"><g class="hero-idle"><ellipse cx="0" cy="0" rx="11" ry="3.5" class="h-shadow"/><g id="heroflip">
+    <line id="legL" x1="-3" y1="-15" x2="-3" y2="-1" class="h-leg"/><line id="legR" x1="3" y1="-15" x2="3" y2="-1" class="h-leg"/>
+    <rect x="-12.5" y="-30" width="8" height="12.5" rx="3" class="h-pack"/><rect x="-7" y="-32" width="14" height="18" rx="6" class="h-body"/>
+    <line id="arm" x1="1" y1="-27" x2="4" y2="-18" class="h-arm"/><circle cx="0" cy="-39" r="7.5" class="h-skin"/>
+    <path d="M-7.6,-39.5 A7.6,7.6 0 0 1 7.6,-40.5 L5,-40 Q-1,-44 -7.6,-39.5 Z" class="h-hair"/><circle cx="3.8" cy="-39" r="1.15" class="h-eye"/></g></g></g>`;
+  function prop(x, y, t) {
+    x = x.toFixed(1); y = y.toFixed(1);
+    if (t < .42) return `<g transform="translate(${x},${y})"><rect x="-2.5" y="-6" width="5" height="12" rx="2" class="t-trunk"/><circle cy="-15" r="11" class="t-tree"/><circle cx="-6" cy="-10" r="7" class="t-tree2"/><circle cx="6" cy="-11" r="7" class="t-tree2"/></g>`;
+    if (t < .7) return `<g transform="translate(${x},${y})"><circle cx="-6" r="6" class="t-tree2"/><circle cx="5" r="6.5" class="t-tree2"/><circle cy="-4" r="7" class="t-tree"/></g>`;
+    if (t < .88) return `<g transform="translate(${x},${y})">${[[-6, 0], [0, -4], [6, 1]].map(([a, b]) => `<circle cx="${a}" cy="${b}" r="3" class="t-flower"/><circle cx="${a}" cy="${b}" r="1.2" class="t-flower-c"/>`).join("")}</g>`;
+    return `<ellipse cx="${x}" cy="${y}" rx="9" ry="6" class="t-rock"/>`;
+  }
+  function buildRoad(el, cfg) {
+    const W = Math.round(el.clientWidth) || 358;
+    const n = cfg.stops.length, top = 100, dy = 132;
+    const X = i => (i % 2 === 0 ? .22 : .78) * W;
+    const P = cfg.stops.map((s, i) => [X(i), top + i * dy]);
+    const start = [W * .5, 26], fin = [n % 2 === 0 ? W * .22 : W * .78, top + n * dy - 12];
+    const H = fin[1] + 64;
+    const curve = (a, b) => { const d = b[1] - a[1]; return `C${a[0]},${a[1] + d * .55} ${b[0]},${b[1] - d * .55} ${b[0]},${b[1]}`; };
+    const pts = [...P, fin];
+    const segs = pts.slice(0, -1).map((p, i) => `M${p[0]},${p[1]} ` + curve(p, pts[i + 1]));
+    const walkD = `M${P[0][0]},${P[0][1]} ` + pts.slice(0, -1).map((p, i) => curve(p, pts[i + 1])).join(" ");
+    const fullD = `M${start[0]},${start[1]} ` + curve(start, P[0]) + " " + walkD.replace(/^M[^C]+/, "");
+    const r = seeded(cfg.key);
+    let scene = "";
+    for (let i = 0; i <= n; i++) {
+      const ym = top + (i - .5) * dy;
+      scene += prop(W * (.06 + r() * .08), ym + (r() - .5) * 36, r());
+      scene += prop(W * (.86 + r() * .08), ym + (r() - .5) * 36, r());
+      if (i < n) scene += prop(P[i][0] < W / 2 ? W * .07 : W * .93, P[i][1] + 40 + r() * 16, r());
+    }
+    const sign = `<g transform="translate(${start[0] + 34},${start[1] + 4})"><line x1="0" y1="0" x2="0" y2="-20" class="t-pole"/><rect x="-22" y="-34" width="44" height="16" rx="4" class="t-board"/><text x="0" y="-23" text-anchor="middle" class="t-sign">СТАРТ</text></g>`;
+    let flag = `<g transform="translate(${fin[0] + (fin[0] < W / 2 ? -30 : 30)},${fin[1] + 8})"><line x1="0" y1="0" x2="0" y2="-44" class="t-pole"/>`;
+    for (let a = 0; a < 4; a++) for (let b = 0; b < 3; b++) flag += `<rect x="${1 + a * 6}" y="${-44 + b * 6}" width="6" height="6" class="${(a + b) % 2 ? "t-chk2" : "t-chk1"}"/>`;
+    flag += `</g>`;
+    const stopsSVG = cfg.stops.map((s, i) => {
+      const [x, y] = P[i], col = `hsl(${s.hue} var(--chip-s) var(--chip-l))`;
+      if (s.state === "done") return `<circle cx="${x}" cy="${y}" r="22" style="fill:${col};stroke:var(--panel);stroke-width:4"/><text x="${x}" y="${y}" class="s-num" style="fill:var(--panel)">✓</text>`;
+      if (s.state === "cur") return `<circle cx="${x}" cy="${y}" r="22" class="stop-pulse" style="stroke:${col}"/><circle cx="${x}" cy="${y}" r="22" class="s-ring" style="stroke:${col}"/><text x="${x}" y="${y}" class="s-num" style="fill:${col}">${s.num}</text>`;
+      return `<circle cx="${x}" cy="${y}" r="20" class="s-todo"/><text x="${x}" y="${y}" class="s-num" style="fill:var(--muted)">${s.num}</text>`;
+    }).join("");
+    let html = `<svg class="map" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true">${scene}${sign}
+      <path class="rd-edge" d="${fullD}"/><path class="rd" d="${fullD}"/><path class="rd-line" d="${fullD}"/><path class="rd-trail" id="trail" d="${walkD}"/>
+      ${segs.map(d => `<path class="seg-h" d="${d}"/>`).join("")}${flag}${stopsSVG}</svg>
+      <svg class="herosvg" id="herosvg" viewBox="-24 -54 48 60" width="48" height="60" aria-hidden="true">${HERO}</svg>`;
+    html += cfg.stops.map((s, i) => {
+      const [x, y] = P[i], left = x < W / 2;
+      const pos = left ? `left:${x + 32}px` : `right:${W - x + 32}px`;
+      return `<a class="stoplink" href="${s.href}" style="left:${x}px;top:${y}px" aria-label="${esc(s.title)}"></a>` +
+        `<a class="lbl2 sh ${left ? "" : "r"} ${s.state}" href="${s.href}" style="--sh:${s.hue};bottom:${H - y - 10}px;${pos}"><b>${esc(s.title)}</b><small>${esc(s.sub)}</small></a>`;
+    }).join("");
+    const fl = fin[0] < W / 2;
+    html += `<div class="lbl2 fin ${fl ? "" : "r"}" style="top:${fin[1] - 34}px;${fl ? `left:${fin[0] + 4}px` : `right:${W - fin[0] + 4}px`}"><b>${esc(cfg.finish)}</b><small>${cfg.allDone ? "ты дошёл!" : "финиш"}</small></div>`;
+    html += `<a class="bubble" id="bubble" href="${cfg.cont}">Продолжить ▶</a>`;
+    el.innerHTML = html;
+
+    const segEls = [...el.querySelectorAll(".seg-h")], lens = segEls.map(p => p.getTotalLength());
+    const cum = lens.reduce((a, l) => (a.push(a[a.length - 1] + l), a), [0]);
+    const maxP = segEls.length;
+    const herosvg = el.querySelector("#herosvg"), flip = el.querySelector("#heroflip"), legL = el.querySelector("#legL"), legR = el.querySelector("#legR"), arm = el.querySelector("#arm");
+    const trail = el.querySelector("#trail"), bubble = el.querySelector("#bubble");
+    let facing = 1;
+    const er = el.getBoundingClientRect();
+    const boxes = [...el.querySelectorAll(".lbl2")].map(n => { const r = n.getBoundingClientRect(); return [r.left - er.left - 4, r.top - er.top - 4, r.right - er.left + 4, r.bottom - er.top + 4]; });
+    function placeBubble(pt) {
+      const bw = bubble.offsetWidth, bh = bubble.offsetHeight;
+      const cands = [[pt.x - bw / 2, pt.y - 54 - bh], [pt.x - bw / 2, pt.y + 10], [pt.x + 22, pt.y - 30 - bh / 2], [pt.x - 22 - bw, pt.y - 30 - bh / 2]];
+      const free = c => c[0] >= 4 && c[0] + bw <= W - 4 && !boxes.some(b => c[0] < b[2] && c[0] + bw > b[0] && c[1] < b[3] && c[1] + bh > b[1]);
+      const c = cands.find(free) || cands[0];
+      bubble.style.left = c[0].toFixed(1) + "px"; bubble.style.top = c[1].toFixed(1) + "px";
+    }
+    const at = p => { p = Math.max(0, Math.min(maxP, p)); const k = Math.min(maxP - 1, Math.floor(p)), f = p - k; return { pt: segEls[k].getPointAtLength(lens[k] * f), len: cum[k] + lens[k] * f }; };
+    function place(p, t, moving) {
+      const { pt, len } = at(p), a = at(p - .03).pt, b = at(p + .03).pt;
+      if (Math.abs(b.x - a.x) > .6) facing = b.x < a.x ? -1 : 1;
+      herosvg.style.left = (pt.x - 24).toFixed(1) + "px"; herosvg.style.top = (pt.y - 57).toFixed(1) + "px";
+      flip.setAttribute("transform", `scale(${facing},1)`);
+      const ang = moving ? Math.sin(t / 70) * 30 : 0;
+      legL.setAttribute("transform", `rotate(${ang.toFixed(1)} 0 -15)`);
+      legR.setAttribute("transform", `rotate(${(-ang).toFixed(1)} 0 -15)`);
+      arm.setAttribute("transform", `rotate(${(-ang * .9).toFixed(1)} 1 -27)`);
+      trail.style.strokeDasharray = `${len.toFixed(1)} 100000`;
+      placeBubble(pt);
+    }
+    const to = Math.max(0, Math.min(maxP, cfg.pos));
+    const stored = (S.walk || {})[cfg.key];
+    const from = typeof stored === "number" ? Math.min(stored, to) : 0;
+    S.walk = S.walk || {}; S.walk[cfg.key] = to; save();
+    const restText = cfg.allDone ? "Ура, финиш!" : "Продолжить ▶";
+    if (reduceMotion || to - from < .005) { bubble.textContent = restText; place(to, 0, false); return { find: () => scrollToHero(el, at(to).pt) }; }
+    const dur = Math.min(4200, 900 + 1100 * (to - from));
+    place(from, 0, false);
+    bubble.textContent = "Иду…";
+    if (cfg.follow) scrollToHero(el, at(to).pt);
+    let t0 = null;
+    (function step(t) {
+      if (!document.body.contains(el)) return;
+      if (t0 === null) t0 = t + 350;
+      const k = Math.max(0, Math.min(1, (t - t0) / dur)), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      place(from + (to - from) * e, t, k > 0 && k < 1);
+      if (k < 1) requestAnimationFrame(step); else { bubble.textContent = restText; placeBubble(at(to).pt); }
+    })(performance.now());
+    return { find: () => scrollToHero(el, at(to).pt) };
+  }
+  function scrollToHero(el, pt) {
+    const y = el.getBoundingClientRect().top + window.scrollY + pt.y - innerHeight / 2;
+    window.scrollTo({ top: Math.max(0, y), behavior: reduceMotion ? "auto" : "smooth" });
+  }
+
   // ---------- home ----------
   const PRAISE = ["Отличная работа!", "Мозг прокачан!", "Так держать!", "Ещё один кирпичик в фундамент!", "Python тебя уважает!", "Красиво разобрался!", "Ты уже думаешь как интерпретатор!"];
   function renderHome() {
@@ -570,8 +730,12 @@ h2 { font: 600 17px/1.25 var(--f-display); }
         <div><b><span class="sw" style="background:var(--hl)"></span>Жёлтая</b>строка выполнится сейчас</div>
         <div><b><span class="sw" style="background:var(--ok)"></span>Зелёная</b>строка только что выполнилась</div>
         <div><b>→ Стрелка</b>имя ссылается на объект</div>
-      </div>
-      <div class="tree"><div class="root">PYTHON <span>${nd} / ${total}</span></div>`;
+      </div>`;
+    const view = S.view || "road";
+    html += `<div class="seg" role="tablist"><button role="tab" aria-selected="${view === "road"}" data-v="road" class="${view === "road" ? "on" : ""}">Дорога</button><button role="tab" aria-selected="${view === "tree"}" data-v="tree" class="${view === "tree" ? "on" : ""}">Схема</button></div>`;
+    if (view === "road") html += `<div class="roadhead"><h2>Дорога знаний</h2><button id="findme">Где я?</button></div><div class="road" id="road"></div>`;
+    else {
+    html += `<div class="tree"><div class="root">PYTHON <span>${nd} / ${total}</span></div>`;
     DATA.sections.forEach((s, si) => {
       const ls = s.lessons, d = ls.filter(l => isDone(l.id)).length;
       const open = S.open.includes(si);
@@ -588,9 +752,22 @@ h2 { font: 600 17px/1.25 var(--f-display); }
       }
       html += `</div>`;
     });
-    html += `</div><div class="badges-h"><h2>Награды</h2><span>${got.size} из ${ACH.length}</span></div><div class="badges">` +
+    html += `</div>`;
+    }
+    html += `<div class="badges-h"><h2>Награды</h2><span>${got.size} из ${ACH.length}</span></div><div class="badges">` +
       ACH.map((a, i) => `<div class="badge${got.has(a.id) ? "" : " locked"}">${badgeSVG(a, 40 + i * 33)}<b>${esc(a.t)}</b><small>${esc(a.d)}</small></div>`).join("") + `</div>`;
     app.innerHTML = html;
+    app.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => { S.view = b.dataset.v; save(); renderHome(); }));
+    if (view === "road") {
+      const cur = DATA.sections.findIndex(s => !secDone(s)), allDone = cur < 0;
+      const curS = allDone ? null : DATA.sections[cur];
+      const pos = allDone ? DATA.sections.length : cur + curS.lessons.filter(l => isDone(l.id)).length / curS.lessons.length;
+      const rd = buildRoad(document.getElementById("road"), {
+        key: "home", pos, allDone, follow: true, cont: "#l" + next.id, finish: "Вся схема Python",
+        stops: DATA.sections.map((s, si) => { const d = s.lessons.filter(l => isDone(l.id)).length; return { title: s.title, sub: `${si + 1} · ${d} из ${s.lessons.length} уроков`, href: "#s" + (si + 1), hue: secHue(si), num: si + 1, state: d === s.lessons.length ? "done" : si === cur ? "cur" : "" }; }),
+      });
+      document.getElementById("findme").onclick = rd.find;
+    }
     app.querySelectorAll(".head").forEach(b => b.addEventListener("click", () => {
       const si = +b.dataset.sec;
       S.open = S.open.includes(si) ? S.open.filter(x => x !== si) : [...S.open, si];
@@ -608,12 +785,16 @@ h2 { font: 600 17px/1.25 var(--f-display); }
     const next = s.lessons.find(l => !isDone(l.id));
     let html = `<div class="sh" style="--sh:${secHue(si)}"><div class="sec-head"><div class="eyebrow" style="color:var(--c-ink)">Раздел ${si + 1} из ${DATA.sections.length}</div><h1>${esc(s.title)}</h1>`;
     if (s.intro) html += `<p class="sec-intro">${md(s.intro)}</p>`;
-    html += `<div class="secbar"><div class="xpbar"><i style="width:${100 * d / s.lessons.length}%"></i></div>${d}/${s.lessons.length}</div></div><ol class="path">`;
-    s.lessons.forEach((l, li) => {
-      const cls = isDone(l.id) ? "done" : l === next ? "next" : "";
-      html += `<li class="${cls}"><div class="node">${isDone(l.id) ? "✓" : li + 1}</div><a class="card press" href="#l${l.id}">${l === next ? `<div class="lbl">Следующий · +${XP.l} XP</div>` : ""}<div class="t">${esc(l.title)}</div><div class="c">${esc(l.covers.join(" · "))}</div></a></li>`;
+    html += `<div class="secbar"><div class="xpbar"><i style="width:${100 * d / s.lessons.length}%"></i></div>${d}/${s.lessons.length}</div></div>
+      <div class="roadhead" style="margin-top:18px"><h2>Путь раздела</h2><button id="findme">Где я?</button></div><div class="road" id="road"></div></div>`;
+    app.innerHTML = html;
+    const ni = next ? s.lessons.indexOf(next) : s.lessons.length;
+    const nextGlobal = next || LESSONS.find(l => !isDone(l.id)) || s.lessons[0];
+    const rd = buildRoad(document.getElementById("road"), {
+      key: "s" + si, pos: ni, allDone: !next, follow: false, cont: "#l" + nextGlobal.id, finish: si + 1 < DATA.sections.length ? "Дальше: " + DATA.sections[si + 1].title : "Конец схемы",
+      stops: s.lessons.map((l, li) => ({ title: l.title, sub: l === next ? `следующий · +${XP.l} XP` : l.covers.join(" · "), href: "#l" + l.id, hue: secHue(si), num: li + 1, state: isDone(l.id) ? "done" : l === next ? "cur" : "" })),
     });
-    app.innerHTML = html + `</ol></div>`;
+    document.getElementById("findme").onclick = rd.find;
   }
 
   // ---------- syntax highlight ----------
@@ -970,7 +1151,11 @@ h2 { font: 600 17px/1.25 var(--f-display); }
     setTimeout(() => o.classList.remove("pulse"), 1400);
   }
   let rz;
-  window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => player && player.redraw && player.redraw(), 80); });
+  let lastW = innerWidth;
+  window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => {
+    if (player && player.redraw) player.redraw();
+    if (Math.abs(innerWidth - lastW) > 30 && document.getElementById("road")) { lastW = innerWidth; const y = scrollY; render(); scrollTo(0, y); }
+  }, 120); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => player && player.redraw && player.redraw());
   document.addEventListener("keydown", e => {
     if (!player || e.target.closest("input, textarea")) return;
