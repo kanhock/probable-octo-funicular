@@ -32,6 +32,19 @@ def prep_code(src):
     return "\n".join(lines) + "\n", narr
 
 
+def run_snippet(code):
+    """Run a check's code and return its output on one line ("a | b")."""
+    import contextlib
+    import io
+    buf = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(buf):
+            exec(compile(code, "<check>", "exec"), {"__name__": "__main__"})
+    except Exception as e:  # pragma: no cover - surfaced as a problem
+        return f"!{type(e).__name__}: {e}"
+    return " | ".join(line.rstrip() for line in buf.getvalue().strip().split("\n"))
+
+
 def build():
     sections = []
     problems = []
@@ -68,7 +81,38 @@ def build():
         for it in sec["items"]:
             if it not in covered:
                 problems.append(f"section {si}: item '{it}' has no lesson")
-    data = {"sections": sections}
+    from zones import ZONES
+    deep = {}
+    for modname in ("deep_a", "deep_b", "deep_c", "deep_d", "deep_e"):
+        try:
+            deep.update(importlib.import_module(modname).DEEP)
+        except ModuleNotFoundError:
+            pass
+    zone_of = {}
+    for zi, z in enumerate(ZONES):
+        for sn in z["sections"]:
+            zone_of[sn - 1] = zi
+    for si, sec in enumerate(sections):
+        sec["zone"] = zone_of[si]
+        for les in sec["lessons"]:
+            extra = deep.get(les["id"])
+            if not extra:
+                problems.append(f"{les['id']}: no deep content")
+                continue
+            les.update(extra)
+            for q in les.get("checks", []):
+                if q.pop("run", False):
+                    got = run_snippet(q["code"])
+                    want = q["options"][q["answer"]]
+                    if got != want:
+                        problems.append(f"{les['id']}: check output mismatch: want {want!r}, got {got!r}")
+                if not (0 <= q["answer"] < len(q["options"])):
+                    problems.append(f"{les['id']}: bad answer index in check")
+            for lid in les.get("links", []):
+                if lid not in {l["id"] for s2 in sections for l in s2["lessons"]}:
+                    problems.append(f"{les['id']}: unknown link {lid}")
+    zones = [{k: z[k] for k in ("name", "kind", "hue", "intro", "why")} for z in ZONES]
+    data = {"sections": sections, "zones": zones}
     blob = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     with open(os.path.join(HERE, "app.html"), encoding="utf-8") as fh:
         tpl = fh.read()

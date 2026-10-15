@@ -24,6 +24,7 @@
   --code-bg: #F6F8FA;
   --flame: #F2701D;
   --xp: #7A4DE0;
+  --zs: 48%; --zl: 89%;
   --hero1: #2B66CF; --hero2: #7A4DE0; --glow1: rgb(43 102 207 / .14); --glow2: rgb(122 77 224 / .12);
   --grass: #E2F1DA; --grass2: #CFE7C4; --road: #74808C; --road-edge: #5C6874; --road-line: #F4F7F9; --trail: #FFD43B;
   --tree: #4FA66C; --tree2: #3C8C57; --trunk: #8A5A3B; --rock: #B7C0C8; --flower: #F27BA6;
@@ -39,7 +40,7 @@
   :root:not([data-theme="light"]) {
     --bg: #0D1318; --panel: #151D25; --ink: #E2E9EF; --muted: #8E9DAA; --line: #26323D;
     --accent: #6FA2FF; --accent-ink: #0D1318; --hl: #FFD43B; --hl-soft: #3A3317; --prev-soft: #16302A;
-    --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --hero1: #24498F; --hero2: #5435A8; --glow1: rgb(111 162 255 / .10); --glow2: rgb(168 137 255 / .09); --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
+    --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --zs: 26%; --zl: 15%; --hero1: #24498F; --hero2: #5435A8; --glow1: rgb(111 162 255 / .10); --glow2: rgb(168 137 255 / .09); --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
     --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25); --chip-l: 68%; --chip-s: 75%;
     color-scheme: dark;
   }
@@ -47,7 +48,7 @@
 :root[data-theme="dark"] {
   --bg: #0D1318; --panel: #151D25; --ink: #E2E9EF; --muted: #8E9DAA; --line: #26323D;
   --accent: #6FA2FF; --accent-ink: #0D1318; --hl: #FFD43B; --hl-soft: #3A3317; --prev-soft: #16302A;
-  --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --hero1: #24498F; --hero2: #5435A8; --glow1: rgb(111 162 255 / .10); --glow2: rgb(168 137 255 / .09); --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
+  --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --zs: 26%; --zl: 15%; --hero1: #24498F; --hero2: #5435A8; --glow1: rgb(111 162 255 / .10); --glow2: rgb(168 137 255 / .09); --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
   --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25); --chip-l: 68%; --chip-s: 75%;
   color-scheme: dark;
 }
@@ -287,9 +288,129 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
 .dots i.on { background: var(--accent); border-color: var(--accent); transform: scale(1.1); }
 .dots.shake { animation: shake .35s ease; }
 .pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px; }
-.key { border: 0; background: var(--bg); border-radius: 18px; padding: 14px 0; font: 600 24px var(--f-display); cursor: pointer; transition: transform .1s, background .1s; }
-.key:active { transform: scale(.94); background: var(--line); }
-.key.txt { font: 600 14px var(--f-body); color: var(--muted); }
+.pkey { border: 0; background: var(--bg); border-radius: 18px; padding: 14px 0; font: 600 24px var(--f-display); cursor: pointer; transition: transform .1s, background .1s; }
+.pkey:active { transform: scale(.94); background: var(--line); }
+.pkey.txt { font: 600 14px var(--f-body); color: var(--muted); }
+
+
+/* ---------- zones on the map ---------- */
+.z-wall { fill: #F6E7CF; stroke: #B9895A; stroke-width: 1; } .z-roof { fill: #D2553F; } .z-door { fill: #8A5A3B; }
+.z-txt { font: 700 8px var(--f-code); text-anchor: middle; fill: var(--ink); paint-order: stroke; stroke: var(--panel); stroke-width: 2.5px; }
+.z-txt.dark { fill: #14202B; stroke: none; } .z-txt.light { fill: #FFFFFF; stroke: none; } .z-txt.big { font-size: 10px; }
+.z-txt.dunder { fill: #6E56CF; font-size: 9px; }
+.z-dark { fill: #2C3E57; }
+.z-gear { fill: #C98A3D; } .z-gear.dark { fill: #6E56CF; } .z-hole { fill: var(--panel); }
+.spin { transform-box: fill-box; transform-origin: center; animation: spin 9s linear infinite; } .spin.rev { animation-direction: reverse; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.z-crate { fill: #C99A5B; stroke: #8A5A3B; stroke-width: 1; } .z-crate-l { stroke: #8A5A3B; stroke-width: 1; fill: none; }
+.z-bldg { fill: #5B7DB8; } .z-bldg2 { fill: #F2D9B3; stroke: #B9895A; } .z-win { fill: #FFE27A; } .z-blue { fill: #2B66CF; }
+.z-pipe { fill: none; stroke: #8E9DAA; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; } .z-valve { fill: #E5484D; }
+.z-cont { stroke: rgb(0 0 0 / .25); stroke-width: 1; } .z-cont.c0 { fill: #E5484D; } .z-cont.c1 { fill: #12A594; } .z-cont.c2 { fill: #F2A33A; }
+.z-cont-l { stroke: rgb(0 0 0 / .2); stroke-width: 1; }
+.z-crane { fill: none; stroke: #F2A33A; stroke-width: 3; stroke-linecap: round; }
+.z-reed { fill: none; stroke: #3C8C57; stroke-width: 2; stroke-linecap: round; }
+.z-water { fill: #4C9BE8; opacity: .85; } .z-rail { stroke: #8A5A3B; stroke-width: 4; stroke-linecap: round; }
+.z-crystal.c0 { fill: #8E7CF0; } .z-crystal.c1 { fill: #4CC3D9; }
+.z-block { fill: #6E56CF; stroke: rgb(255 255 255 / .35); }
+.z-pine { fill: #2F7A4C; } .z-mount { fill: #8C96A3; } .z-snow { fill: #FFFFFF; } .z-castle { fill: #B7C0C8; stroke: #6E7B87; stroke-width: 1; }
+.rd.lane { stroke-width: 18; } .rd-edge.lane { stroke-width: 23; }
+.rd.ring { stroke-width: 12; } .rd-edge.ring { stroke-width: 17; }
+.road { background: var(--grass); }
+.zgate { position: absolute; left: 10px; right: 10px; z-index: 2; border-radius: 18px; padding: 10px 14px 8px;
+  background: color-mix(in srgb, hsl(var(--zh) 60% 50%) 16%, var(--panel)); border: 1.5px solid hsl(var(--zh) 55% 50% / .55); box-shadow: var(--shadow); }
+.zgate::before, .zgate::after { content: ""; position: absolute; top: 100%; width: 6px; height: 26px; background: hsl(var(--zh) 40% 40%); border-radius: 0 0 3px 3px; }
+.zgate::before { left: 22px; } .zgate::after { right: 22px; }
+.zgate b { display: block; font: 700 16px var(--f-display); }
+.zgate p { margin: 3px 0 2px; font-size: 13px; line-height: 1.4; color: var(--ink); }
+.zgate .zg-more { color: var(--muted); }
+.zg-top { display: flex; justify-content: space-between; align-items: center; }
+.zg-n { font: 600 10.5px var(--f-code); letter-spacing: .08em; text-transform: uppercase; color: hsl(var(--zh) 55% 40%); }
+.zg-why { border: 0; background: transparent; color: var(--accent); font: 600 12px var(--f-body); cursor: pointer; padding: 2px 0; }
+.zpop { position: fixed; z-index: 40; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 64px); transform: translateX(-50%); width: min(380px, calc(100% - 32px));
+  display: grid; gap: 2px; padding: 12px 16px; border-radius: 20px; color: #FFFFFF; background: linear-gradient(135deg, hsl(var(--zh) 60% 42%), hsl(calc(var(--zh) + 40) 60% 38%));
+  box-shadow: 0 16px 40px rgb(0 0 0 / .3); animation: zin .5s cubic-bezier(.2,.8,.2,1.2), tout .4s ease 3.7s forwards; }
+.zpop small { font: 600 10.5px var(--f-code); letter-spacing: .1em; text-transform: uppercase; opacity: .85; }
+.zpop b { font: 700 19px var(--f-display); }
+.zpop span { font-size: 13.5px; opacity: .95; }
+@keyframes zin { from { transform: translateX(-50%) translateY(-20px) scale(.9); opacity: 0; } }
+
+/* ---------- lesson depth ---------- */
+.deep { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); margin-bottom: 14px; overflow: hidden; }
+.deep summary { cursor: pointer; list-style: none; display: block; position: relative; padding: 12px 44px 12px 16px; }
+.deep summary small { display: block; margin-top: 2px; }
+.deep summary::-webkit-details-marker { display: none; }
+.deep summary span { font: 600 14px var(--f-display); }
+.deep summary span::before { content: "⚙ "; color: var(--xp); }
+.deep summary small { color: var(--muted); font-size: 12px; }
+.deep summary::after { content: "+"; position: absolute; right: 16px; top: 12px; font: 600 18px var(--f-code); color: var(--muted); }
+.deep[open] summary::after { content: "−"; }
+.deep-b { padding: 0 16px 12px; font-size: 15px; }
+.deep-b p { margin: 0 0 10px; }
+.deep-b code, .pit code, .ck code, .links code, .nx code { font: .9em var(--f-code); background: var(--code-bg); border: 1px solid var(--line); border-radius: 5px; padding: 0 4px; }
+.code.blk { margin: 4px 0 10px; padding: 8px 12px; background: var(--code-bg); border: 1px solid var(--line); border-radius: 12px; font: 12.5px/1.55 var(--f-code); overflow-x: auto; white-space: pre; min-width: 0; }
+.deep-b ul, .deep-b ol { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 4px; }
+.tbl { overflow-x: auto; margin: 4px 0 10px; }
+.tbl table { border-collapse: collapse; font-size: 13.5px; min-width: 100%; }
+.tbl th, .tbl td { border-bottom: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+.tbl th { font: 600 11px var(--f-code); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.pit { background: var(--err-soft); border-radius: var(--r); padding: 12px 16px; margin-bottom: 14px; }
+.pit h3 { font: 600 13px var(--f-display); margin-bottom: 6px; color: var(--err); }
+.pit ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 14.5px; }
+.links { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 16px; }
+.links > span { font: 600 11px var(--f-code); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-right: 2px; }
+.links a { text-decoration: none; font-size: 13px; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 99px; padding: 4px 10px; }
+
+/* ---------- checks & gate ---------- */
+.checks { margin-bottom: 14px; display: grid; gap: 10px; }
+.ck-h { display: flex; justify-content: space-between; align-items: baseline; }
+.ck-h h3 { font: 600 16px var(--f-display); }
+.ck-h span { font: 600 12px var(--f-code); color: var(--xp); }
+.ck-sub { margin: -4px 0 0; font-size: 13px; color: var(--muted); }
+.ck { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px; display: grid; gap: 8px; }
+.ck.ok { border-color: color-mix(in srgb, var(--ok) 55%, var(--line)); }
+.ck-q { display: flex; gap: 10px; font-size: 15px; }
+.ck-q > div { min-width: 0; }
+.ck-n { flex: none; width: 24px; height: 24px; border-radius: 8px; display: grid; place-items: center; font: 700 12px var(--f-code); background: var(--code-bg); border: 1px solid var(--line); }
+.ck.ok .ck-n { background: var(--ok); color: var(--ok-ink); border-color: var(--ok); }
+.ck .opts { display: grid; gap: 6px; }
+.ck .opts button { text-align: left; border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 10px 12px; cursor: pointer; font: 14px var(--f-body); color: var(--ink); transition: transform .12s ease; }
+.ck .opts button:disabled { cursor: default; }
+.ck .opts button.right { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 15%, var(--panel)); animation: pop .4s ease; }
+.ck .opts button.wrong { border-color: var(--err); background: var(--err-soft); animation: shake .35s ease; }
+.ck .why { font-size: 14px; }
+.ck .why .again { margin-top: 8px; }
+.gate { display: grid; gap: 6px; margin-bottom: 10px; }
+.gate-h { font: 600 11px var(--f-code); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.gate a { display: flex; gap: 10px; align-items: center; text-decoration: none; color: var(--ink); background: var(--panel); border: 1px dashed var(--line); border-radius: 14px; padding: 9px 12px; font-size: 14px; }
+.gate a i { font-style: normal; flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 700 11px var(--f-code); background: var(--line); }
+.gate a.ok { border-style: solid; border-color: color-mix(in srgb, var(--ok) 50%, var(--line)); color: var(--muted); }
+.gate a.ok i { background: var(--ok); color: var(--ok-ink); }
+.done-btn:disabled { background: var(--line); color: var(--muted); box-shadow: none; cursor: not-allowed; }
+.done-btn.ready { animation: breathe-ok 1.8s ease-in-out infinite; }
+@keyframes breathe-ok { 50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--ok) 25%, transparent); } }
+
+/* ---------- predictions in the example ---------- */
+.narr .nx.ask > i { background: var(--xp); color: #FFFFFF; }
+.popts { display: flex; flex-wrap: wrap; gap: 6px; }
+.popts button { border: 1.5px solid var(--line); background: var(--bg); border-radius: 12px; padding: 8px 14px; font: 600 14px var(--f-code); cursor: pointer; color: var(--ink); }
+.popts button.right { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 18%, var(--panel)); }
+.popts button.wrong { border-color: var(--err); background: var(--err-soft); opacity: .7; }
+.popts.shake { animation: shake .35s ease; }
+.pwhy { font-size: 13.5px; color: var(--muted); }
+
+/* ---------- review ---------- */
+.review-card { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); margin-top: 12px; padding: 12px 16px; border-radius: 20px; background: color-mix(in srgb, var(--xp) 12%, var(--panel)); border: 1.5px solid color-mix(in srgb, var(--xp) 45%, var(--line)); }
+.review-card > div { flex: 1; display: grid; gap: 1px; }
+.review-card small { font: 600 10.5px var(--f-code); letter-spacing: .08em; text-transform: uppercase; color: var(--xp); }
+.review-card b { font-size: 16px; }
+.review-card span { font-size: 12.5px; color: var(--muted); }
+.review-card .go { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--xp); color: #FFFFFF; font-size: 20px; flex: none; }
+.rv-top { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font: 600 12px var(--f-code); color: var(--muted); }
+.rv-top .xpbar { flex: 1; }
+.ck.rv { padding: 16px; }
+.rv-from { font: 600 11px var(--f-code); color: var(--c-ink); text-decoration: none; }
+.rv-end { text-align: center; display: grid; gap: 12px; justify-items: center; padding-top: 30px; }
+.check.big { width: 90px; height: 90px; } .check.big circle { fill: var(--ok); } .check.big path { fill: none; stroke: var(--ok-ink); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------- road map ---------- */
 .seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 4px; gap: 4px; margin: 4px 0 14px; }
@@ -566,10 +687,10 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
 
   // ---------- progress & rewards (stored in this browser only) ----------
   // aw: { "l:3-2": "2026-10-15", "q:3-2": …, "v:3-2": … }  l = lesson done, q = quiz right on first try, v = example watched to the end
-  const XP = { l: 20, q: 10, v: 5 };
+  const XP = { l: 20, q: 10, v: 5, r: 2 };
   const LEVELS = [[0, "Новичок"], [60, "Исследователь"], [150, "Ученик"], [300, "Кодер"], [500, "Питонист"], [800, "Инженер"], [1200, "Архитектор"], [1700, "Мастер Python"], [2400, "Гуру"]];
   const DAILY_GOAL = 3;
-  const blankState = () => ({ aw: {}, tried: {}, open: [], view: "road", walk: {} });
+  const blankState = () => ({ aw: {}, tried: {}, ok: {}, box: {}, open: [], view: "road", walk: {} });
   let S = blankState();
   let USER = null, USERS = {}, PROG = {}, NOTES = {};
   const COLORS = ["#3776AB", "#E5484D", "#12A594", "#F76B15", "#8E4EC6", "#D6409F"];
@@ -792,13 +913,14 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
   document.getElementById("back").addEventListener("click", () => {
     const r = route();
     if (r.type === "lesson") go("s" + (byId[r.id].si + 1));
+    else if (r.type === "review") { RV = null; go(""); }
     else go("");
   });
   function go(hash) { location.hash = hash ? "#" + hash : "#home"; }
   function route() {
     const hs = location.hash.slice(1);
     let m;
-    if (hs === "awards" || hs === "profile") return { type: hs };
+    if (hs === "awards" || hs === "profile" || hs === "review") return { type: hs };
     if ((m = hs.match(/^s(\d+)$/))) return { type: "sec", i: +m[1] - 1 };
     if ((m = hs.match(/^l(\d+)-(\d+)$/)) && byId[hs.slice(1)]) return { type: "lesson", id: hs.slice(1) };
     return { type: "home" };
@@ -845,57 +967,142 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
 
   // ---------- road map: a walker moves along a winding road of stops ----------
   function seeded(str) { let x = 0; for (const c of str) x = (x * 31 + c.charCodeAt(0)) >>> 0; return () => { x = (x * 1664525 + 1013904223) >>> 0; return x / 4294967296; }; }
-  function prop(x, y, t) {
-    x = x.toFixed(1); y = y.toFixed(1);
-    if (t < .42) return `<g transform="translate(${x},${y})"><rect x="-2.5" y="-6" width="5" height="12" rx="2" class="t-trunk"/><circle cy="-15" r="11" class="t-tree"/><circle cx="-6" cy="-10" r="7" class="t-tree2"/><circle cx="6" cy="-11" r="7" class="t-tree2"/></g>`;
-    if (t < .7) return `<g transform="translate(${x},${y})"><circle cx="-6" r="6" class="t-tree2"/><circle cx="5" r="6.5" class="t-tree2"/><circle cy="-4" r="7" class="t-tree"/></g>`;
-    if (t < .88) return `<g transform="translate(${x},${y})">${[[-6, 0], [0, -4], [6, 1]].map(([a, b]) => `<circle cx="${a}" cy="${b}" r="3" class="t-flower"/><circle cx="${a}" cy="${b}" r="1.2" class="t-flower-c"/>`).join("")}</g>`;
-    return `<ellipse cx="${x}" cy="${y}" rx="9" ry="6" class="t-rock"/>`;
-  }
+  // ---------- road map: zones (worlds) with gates, landmarks and a walker ----------
+  const gearPath = (R, r, n) => { let d = ""; for (let i = 0; i < n * 2; i++) { const a = Math.PI * i / n, rr = i % 2 ? r : R, a2 = Math.PI * (i + 1) / n; d += (i ? "L" : "M") + (rr * Math.cos(a)).toFixed(1) + "," + (rr * Math.sin(a)).toFixed(1) + "L" + (rr * Math.cos(a2)).toFixed(1) + "," + (rr * Math.sin(a2)).toFixed(1); } return d + "Z"; };
+  const tree = `<rect x="-2.5" y="-6" width="5" height="12" rx="2" class="t-trunk"/><circle cy="-15" r="11" class="t-tree"/><circle cx="-6" cy="-10" r="7" class="t-tree2"/><circle cx="6" cy="-11" r="7" class="t-tree2"/>`;
+  const bush = `<circle cx="-6" r="6" class="t-tree2"/><circle cx="5" r="6.5" class="t-tree2"/><circle cy="-4" r="7" class="t-tree"/>`;
+  const flowers = [[-6, 0], [0, -4], [6, 1]].map(([a, b]) => `<circle cx="${a}" cy="${b}" r="3" class="t-flower"/><circle cx="${a}" cy="${b}" r="1.2" class="t-flower-c"/>`).join("");
+  const house = (lbl) => `<rect x="-11" y="-15" width="22" height="15" rx="1.5" class="z-wall"/><path d="M-14,-15 L0,-27 L14,-15Z" class="z-roof"/><rect x="-3" y="-9" width="6" height="9" rx="1" class="z-door"/>${lbl ? `<text y="-31" class="z-txt">${lbl}</text>` : ""}`;
+  const sign = (lbl) => `<line x1="0" y1="0" x2="0" y2="-18" class="t-pole"/><rect x="-15" y="-30" width="30" height="12" rx="3" class="t-board"/><text y="-21.5" class="z-txt dark">${lbl}</text>`;
+  const PROPS = {
+    village: (t, r) => t < .45 ? house(["x", "age", "name", "", ""][Math.floor(r() * 5)]) : t < .8 ? tree : flowers,
+    cross: (t, r) => t < .4 ? sign(["if", "elif", "else", "for", "while", "break"][Math.floor(r() * 6)]) : t < .55 ? `<rect x="-4" y="-26" width="8" height="20" rx="3" class="z-dark"/><circle cy="-21" r="2.4" fill="#E5484D"/><circle cy="-15" r="2.4" fill="#FFD43B"/><circle cy="-9" r="2.4" fill="#30A46C"/><line y1="-6" y2="2" class="t-pole"/>` : t < .8 ? tree : bush,
+    workshop: (t, r) => t < .4 ? `<path d="${gearPath(11, 8, 8)}" class="z-gear spin"/><circle r="3.5" class="z-hole"/>` : t < .65 ? `<rect x="-10" y="-14" width="20" height="14" rx="2" class="z-crate"/><path d="M-10,-14 L10,0 M10,-14 L-10,0" class="z-crate-l"/>` : tree,
+    city: (t, r) => { if (t < .65) { const hh = 26 + Math.floor(r() * 4) * 8; let w = `<rect x="-9" y="${-hh}" width="18" height="${hh}" rx="2" class="z-bldg"/>`; for (let y = -hh + 5; y < -4; y += 7) w += `<rect x="-5" y="${y}" width="3" height="3" class="z-win"/><rect x="2" y="${y}" width="3" height="3" class="z-win"/>`; return w; } return tree; },
+    engine: (t, r) => t < .45 ? `<path d="${gearPath(12, 9, 10)}" class="z-gear dark spin${r() < .5 ? " rev" : ""}"/><circle r="4" class="z-hole"/>` : t < .75 ? `<path d="M-14,0 V-12 H6 V-22" class="z-pipe"/><circle cx="6" cy="-22" r="3" class="z-valve"/>` : `<text y="-4" class="z-txt dunder">__${["add", "len", "eq", "iter", "call"][Math.floor(r() * 5)]}__</text>`,
+    port: (t, r) => t < .5 ? `<rect x="-15" y="-13" width="30" height="13" rx="1.5" class="z-cont c${Math.floor(r() * 3)}"/><path d="M-9,-11 V-2 M-3,-11 V-2 M3,-11 V-2 M9,-11 V-2" class="z-cont-l"/><text y="-16" class="z-txt">${["math", "os", "json", "re", "io"][Math.floor(r() * 5)]}</text>` : t < .7 ? `<rect x="-7" y="-12" width="14" height="12" rx="2" class="z-crate"/>` : bush,
+    river: (t, r) => t < .4 ? `<path d="M-8,0 Q-9,-14 -6,-20 M-2,0 Q-2,-16 0,-24 M4,0 Q5,-12 8,-18" class="z-reed"/>` : t < .65 ? `<ellipse rx="9" ry="6" class="t-rock"/>` : tree,
+    cave: (t, r) => t < .5 ? `<path d="M-8,0 L-3,-24 L2,-8 L5,-18 L9,0Z" class="z-crystal c${Math.floor(r() * 2)}"/>` : t < .8 ? `<rect x="-12" y="-8" width="24" height="8" rx="2" class="z-block"/><rect x="-10" y="-16" width="20" height="8" rx="2" class="z-block"/><text y="-19" class="z-txt">frame</text>` : `<ellipse rx="9" ry="6" class="t-rock"/>`,
+    summit: (t, r) => t < .55 ? `<rect x="-2" y="-6" width="4" height="8" class="t-trunk"/><path d="M-11,-4 L0,-28 L11,-4Z" class="z-pine"/><path d="M-8,-14 L0,-32 L8,-14Z" class="z-pine"/>` : t < .8 ? `<path d="M-16,0 L-4,-20 L4,-10 L9,-16 L18,0Z" class="z-mount"/><path d="M-7,-15 L-4,-20 L-1,-15Z" class="z-snow"/>` : `<ellipse rx="9" ry="6" class="t-rock"/>`,
+    meadow: (t, r) => t < .42 ? tree : t < .7 ? bush : flowers,
+  };
+  const cubic = (p0, c1, c2, p3, t) => { const u = 1 - t; return [u * u * u * p0[0] + 3 * u * u * t * c1[0] + 3 * u * t * t * c2[0] + t * t * t * p3[0], u * u * u * p0[1] + 3 * u * u * t * c1[1] + 3 * u * t * t * c2[1] + t * t * t * p3[1]]; };
+
   function buildRoad(el, cfg) {
     const W = Math.round(el.clientWidth) || 358;
-    const n = cfg.stops.length, top = 100, dy = 132;
+    const n = cfg.stops.length, dy = 132, GATE = 260;
+    const zoneOf = cfg.zoneOf || (() => -1);
     const X = i => (i % 2 === 0 ? .22 : .78) * W;
-    const P = cfg.stops.map((s, i) => [X(i), top + i * dy]);
-    const start = [W * .5, 26], fin = [n % 2 === 0 ? W * .22 : W * .78, top + n * dy - 12];
-    const H = fin[1] + 64;
-    const curve = (a, b) => { const d = b[1] - a[1]; return `C${a[0]},${a[1] + d * .55} ${b[0]},${b[1] - d * .55} ${b[0]},${b[1]}`; };
+    const P = [], gates = [];
+    let y = 26 + (zoneOf(0) >= 0 ? GATE + 30 : 0) + 74;
+    for (let i = 0; i < n; i++) {
+      const z = zoneOf(i);
+      if (i > 0 && z !== zoneOf(i - 1)) y += GATE;
+      if (z >= 0 && (i === 0 || z !== zoneOf(i - 1))) gates.push({ z, i, y: i === 0 ? 12 : y - dy - GATE + 70 });
+      P.push([X(i), y]);
+      y += dy;
+    }
+    const start = [W * .5, P[0][1] - 74], fin = [n % 2 === 0 ? W * .22 : W * .78, y - 12];
+    const H = fin[1] + 70;
+    const ctrl = (a, b) => { const d = b[1] - a[1]; return [[a[0], a[1] + d * .55], [b[0], b[1] - d * .55]]; };
+    const curve = (a, b) => { const [c1, c2] = ctrl(a, b); return `C${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${b[0]},${b[1]}`; };
     const pts = [...P, fin];
     const segs = pts.slice(0, -1).map((p, i) => `M${p[0]},${p[1]} ` + curve(p, pts[i + 1]));
+    const segAt = (k, t) => { const a = pts[k], b = pts[k + 1], [c1, c2] = ctrl(a, b); return cubic(a, c1, c2, b, t); };
     const walkD = `M${P[0][0]},${P[0][1]} ` + pts.slice(0, -1).map((p, i) => curve(p, pts[i + 1])).join(" ");
     const fullD = `M${start[0]},${start[1]} ` + curve(start, P[0]) + " " + walkD.replace(/^M[^C]+/, "");
+    const Z = DATA.zones;
+    // zone ground bands
+    let ground = "", defs = "";
+    const bandTop = g => g.i === 0 ? 0 : g.y - 10;
+    gates.forEach((g, gi) => {
+      const y0 = bandTop(g), y1 = gates[gi + 1] ? bandTop(gates[gi + 1]) : H, z = Z[g.z];
+      defs += `<linearGradient id="zg${gi}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:hsl(${z.hue} var(--zs) var(--zl))"/><stop offset="1" style="stop-color:hsl(${z.hue} var(--zs) calc(var(--zl) - 4%))"/></linearGradient>`;
+      ground += `<rect x="0" y="${y0}" width="${W}" height="${y1 - y0}" fill="url(#zg${gi})"/>`;
+    });
+    // scenery
     const r = seeded(cfg.key);
+    const kindAt = yy => { let k = "meadow"; gates.forEach(g => { if (yy >= bandTop(g)) k = Z[g.z].kind; }); return k; };
+    const gateBox = yy => gates.some(g => g.i === 0 ? yy < 290 : yy > g.y - 30 && yy < g.y + 262);
     let scene = "";
+    const put = (x, yy) => { if (gateBox(yy)) return; const kind = kindAt(yy); scene += `<g transform="translate(${x.toFixed(1)},${yy.toFixed(1)})">${PROPS[kind](r(), r)}</g>`; };
     for (let i = 0; i <= n; i++) {
-      const ym = top + (i - .5) * dy;
-      scene += prop(W * (.06 + r() * .08), ym + (r() - .5) * 36, r());
-      scene += prop(W * (.86 + r() * .08), ym + (r() - .5) * 36, r());
-      if (i < n) scene += prop(P[i][0] < W / 2 ? W * .07 : W * .93, P[i][1] + 40 + r() * 16, r());
+      const ym = (i === 0 ? start[1] + 40 : (pts[i - 1][1] + pts[i][1]) / 2);
+      put(W * (.06 + r() * .07), ym + (r() - .5) * 30);
+      put(W * (.87 + r() * .07), ym + (r() - .5) * 30);
+      if (i < n) put(P[i][0] < W / 2 ? W * .07 : W * .93, P[i][1] + 44 + r() * 12);
     }
-    const sign = `<g transform="translate(${start[0] + 34},${start[1] + 4})"><line x1="0" y1="0" x2="0" y2="-20" class="t-pole"/><rect x="-22" y="-34" width="44" height="16" rx="4" class="t-board"/><text x="0" y="-23" text-anchor="middle" class="t-sign">СТАРТ</text></g>`;
-    let flag = `<g transform="translate(${fin[0] + (fin[0] < W / 2 ? -30 : 30)},${fin[1] + 8})"><line x1="0" y1="0" x2="0" y2="-44" class="t-pole"/>`;
-    for (let a = 0; a < 4; a++) for (let b = 0; b < 3; b++) flag += `<rect x="${1 + a * 6}" y="${-44 + b * 6}" width="6" height="6" class="${(a + b) % 2 ? "t-chk2" : "t-chk1"}"/>`;
-    flag += `</g>`;
+    // landmarks: one meaningful scene per zone, on the free "plaza" between the gate and the zone's first stop
+    let under = "", over = "";
+    const segPts = k => { const out = []; for (let j = 0; j <= 60; j++) out.push([j / 60, ...segAt(k, j / 60)]); return out; };
+    gates.forEach(g => {
+      const z = Z[g.z], k = g.i;
+      if (k >= n) return;
+      const py = g.i === 0 ? 210 : g.y + 200;
+      let roadX = null, tAt = null;
+      if (k > 0) { const sp = segPts(k - 1); const best = sp.reduce((a, b) => Math.abs(b[2] - py) < Math.abs(a[2] - py) ? b : a); roadX = best[1]; tAt = best[0]; }
+      let lx = roadX === null ? W * .5 : roadX < W / 2 ? (roadX + W) / 2 + 6 : roadX / 2 - 6;
+      lx = Math.max(48, Math.min(W - 48, lx));
+      const ly = py + 28;
+      const at2 = (x, y2, body) => `<g transform="translate(${x.toFixed(1)},${y2.toFixed(1)})">${body}</g>`;
+      if (z.kind === "village") over += at2(lx, ly, `${house("")}<text y="-31" class="z-txt">объект</text>`) + at2(lx + (lx < W / 2 ? 34 : -34), ly + 4, sign("x"));
+      if (z.kind === "cross") {
+        if (tAt !== null) {
+          const t0 = Math.max(.05, tAt - .22), t1 = Math.min(.95, tAt + .16);
+          const mid = segAt(k - 1, (t0 + t1) / 2), mq = segAt(k - 1, (t0 + t1) / 2 + .01);
+          let dir = ((mq[1] - mid[1]) * 1 > 0 ? 1 : -1);
+          const nx = -(mq[1] - mid[1]), ny = mq[0] - mid[0];
+          if (Math.sign(mid[0] + nx * dir - mid[0]) === Math.sign(lx - mid[0])) dir = -dir;
+          let d = "";
+          for (let j = 0; j <= 24; j++) { const t = t0 + (t1 - t0) * j / 24, p = segAt(k - 1, t), q = segAt(k - 1, Math.min(1, t + .01)), dx = q[0] - p[0], dyy = q[1] - p[1], L = Math.hypot(dx, dyy) || 1, o = 46 * Math.sin(Math.PI * j / 24) * dir; d += (j ? "L" : "M") + (p[0] - dyy / L * o).toFixed(1) + "," + (p[1] + dx / L * o).toFixed(1); }
+          under += `<path d="${d}" class="rd-edge lane"/><path d="${d}" class="rd lane"/>`;
+          const pm = segAt(k - 1, (t0 + t1) / 2), pq = segAt(k - 1, (t0 + t1) / 2 + .01), L = Math.hypot(pq[0] - pm[0], pq[1] - pm[1]) || 1, ox = -(pq[1] - pm[1]) / L * dir, oy = (pq[0] - pm[0]) / L * dir;
+          over += at2(pm[0] + ox * 66, pm[1] + oy * 66 + 10, sign("else")) + at2(pm[0] - ox * 30, pm[1] - oy * 30 + 10, sign("if"));
+        }
+        under += `<circle cx="${lx}" cy="${py}" r="24" class="rd-edge ring"/><circle cx="${lx}" cy="${py}" r="24" class="rd ring"/>`;
+        over += `<text x="${lx}" y="${py + 3}" class="z-txt big">while</text>`;
+      }
+      if (z.kind === "workshop") over += at2(lx, ly, `<rect x="-30" y="-28" width="60" height="28" rx="4" class="z-bldg2"/><path d="M-34,-28 L0,-42 L34,-28Z" class="z-roof"/><text y="-12" class="z-txt">def f(x):</text><text y="12" class="z-txt">вход → выход</text>`);
+      if (z.kind === "city") over += at2(lx, ly - 10, `<rect x="-28" y="-34" width="56" height="20" rx="3" class="z-blue"/><text y="-21" class="z-txt light">class Dog</text>${[-20, 0, 20].map(dx => `<g transform="translate(${dx},14)">${house("")}</g>`).join("")}<text y="26" class="z-txt">Dog() ×3</text>`);
+      if (z.kind === "engine") over += at2(lx - 8, ly - 14, `<path d="${gearPath(20, 15, 12)}" class="z-gear dark spin"/><circle r="6" class="z-hole"/><g transform="translate(27,-14)"><path d="${gearPath(11, 8, 8)}" class="z-gear spin rev"/></g><text y="36" class="z-txt">синтаксис → методы</text>`);
+      if (z.kind === "port") over += at2(lx, ly, `<path d="M-24,0 V-48 H18 M-24,-44 L-6,-48 M10,-48 V-30" class="z-crane"/><rect x="2" y="-30" width="18" height="10" class="z-cont c1"/><rect x="-22" y="-10" width="26" height="10" class="z-cont c0"/><rect x="6" y="-10" width="22" height="10" class="z-cont c2"/><text y="12" class="z-txt">import</text>`);
+      if (z.kind === "river") {
+        under += `<path d="M0,${py - 16} C${W * .25},${py - 30} ${W * .5},${py + 4} ${W},${py - 14} V${py + 18} C${W * .5},${py + 36} ${W * .25},${py + 2} 0,${py + 16} Z" class="z-water"/>`;
+        over += `<text x="${lx}" y="${py + 4}" class="z-txt light">данные текут →</text>`;
+        if (roadX !== null) over += `<path d="M${roadX - 19},${py - 22} L${roadX - 19},${py + 22} M${roadX + 19},${py - 22} L${roadX + 19},${py + 22}" class="z-rail"/>`;
+      }
+      if (z.kind === "cave") over += at2(lx, ly + 6, `${[0, 1, 2].map(j => `<rect x="-22" y="${-12 - j * 12}" width="44" height="11" rx="2" class="z-block"/><text y="${-4 - j * 12}" class="z-txt light">frame ${3 - j}</text>`).join("")}<text y="-44" class="z-txt">стек вызовов</text>`);
+      if (z.kind === "summit") over += at2(lx, ly + 4, `<path d="M-40,0 L-16,-44 L0,-24 L14,-38 L40,0Z" class="z-mount"/><path d="M-22,-33 L-16,-44 L-10,-33Z" class="z-snow"/><path d="M9,-30 L14,-38 L19,-30Z" class="z-snow"/>`);
+    });
+    const startSign = `<g transform="translate(${start[0] + 34},${start[1] + 4})">${sign("СТАРТ").replace('width="30"', 'width="44"').replace('x="-15"', 'x="-22"')}</g>`;
+    const lastKind = gates.length ? Z[gates[gates.length - 1].z].kind : "";
+    let flag = `<g transform="translate(${fin[0] + (fin[0] < W / 2 ? -30 : 30)},${fin[1] + 8})">`;
+    if (lastKind === "summit") flag += `<rect x="-14" y="-30" width="28" height="30" class="z-castle"/>${[-14, -6, 2, 10].map(x => `<rect x="${x}" y="-36" width="4" height="6" class="z-castle"/>`).join("")}<rect x="-4" y="-12" width="8" height="12" rx="4" class="z-door"/><g transform="translate(0,-36)">`;
+    flag += `<line x1="0" y1="0" x2="0" y2="-30" class="t-pole"/>`;
+    for (let a = 0; a < 4; a++) for (let b = 0; b < 3; b++) flag += `<rect x="${1 + a * 5}" y="${-30 + b * 5}" width="5" height="5" class="${(a + b) % 2 ? "t-chk2" : "t-chk1"}"/>`;
+    flag += lastKind === "summit" ? `</g></g>` : `</g>`;
     const stopsSVG = cfg.stops.map((s, i) => {
-      const [x, y] = P[i], col = `hsl(${s.hue} var(--chip-s) var(--chip-l))`;
-      if (s.state === "done") return `<circle cx="${x}" cy="${y}" r="22" style="fill:${col};stroke:var(--panel);stroke-width:4"/><text x="${x}" y="${y}" class="s-num" style="fill:var(--panel)">✓</text>`;
-      if (s.state === "cur") return `<circle cx="${x}" cy="${y}" r="22" class="stop-pulse" style="stroke:${col}"/><circle cx="${x}" cy="${y}" r="22" class="s-ring" style="stroke:${col}"/><text x="${x}" y="${y}" class="s-num" style="fill:${col}">${s.num}</text>`;
-      return `<circle cx="${x}" cy="${y}" r="20" class="s-todo"/><text x="${x}" y="${y}" class="s-num" style="fill:var(--muted)">${s.num}</text>`;
+      const [x, yy] = P[i], col = `hsl(${s.hue} var(--chip-s) var(--chip-l))`;
+      if (s.state === "done") return `<circle cx="${x}" cy="${yy}" r="22" style="fill:${col};stroke:var(--panel);stroke-width:4"/><text x="${x}" y="${yy}" class="s-num" style="fill:var(--panel)">✓</text>`;
+      if (s.state === "cur") return `<circle cx="${x}" cy="${yy}" r="22" class="stop-pulse" style="stroke:${col}"/><circle cx="${x}" cy="${yy}" r="22" class="s-ring" style="stroke:${col}"/><text x="${x}" y="${yy}" class="s-num" style="fill:${col}">${s.num}</text>`;
+      return `<circle cx="${x}" cy="${yy}" r="20" class="s-todo"/><text x="${x}" y="${yy}" class="s-num" style="fill:var(--muted)">${s.num}</text>`;
     }).join("");
-    let html = `<svg class="map" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true">${scene}${sign}
+    let html = `<svg class="map" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true"><defs>${defs}</defs>${ground}${scene}${under}${startSign}
       <path class="rd-edge" d="${fullD}"/><path class="rd" d="${fullD}"/><path class="rd-line" d="${fullD}"/><path class="rd-trail" id="trail" d="${walkD}"/>
-      ${segs.map(d => `<path class="seg-h" d="${d}"/>`).join("")}${flag}${stopsSVG}</svg>
+      ${segs.map(d => `<path class="seg-h" d="${d}"/>`).join("")}${over}${flag}${stopsSVG}</svg>
       <svg class="herosvg" id="herosvg" style="--shirt:${USER ? USER.color : COLORS[0]}" viewBox="-24 -54 48 60" width="48" height="60" aria-hidden="true">${heroMarkup(true)}</svg>`;
+    html += gates.map(g => { const z = Z[g.z]; return `<div class="zgate" style="--zh:${z.hue};top:${g.y}px"><div class="zg-top"><span class="zg-n">Зона ${g.z + 1} из ${Z.length}</span><button class="zg-why" aria-expanded="false">Зачем?</button></div><b>${esc(z.name)}</b><p>${esc(z.intro)}</p><p class="zg-more" hidden>${esc(z.why)}</p></div>`; }).join("");
     html += cfg.stops.map((s, i) => {
-      const [x, y] = P[i], left = x < W / 2;
+      const [x, yy] = P[i], left = x < W / 2;
       const pos = left ? `left:${x + 32}px` : `right:${W - x + 32}px`;
-      return `<a class="stoplink" href="${s.href}" style="left:${x}px;top:${y}px" aria-label="${esc(s.title)}"></a>` +
-        `<a class="lbl2 sh ${left ? "" : "r"} ${s.state}" href="${s.href}" style="--sh:${s.hue};bottom:${H - y - 10}px;${pos}"><b>${esc(s.title)}</b><small>${esc(s.sub)}</small></a>`;
+      return `<a class="stoplink" href="${s.href}" style="left:${x}px;top:${yy}px" aria-label="${esc(s.title)}"></a>` +
+        `<a class="lbl2 sh ${left ? "" : "r"} ${s.state}" href="${s.href}" style="--sh:${s.hue};bottom:${H - yy - 10}px;${pos}"><b>${esc(s.title)}</b><small>${esc(s.sub)}</small></a>`;
     }).join("");
     const fl = fin[0] < W / 2;
     html += `<div class="lbl2 fin ${fl ? "" : "r"}" style="top:${fin[1] - 34}px;${fl ? `left:${fin[0] + 4}px` : `right:${W - fin[0] + 4}px`}"><b>${esc(cfg.finish)}</b><small>${cfg.allDone ? "ты дошёл!" : "финиш"}</small></div>`;
     html += `<a class="bubble" id="bubble" href="${cfg.cont}">Продолжить ▶</a>`;
     el.innerHTML = html;
+    el.querySelectorAll(".zg-why").forEach(b => b.onclick = () => { const m = b.closest(".zgate").querySelector(".zg-more"); m.hidden = !m.hidden; b.setAttribute("aria-expanded", String(!m.hidden)); b.textContent = m.hidden ? "Зачем?" : "Скрыть"; });
 
     const segEls = [...el.querySelectorAll(".seg-h")], lens = segEls.map(p => p.getTotalLength());
     const cum = lens.reduce((a, l) => (a.push(a[a.length - 1] + l), a), [0]);
@@ -904,7 +1111,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     const trail = el.querySelector("#trail"), bubble = el.querySelector("#bubble");
     let facing = 1;
     const er = el.getBoundingClientRect();
-    const boxes = [...el.querySelectorAll(".lbl2")].map(n => { const r = n.getBoundingClientRect(); return [r.left - er.left - 4, r.top - er.top - 4, r.right - er.left + 4, r.bottom - er.top + 4]; });
+    const boxes = [...el.querySelectorAll(".lbl2, .zgate")].map(nd => { const b = nd.getBoundingClientRect(); return [b.left - er.left - 4, b.top - er.top - 4, b.right - er.left + 4, b.bottom - er.top + 4]; });
     function placeBubble(pt) {
       const bw = bubble.offsetWidth, bh = bubble.offsetHeight;
       const cands = [[pt.x - bw / 2, pt.y - 54 - bh], [pt.x - bw / 2, pt.y + 10], [pt.x + 22, pt.y - 30 - bh / 2], [pt.x - 22 - bw, pt.y - 30 - bh / 2]];
@@ -935,15 +1142,26 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     place(from, 0, false);
     bubble.textContent = "Иду…";
     if (cfg.follow) scrollToHero(el, at(to).pt);
-    let t0 = null;
+    let t0 = null, zNow = zoneOf(Math.min(n - 1, Math.floor(from)));
     (function step(t) {
       if (!document.body.contains(el)) return;
       if (t0 === null) t0 = t + 350;
       const k = Math.max(0, Math.min(1, (t - t0) / dur)), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-      place(from + (to - from) * e, t, k > 0 && k < 1);
+      const p = from + (to - from) * e;
+      place(p, t, k > 0 && k < 1);
+      const zp = zoneOf(Math.min(n - 1, Math.floor(p + .02)));
+      if (zp >= 0 && zp !== zNow) { zNow = zp; zonePop(Z[zp], zp); }
       if (k < 1) requestAnimationFrame(step); else { bubble.textContent = restText; placeBubble(at(to).pt); }
     })(performance.now());
     return { find: () => scrollToHero(el, at(to).pt) };
+  }
+  function zonePop(z, zi) {
+    const d = document.createElement("div");
+    d.className = "zpop";
+    d.style.setProperty("--zh", z.hue);
+    d.innerHTML = `<small>Новая зона ${zi + 1} из ${DATA.zones.length}</small><b>${esc(z.name)}</b><span>${esc(z.intro)}</span>`;
+    document.body.appendChild(d);
+    setTimeout(() => d.remove(), 4200);
   }
   function scrollToHero(el, pt) {
     const y = el.getBoundingClientRect().top + window.scrollY + pt.y - innerHeight / 2;
@@ -983,6 +1201,8 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
         <div class="hello-meta"><span>${xp} XP</span><span>${lv.next ? `ещё ${lv.hi - xp} до «${esc(lv.next)}»` : "максимальный уровень"}</span></div>
       </section>`;
     if (st.n > 0 && !st.active) html += `<div class="nudge">Серия <b>${plural(st.n, "день", "дня", "дней")}</b> ждёт: пройди урок сегодня, чтобы её сохранить.</div>`;
+    const due = dueList().length;
+    if (due) html += `<a class="review-card press" href="#review"><div><small>Интервальное повторение</small><b>${plural(due, "вопрос ждёт", "вопроса ждут", "вопросов ждут")} повторения</b><span>2 минуты, чтобы знания не забылись</span></div><span class="go" aria-hidden="true">↻</span></a>`;
     html += `<a class="cta sh press" style="--sh:${secHue(next.si)}" href="#l${next.id}">
         <small>${nd ? "Продолжить" : "Начни отсюда"} · раздел ${next.si + 1}</small>
         <span class="t">${esc(next.title)}</span>
@@ -998,7 +1218,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
       const curS = allDone ? null : DATA.sections[cur];
       const pos = allDone ? DATA.sections.length : cur + curS.lessons.filter(l => isDone(l.id)).length / curS.lessons.length;
       const rd = buildRoad(document.getElementById("road"), {
-        key: "home", pos, allDone, follow: true, cont: "#l" + next.id, finish: "Вся схема Python",
+        key: "home", pos, allDone, follow: true, cont: "#l" + next.id, finish: "Вся схема Python", zoneOf: i => DATA.sections[i].zone,
         stops: DATA.sections.map((s, si) => { const d = s.lessons.filter(l => isDone(l.id)).length; return { title: s.title, sub: `${si + 1} · ${d} из ${s.lessons.length} уроков`, href: "#s" + (si + 1), hue: secHue(si), num: si + 1, state: d === s.lessons.length ? "done" : si === cur ? "cur" : "" }; }),
       });
       document.getElementById("findme").onclick = rd.find;
@@ -1103,7 +1323,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     } else {
       const title = A.step === "pin1" ? "Придумай PIN из 4 цифр" : A.step === "pin2" ? "Повтори PIN" : `Привет, ${esc(u.name)}! Введи PIN`;
       card = `<h2>${title}</h2><div class="dots" id="dots">${[0, 1, 2, 3].map(i => `<i class="${(A.pin || "").length > i ? "on" : ""}"></i>`).join("")}</div><div class="auth-err" id="err">${A.err || ""}</div>
-        <div class="pad">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => `<button class="key" data-k="${n}">${n}</button>`).join("")}<button class="key txt" data-k="back">Назад</button><button class="key" data-k="0">0</button><button class="key txt" data-k="del" aria-label="Стереть">⌫</button></div>
+        <div class="pad">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => `<button class="pkey" data-k="${n}">${n}</button>`).join("")}<button class="pkey txt" data-k="back">Назад</button><button class="pkey" data-k="0">0</button><button class="pkey txt" data-k="del" aria-label="Стереть">⌫</button></div>
         ${A.step === "login" ? `<button class="btn ghost" id="forgot">Забыл PIN?</button><div id="forgot-box" hidden><p class="fine">PIN нельзя восстановить: данные есть только на этом устройстве. Можно удалить этот профиль и создать новый.</p><button class="btn danger" id="kill">Удалить профиль «${esc(u.name)}»</button></div>` : ""}`;
     }
     const heroColor = u ? u.color : color;
@@ -1148,7 +1368,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
         A.pin = ""; document.querySelectorAll("#dots i").forEach(d => d.classList.remove("on")); err("Неверный PIN. Попробуй ещё раз.");
       }
     }
-    app.querySelectorAll(".key").forEach(b => b.onclick = () => press(b.dataset.k));
+    app.querySelectorAll(".pkey").forEach(b => b.onclick = () => press(b.dataset.k));
     authKey = e => { if (/^[0-9]$/.test(e.key)) press(e.key); else if (e.key === "Backspace") press("del"); };
   }
   let authKey = null;
@@ -1169,7 +1389,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     const ni = next ? s.lessons.indexOf(next) : s.lessons.length;
     const nextGlobal = next || LESSONS.find(l => !isDone(l.id)) || s.lessons[0];
     const rd = buildRoad(document.getElementById("road"), {
-      key: "s" + si, pos: ni, allDone: !next, follow: false, cont: "#l" + nextGlobal.id, finish: si + 1 < DATA.sections.length ? "Дальше: " + DATA.sections[si + 1].title : "Конец схемы",
+      key: "s" + si, pos: ni, allDone: !next, follow: false, zoneOf: () => s.zone, cont: "#l" + nextGlobal.id, finish: si + 1 < DATA.sections.length ? "Дальше: " + DATA.sections[si + 1].title : "Конец схемы",
       stops: s.lessons.map((l, li) => ({ title: l.title, sub: l === next ? `следующий · +${XP.l} XP` : l.covers.join(" · "), href: "#l" + l.id, hue: secHue(si), num: li + 1, state: isDone(l.id) ? "done" : l === next ? "cur" : "" })),
     });
     document.getElementById("findme").onclick = rd.find;
@@ -1289,21 +1509,26 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     if (L.analogy) html += `<div class="analogy"><div class="ic">${ICON.bulb}</div><div><b>ПРЕДСТАВЬ</b>${md(L.analogy)}</div></div>`;
     if (L.files_show) html += Object.entries(L.files_show).map(([fn, src]) => `<div class="file"><div class="fn">файл ${esc(fn)} <span>(лежит рядом, выполняется при import)</span></div><div class="code">${src.replace(/\n$/, "").split("\n").map((ln, i) => `<div class="ln"><span class="ar"></span><span class="no">${i + 1}</span><span>${hl(ln) || " "}</span></div>`).join("")}</div></div>`).join("");
     if (L.code) html += vizShell(L);
+    if (L.deep) html += `<details class="deep"><summary><span>Под капотом</span><small>как это устроено внутри Python</small></summary><div class="deep-b">${mdBlock(L.deep)}</div></details>`;
+    if (L.pitfalls && L.pitfalls.length) html += `<div class="pit"><h3>Частые ошибки</h3><ul>${L.pitfalls.map(k => `<li>${md(k)}</li>`).join("")}</ul></div>`;
     if (L.key && L.key.length) html += `<div class="key"><h3>Запомни</h3><ul>${L.key.map(k => `<li>${md(k)}</li>`).join("")}</ul></div>`;
-    if (L.quiz) html += quizHTML(L);
+    if (L.links && L.links.length) html += `<div class="links"><span>Связано с</span>${L.links.map(id => `<a class="press" href="#l${id}">${L.si === byId[id].si ? "" : (byId[id].si + 1) + "." + (byId[id].li + 1) + " "}${esc(byId[id].title)}</a>`).join("")}</div>`;
+    html += checksHTML(L);
     const note = NOTES[L.id];
     html += `<section class="note-card"><div class="nc-h"><h3>Моя заметка</h3><span id="note-st">${note && note.text ? "сохранено ✓" : ""}</span></div><textarea id="note" rows="3" placeholder="Запиши своими словами, что понял. Заметка сохранится в профиле.">${esc(note ? note.text : "")}</textarea></section>`;
     const dn = isDone(L.id);
-    html += `<button class="done-btn ${dn ? "on" : ""}" id="donebtn">${dn ? "✓ Урок пройден<small>нажми, чтобы снять отметку</small>" : `Я понял — урок пройден<small>+${XP.l} XP</small>`}</button>
+    html += `<div class="gate" id="gate"></div><button class="done-btn ${dn ? "on" : ""}" id="donebtn">${dn ? "✓ Урок пройден<small>нажми, чтобы снять отметку</small>" : `Я понял — урок пройден<small>+${XP.l} XP</small>`}</button>
       <nav class="pn">${prevL ? `<a class="press" href="#l${prevL.id}"><small>← назад</small><span>${esc(prevL.title)}</span></a>` : ""}${nextL ? `<a class="nx press" href="#l${nextL.id}"><small>дальше →</small><span>${esc(nextL.title)}</span></a>` : ""}</nav></div>`;
     app.innerHTML = html;
     document.getElementById("donebtn").addEventListener("click", () => {
       if (isDone(L.id)) { delete S.aw["l:" + L.id]; save(); refreshPills(false); renderLesson(id); return; }
+      if (!gateState(L).ready) return;
       const res = withRewards(() => award("l:" + L.id));
       renderLesson(id);
       completeSheet(L, res);
     });
-    if (L.quiz) wireQuiz(L);
+    wireChecks(L);
+    updateGate(L);
     const nt = document.getElementById("note"), ns = document.getElementById("note-st");
     let ntT = null;
     nt.addEventListener("input", () => {
@@ -1350,29 +1575,160 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     announce(res);
   }
 
-  function quizHTML(L) {
-    const q = L.quiz, gotIt = S.aw["q:" + L.id];
-    return `<div class="quiz"><h3>Проверь себя <span>${gotIt ? "✓ +" + XP.q + " XP получено" : "+" + XP.q + " XP с первой попытки"}</span></h3><p class="q">${md(q.q)}</p><div class="opts">${q.options.map((o, i) => `<button data-i="${i}">${md(o)}</button>`).join("")}</div><div class="why" id="why" hidden></div></div>`;
+  // ---------- mastery: checks gate, predictions, spaced review ----------
+  const INTERVALS = [1, 3, 7, 16, 35];
+  const lessonQs = L => (L.quiz ? [L.quiz] : []).concat(L.checks || []);
+  const qById = qid => { const [lid, k] = qid.split("#"); const L = byId[lid]; return L ? lessonQs(L)[+k] : null; };
+  const addDays = n => { const d = new Date(); d.setDate(d.getDate() + n); return today(d); };
+  function schedule(qid, ok) {
+    S.box = S.box || {};
+    const cur = S.box[qid];
+    if (ok) { const b = cur ? Math.min(cur[0] + 1, INTERVALS.length) : 1; S.box[qid] = [b, addDays(INTERVALS[b - 1])]; }
+    else S.box[qid] = [1, addDays(1)];
+    save();
   }
-  function wireQuiz(L) {
-    const q = L.quiz;
-    let first = !S.tried[L.id];
-    app.querySelectorAll(".quiz .opts button").forEach(b => b.addEventListener("click", () => {
+  const dueList = () => Object.entries(S.box || {}).filter(([q, v]) => v[1] <= today() && qById(q)).map(([q]) => q);
+  const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  function mdBlock(text) {
+    return String(text).split(/```/).map((part, i) => i % 2
+      ? `<pre class="code blk">${part.replace(/^\n/, "").replace(/\n$/, "").split("\n").map(ln => `<div>${hl(ln) || " "}</div>`).join("")}</pre>`
+      : part.split(/\n\s*\n/).filter(p => p.trim()).map(p => {
+          const ls = p.trim().split("\n");
+          if (ls.every(l => l.trim().startsWith("|"))) {
+            const rows = ls.filter(l => !/^\|[\s|:-]+\|$/.test(l.trim())).map(l => l.trim().replace(/^\||\|$/g, "").split("|").map(c => md(c.trim())));
+            return `<div class="tbl"><table><thead><tr>${rows[0].map(c => `<th>${c}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+          }
+          const head = [], items = [];
+          let kind = null;
+          ls.forEach(l => { const m = l.match(/^\s*(-|\d+\.)\s+(.*)$/); if (m) { kind = kind || (m[1] === "-" ? "ul" : "ol"); items.push(m[2]); } else if (items.length) items[items.length - 1] += " " + l.trim(); else head.push(l); });
+          return (head.length ? `<p>${md(head.join(" ").trim())}</p>` : "") + (items.length ? `<${kind}>${items.map(i => `<li>${md(i)}</li>`).join("")}</${kind}>` : "");
+        }).join("")).join("");
+  }
+  function qCard(L, q, k, opts) {
+    const qid = L.id + "#" + k, ok = S.ok && S.ok[qid];
+    const order = ok ? q.options.map((_, i) => i) : shuffle(q.options.map((_, i) => i));
+    return `<div class="ck${ok ? " ok" : ""}" data-k="${k}"><div class="ck-q"><span class="ck-n">${ok ? "✓" : k + 1}</span><div>${md(q.q)}</div></div>${q.code ? `<pre class="code blk">${q.code.split("\n").map(ln => `<div>${hl(ln) || " "}</div>`).join("")}</pre>` : ""}
+      <div class="opts">${order.map(i => `<button data-i="${i}"${ok ? " disabled" : ""} class="${ok && i === q.answer ? "right" : ""}">${md(q.options[i])}</button>`).join("")}</div>
+      <div class="why"${ok ? "" : " hidden"}>${ok ? "<b>Верно.</b> " + md(q.why || "") : ""}</div></div>`;
+  }
+  function checksHTML(L) {
+    const Q = lessonQs(L);
+    if (!Q.length) return "";
+    return `<section class="checks" id="checks"><div class="ck-h"><h3>Проверка понимания</h3><span id="ck-count"></span></div>
+      <p class="ck-sub">Чтобы пройти урок, ответь верно на все вопросы. Ошибся — прочитай объяснение и попробуй снова: варианты перемешаются.</p>
+      ${Q.map((q, k) => qCard(L, q, k)).join("")}</section>`;
+  }
+  function wireChecks(L) {
+    const Q = lessonQs(L);
+    const box = document.getElementById("checks");
+    if (!box) return;
+    box.addEventListener("click", e => {
+      const b = e.target.closest(".opts button"), again = e.target.closest(".again");
+      const card = e.target.closest(".ck");
+      if (!card) return;
+      const k = +card.dataset.k, q = Q[k], qid = L.id + "#" + k;
+      if (again) { card.outerHTML = qCard(L, q, k); return; }
+      if (!b || b.disabled) return;
       const i = +b.dataset.i, right = i === q.answer;
-      app.querySelectorAll(".quiz .opts button").forEach(x => x.classList.remove("right", "wrong"));
+      S.tried = S.tried || {}; S.ok = S.ok || {};
+      const first = !S.tried[qid];
+      S.tried[qid] = 1;
+      card.querySelectorAll(".opts button").forEach(x => x.disabled = true);
       b.classList.add(right ? "right" : "wrong");
-      if (right) b.classList.add("right"); else setTimeout(() => app.querySelector(`.quiz .opts button[data-i="${q.answer}"]`)?.classList.add("right"), 450);
-      const why = document.getElementById("why");
+      const why = card.querySelector(".why");
       why.hidden = false;
-      why.innerHTML = (right ? "<b>Верно!</b> " : "<b>Не совсем.</b> ") + md(q.why || "");
-      if (first) {
-        first = false; S.tried[L.id] = 1; save();
-        if (right) {
-          const res = withRewards(() => award("q:" + L.id));
-          if (res.gained) { toast(`<b>+${res.gained} XP</b><small>верно с первой попытки</small>`, `<span class="pill xp">${ICON.bolt}</span>`); confetti(.4); announce(res); }
-        }
+      if (right) {
+        S.ok[qid] = 1;
+        if (!S.box || !S.box[qid]) schedule(qid, true);
+        card.classList.add("ok"); card.querySelector(".ck-n").textContent = "✓";
+        why.innerHTML = "<b>Верно!</b> " + md(q.why || "");
+        if (first) { const res = withRewards(() => award("q:" + qid)); if (res.gained) { toast(`<b>+${res.gained} XP</b><small>верно с первой попытки</small>`, `<span class="pill xp">${ICON.bolt}</span>`); announce(res); } }
+      } else {
+        why.innerHTML = "<b>Не совсем.</b> " + md(q.why || "") + `<div><button class="btn again">Ещё раз</button></div>`;
       }
-    }));
+      save();
+      updateGate(L);
+    });
+  }
+  function gateState(L) {
+    const Q = lessonQs(L), okN = Q.filter((_, k) => S.ok && S.ok[L.id + "#" + k]).length;
+    const ex = !L.code || !!S.aw["v:" + L.id];
+    return { ex, okN, total: Q.length, ready: ex && okN === Q.length };
+  }
+  function updateGate(L) {
+    const g = gateState(L), el = document.getElementById("gate"), btn = document.getElementById("donebtn"), cnt = document.getElementById("ck-count");
+    if (cnt) cnt.textContent = `${g.okN} / ${g.total}`;
+    if (!el || !btn) return;
+    if (isDone(L.id)) { el.innerHTML = ""; return; }
+    el.innerHTML = `<div class="gate-h">Чтобы пройти урок</div>` +
+      (L.code ? `<a href="#" data-go="viz" class="${g.ex ? "ok" : ""}"><i>${g.ex ? "✓" : "1"}</i>Разбери пример до конца и ответь на вопросы в нём</a>` : "") +
+      (g.total ? `<a href="#" data-go="checks" class="${g.okN === g.total ? "ok" : ""}"><i>${g.okN === g.total ? "✓" : L.code ? "2" : "1"}</i>Ответь верно на все вопросы проверки (${g.okN}/${g.total})</a>` : "");
+    el.querySelectorAll("a").forEach(a => a.onclick = e => { e.preventDefault(); document.querySelector(a.dataset.go === "viz" ? ".viz" : "#checks")?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); });
+    btn.disabled = !g.ready;
+    btn.classList.toggle("ready", g.ready);
+    btn.innerHTML = g.ready ? `Урок пройден — забрать награду<small>+${XP.l} XP</small>` : `Сначала докажи, что понял<small>осталось ${(g.ex ? 0 : 1) + (g.total - g.okN)} ${plural((g.ex ? 0 : 1) + (g.total - g.okN), "шаг", "шага", "шагов").replace(/^\d+ /, "")}</small>`;
+  }
+
+  // predictions inside the step-by-step example
+  function predictPoints(L) {
+    const steps = L.trace.steps, fr = L.trace.frames, cand = [], pool = new Map();
+    steps.forEach(s => s.f.forEach(fi => fr[fi].vars.forEach(([k, v]) => { if (v[0] === "p") { if (!pool.has(k)) pool.set(k, new Set()); pool.get(k).add(v[1]); } })));
+    const all = new Set([].concat(...[...pool.values()].map(s => [...s])));
+    const kind = v => /^['"]/.test(v) ? "s" : /^-?\d/.test(v) ? "n" : v;
+    for (let i = 1; i < steps.length; i++) {
+      const a = steps[i - 1], b = steps[i];
+      if (a.e !== "l" || b.e === "d" || a.f.length !== b.f.length) continue;
+      const fa = fr[a.f[a.f.length - 1]], fb = fr[b.f[b.f.length - 1]];
+      if (fa.name !== fb.name) continue;
+      const pa = Object.fromEntries(fa.vars);
+      for (const [k, v] of fb.vars) {
+        if (v[0] !== "p" || k.startsWith("_") || JSON.stringify(pa[k]) === JSON.stringify(v)) continue;
+        const val = v[1], old = pa[k] && pa[k][0] === "p" ? pa[k][1] : null;
+        let ds = [];
+        if (old !== null && old !== val) ds.push(old);
+        [...(pool.get(k) || [])].forEach(x => { if (x !== val && !ds.includes(x)) ds.push(x); });
+        shuffle([...all]).forEach(x => { if (x !== val && !ds.includes(x) && kind(x) === kind(val)) ds.push(x); });
+        if (/^-?\d+$/.test(val)) [String(+val + 1), String(+val - 1), String(+val * 2)].forEach(x => { if (x !== val && !ds.includes(x)) ds.push(x); });
+        if (val === "True" || val === "False") ds = [val === "True" ? "False" : "True"].concat(ds.filter(x => x !== "True" && x !== "False"));
+        ds = ds.slice(0, 3);
+        if (ds.length >= 1 && val.length <= 40) cand.push({ i, name: k, val, line: a.l, options: shuffle([val, ...ds]) });
+        break;
+      }
+    }
+    const picks = [];
+    [.3, .7].forEach(f => {
+      const target = f * steps.length;
+      const c = cand.filter(c => !picks.includes(c)).sort((x, y) => Math.abs(x.i - target) - Math.abs(y.i - target))[0];
+      if (c && !picks.some(p => Math.abs(p.i - c.i) < 3)) picks.push(c);
+    });
+    return picks.sort((a, b) => a.i - b.i);
+  }
+
+  // ---------- spaced review ----------
+  let RV = null;
+  function renderReview() {
+    setBar("<b>Повторение</b>", true, null);
+    if (!RV) { const due = shuffle(dueList()).slice(0, 8); RV = { list: due, i: 0, right: 0, answered: false }; }
+    if (!RV.list.length) { app.innerHTML = `<h1 class="page-h">Повторение</h1><div class="empty-card">Сейчас нечего повторять. Вопросы из пройденных уроков вернутся сюда через 1, 3, 7, 16 и 35 дней.</div><p><a class="btn primary" href="#home">К пути</a></p>`; RV = null; return; }
+    if (RV.i >= RV.list.length) {
+      const res = RV;
+      app.innerHTML = `<section class="rv-end"><svg class="check big" viewBox="0 0 78 78" aria-hidden="true"><circle cx="39" cy="39" r="39"/><path d="M22 40l11 11 23-24"/></svg><h1>Повторение готово</h1><p>Верно ${res.right} из ${res.list.length}. Правильные ответы вернутся позже, ошибки — уже завтра.</p><a class="btn primary wide" href="#home">К пути</a></section>`;
+      confetti(.8); RV = null; return;
+    }
+    const qid = RV.list[RV.i], q = qById(qid), L = byId[qid.split("#")[0]];
+    const order = shuffle(q.options.map((_, i) => i));
+    app.innerHTML = `<div class="rv-top"><div class="xpbar"><i style="width:${100 * RV.i / RV.list.length}%"></i></div><span>${RV.i + 1} / ${RV.list.length}</span></div>
+      <section class="ck rv sh" style="--sh:${secHue(L.si)}"><a class="rv-from" href="#l${L.id}">Урок ${L.si + 1}.${L.li + 1} · ${esc(L.title)}</a><div class="ck-q"><div>${md(q.q)}</div></div>${q.code ? `<pre class="code blk">${q.code.split("\n").map(ln => `<div>${hl(ln) || " "}</div>`).join("")}</pre>` : ""}
+      <div class="opts">${order.map(i => `<button data-i="${i}">${md(q.options[i])}</button>`).join("")}</div><div class="why" hidden></div><button class="btn primary wide" id="rv-next" hidden>Дальше</button></section>`;
+    app.querySelectorAll(".opts button").forEach(b => b.onclick = () => {
+      const i = +b.dataset.i, right = i === q.answer;
+      app.querySelectorAll(".opts button").forEach(x => { x.disabled = true; if (+x.dataset.i === q.answer) x.classList.add("right"); });
+      if (!right) b.classList.add("wrong");
+      schedule(qid, right);
+      if (right) { RV.right++; withRewards(() => award(`r:${qid}:${today()}`)); }
+      const why = app.querySelector(".why"); why.hidden = false; why.innerHTML = (right ? "<b>Верно!</b> " : "<b>Не совсем.</b> ") + md(q.why || "");
+      const nx = document.getElementById("rv-next"); nx.hidden = false; nx.onclick = () => { RV.i++; renderReview(); window.scrollTo(0, 0); };
+    });
   }
 
   function vizShell(L) {
@@ -1434,8 +1790,9 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
   function startPlayer(L) {
     if (player && player.timer) clearInterval(player.timer);
     const tr = L.trace, steps = tr.steps, lines = L.code.split("\n");
-    const st = { i: 0, timer: null };
+    const st = { i: 0, timer: null, solved: new Set(), asking: null };
     player = st;
+    const cps = S.aw["v:" + L.id] ? [] : predictPoints(L);
     const $ = id => document.getElementById(id);
     const codeEl = $("code");
     codeEl.innerHTML = lines.map((ln, i) => `<div class="ln" data-l="${i + 1}"><span class="ar"></span><span class="no">${i + 1}</span><span>${hl(ln) || " "}</span></div>`).join("");
@@ -1470,6 +1827,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
         const n = (L.narr || {})[cur.l];
         narr += `<div class="nx next"><i>${cur.l}</i><span>${n ? md(n) : `Python готовится выполнить строку ${cur.l}.`}</span></div>`;
       }
+      if (st.i === 0 && cps.length) narr += `<div class="hint">В этом примере ${plural(cps.length, "остановка", "остановки", "остановок")}: перед важной строкой нужно будет предсказать результат.</div>`;
       if (st.i === 0) narr += `<div class="hint">Нажимай ▶. Жёлтая строка выполнится сейчас, зелёная только что выполнилась. Стрелки показывают, на какой объект ссылается имя.</div>`;
       const ch = describeChange(L, prev, cur);
       if (ch.length) narr += `<div class="chg">${ch.map(c => `<div>${c}</div>`).join("")}</div>`;
@@ -1508,26 +1866,49 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
       requestAnimationFrame(() => drawArrows(prev ? fresh : null));
       if (st.i === steps.length - 1) {
         stop();
-        if (user && !S.aw["v:" + L.id]) {
+        if (!S.aw["v:" + L.id] && cps.every(c => st.solved.has(c.i))) {
           const res = withRewards(() => award("v:" + L.id));
           $("solved").innerHTML = `<span class="solved">✓ разобран</span>`;
           toast(`<b>+${res.gained} XP</b><small>пример разобран до конца</small>`, `<span class="pill xp">${ICON.bolt}</span>`);
           announce(res);
+          updateGate(L);
         }
       }
     }
     function stop() { if (st.timer) { clearInterval(st.timer); st.timer = null; } $("b-play").textContent = "⏵⏵"; }
-    $("b-first").onclick = () => { stop(); show(0, true); };
-    $("b-prev").onclick = () => { stop(); show(st.i - 1, true); };
-    $("b-next").onclick = () => { stop(); show(st.i + 1, true); };
-    $("b-last").onclick = () => { stop(); show(steps.length - 1, false); };
+    function ask(c) {
+      st.asking = c;
+      $("narr").innerHTML = `<div class="nx ask"><i>?</i><span><b>Предскажи, прежде чем идти дальше.</b> Сейчас выполнится строка ${c.line}: <code>${esc(lines[c.line - 1].trim())}</code>. Каким станет <code>${esc(c.name)}</code>?</span></div>
+        <div class="popts">${c.options.map(o => `<button data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div><div class="pwhy" id="pwhy"></div>`;
+      $("narr").querySelectorAll(".popts button").forEach(b => b.onclick = () => {
+        if (b.dataset.v === c.val) {
+          b.classList.add("right"); st.solved.add(c.i); st.asking = null;
+          $("pwhy").innerHTML = "<b>Верно!</b> Проверим на шаге.";
+          setTimeout(() => { if (player === st) show(c.i, true); }, 650);
+        } else {
+          b.classList.add("wrong"); b.disabled = true;
+          $("pwhy").innerHTML = `Не то. Посмотри на строку ${c.line} и на текущие значения в блоке «Имена»: что получится, если подставить их?`;
+        }
+      });
+      $("narr").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest" });
+    }
+    function goTo(target, user) {
+      if (st.asking) { const o = $("narr").querySelector(".popts"); if (o && !reduceMotion) { o.classList.remove("shake"); void o.offsetWidth; o.classList.add("shake"); } return; }
+      const c = cps.find(c => !st.solved.has(c.i) && c.i > st.i && c.i <= target);
+      if (c) { stop(); show(c.i - 1, user); ask(c); return; }
+      show(target, user);
+    }
+    $("b-first").onclick = () => { stop(); st.asking = null; show(0, true); };
+    $("b-prev").onclick = () => { stop(); st.asking = null; show(st.i - 1, true); };
+    $("b-next").onclick = () => { stop(); goTo(st.i + 1, true); };
+    $("b-last").onclick = () => { stop(); goTo(steps.length - 1, true); };
     $("b-play").onclick = () => {
       if (st.timer) return stop();
       if (st.i === steps.length - 1) show(0, true);
       $("b-play").textContent = "⏸";
-      st.timer = setInterval(() => { if (player !== st || !document.body.contains(scrub)) return clearInterval(st.timer); show(st.i + 1, true); }, 1100);
+      st.timer = setInterval(() => { if (player !== st || !document.body.contains(scrub)) return clearInterval(st.timer); goTo(st.i + 1, true); }, 1100);
     };
-    scrub.oninput = () => { stop(); show(+scrub.value, false); };
+    scrub.oninput = () => { stop(); if (st.asking) { scrub.value = st.i; return; } const c = cps.find(c => !st.solved.has(c.i) && c.i <= +scrub.value); if (c) { show(c.i - 1, false); ask(c); } else show(+scrub.value, false); };
     $("mem").addEventListener("click", onRef);
     $("narr").addEventListener("click", onRef);
     st.redraw = () => drawArrows(null);
@@ -1564,6 +1945,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     else if (r.type === "sec") { renderSection(r.i); window.scrollTo(0, 0); }
     else if (r.type === "awards") { renderAwards(); window.scrollTo(0, 0); }
     else if (r.type === "profile") { renderProfile(); window.scrollTo(0, 0); }
+    else if (r.type === "review") { renderReview(); window.scrollTo(0, 0); }
     else renderHome();
   }
   async function boot() {
