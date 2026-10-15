@@ -1,0 +1,632 @@
+<title>Python по схеме</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Unbounded:wght@500;700&display=swap">
+<style>
+/* Layout: one-column phone app — sticky top bar, scheme tree as home, lesson = text + step visualizer (code / names / objects / output). */
+:root {
+  --bg: #EDF1F4;
+  --panel: #FFFFFF;
+  --ink: #14202B;
+  --muted: #5A6A77;
+  --line: #D3DCE3;
+  --accent: #2B66CF;
+  --accent-ink: #FFFFFF;
+  --hl: #FFD43B;
+  --hl-soft: #FFF3C2;
+  --prev-soft: #E3F1EA;
+  --ok: #1E8F62;
+  --err: #C93F35;
+  --err-soft: #FBE7E5;
+  --code-bg: #F6F8FA;
+  --chip-l: 46%;
+  --chip-s: 70%;
+  --f-display: "Unbounded", "Golos Text", system-ui, sans-serif;
+  --f-body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-code: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1318; --panel: #151D25; --ink: #E2E9EF; --muted: #8E9DAA; --line: #26323D;
+    --accent: #6FA2FF; --accent-ink: #0D1318; --hl: #FFD43B; --hl-soft: #3A3317; --prev-soft: #16302A;
+    --ok: #45C08D; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --chip-l: 68%; --chip-s: 75%;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1318; --panel: #151D25; --ink: #E2E9EF; --muted: #8E9DAA; --line: #26323D;
+  --accent: #6FA2FF; --accent-ink: #0D1318; --hl: #FFD43B; --hl-soft: #3A3317; --prev-soft: #16302A;
+  --ok: #45C08D; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --chip-l: 68%; --chip-s: 75%;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body { color: var(--ink); font: 16px/1.55 var(--f-body); -webkit-text-size-adjust: 100%; }
+button { font: inherit; color: inherit; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.bar .back { border: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 6px 12px; cursor: pointer; font-weight: 600; }
+.bar .crumb { flex: 1; min-width: 0; font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar .crumb b { color: var(--ink); font-weight: 600; }
+.bar .pct { font: 600 12px var(--f-code); color: var(--muted); font-variant-numeric: tabular-nums; }
+
+main {
+  max-width: 760px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 18px 64px;
+}
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h1 { font: 700 clamp(24px, 6vw, 34px)/1.15 var(--f-display); letter-spacing: -0.01em; }
+h2 { font: 600 20px/1.25 var(--f-display); }
+.eyebrow { font: 600 11px var(--f-code); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- home ---------- */
+.hero { display: grid; gap: 10px; padding-block: 8px 18px; }
+.hero p { margin: 0; color: var(--muted); max-width: 60ch; }
+.prog { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.prog > i { display: block; height: 100%; background: var(--ok); width: 0; transition: width .4s; }
+.hero .meta { display: flex; justify-content: space-between; font: 500 12px var(--f-code); color: var(--muted); }
+.cta { display: grid; gap: 2px; text-decoration: none; background: var(--accent); color: var(--accent-ink); border-radius: 14px; padding: 12px 16px; margin-top: 4px; }
+.cta small { font-size: 12px; opacity: .85; }
+.cta span { font-weight: 600; }
+.howto { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-block: 6px 22px; }
+.howto div { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 13px; color: var(--muted); }
+.howto b { display: block; color: var(--ink); font-size: 14px; }
+
+.tree { font-family: var(--f-code); font-size: 14px; }
+.tree .root { font: 700 18px var(--f-display); color: var(--accent); padding-bottom: 4px; }
+.sec { position: relative; padding-left: 26px; }
+.sec::before { content: ""; position: absolute; left: 7px; top: 0; bottom: 0; border-left: 2px solid var(--line); }
+.sec:last-child::before { bottom: calc(100% - 22px); }
+.sec > .head::before { content: ""; position: absolute; left: -19px; top: 21px; width: 16px; border-top: 2px solid var(--line); }
+.sec > .head {
+  position: relative; display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px; margin-block: 5px; cursor: pointer;
+}
+.sec > .head .num { font: 700 13px var(--f-code); color: var(--accent); min-width: 22px; font-variant-numeric: tabular-nums; }
+.sec > .head .nm { flex: 1; min-width: 0; font: 600 14px var(--f-body); }
+.sec > .head .cnt { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sec > .head .ring { width: 22px; height: 22px; flex: none; }
+.items { padding-left: 22px; margin-bottom: 6px; position: relative; }
+.items a {
+  position: relative; display: flex; gap: 8px; align-items: baseline; text-decoration: none; color: var(--ink);
+  padding: 4px 6px; border-radius: 8px; font-size: 13.5px;
+}
+.items a::before { content: "├─"; color: var(--line); }
+.items a:last-child::before { content: "└─"; }
+.items a:hover { background: var(--hl-soft); }
+.items a .ok { color: var(--ok); font-weight: 700; }
+.items a .tag { color: var(--muted); font-size: 11px; margin-left: auto; white-space: nowrap; }
+
+/* ---------- section page ---------- */
+.lessonlist { display: grid; gap: 10px; margin-top: 16px; }
+.lessonlist a {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; text-decoration: none; color: var(--ink);
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px;
+}
+.lessonlist .ix { font: 700 13px var(--f-code); color: var(--muted); font-variant-numeric: tabular-nums; }
+.lessonlist .t { font-weight: 600; }
+.lessonlist .c { font: 12px var(--f-code); color: var(--muted); margin-top: 2px; }
+.lessonlist .st { font-weight: 700; color: var(--ok); }
+.sec-intro { color: var(--muted); margin: 8px 0 0; max-width: 62ch; }
+
+/* ---------- lesson ---------- */
+.covers { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.covers span { font: 500 12px var(--f-code); background: var(--panel); border: 1px solid var(--line); border-radius: 99px; padding: 2px 9px; }
+.prose { margin-top: 14px; }
+.prose p { margin: 0 0 12px; max-width: 65ch; }
+.prose code, .key code, .narr code, .quiz code { font: 0.9em var(--f-code); background: var(--code-bg); border: 1px solid var(--line); border-radius: 5px; padding: 0 4px; }
+.analogy { background: var(--hl-soft); border-radius: var(--r); padding: 12px 14px; margin: 4px 0 18px; font-size: 15px; }
+.analogy b { font-family: var(--f-display); font-size: 12px; letter-spacing: .06em; display: block; margin-bottom: 2px; }
+
+.viz { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; margin-block: 8px 18px; }
+.viz-top { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.viz-top .eyebrow { color: var(--accent); }
+.viz-top .stepno { font: 600 12px var(--f-code); color: var(--muted); font-variant-numeric: tabular-nums; }
+.codebox { max-height: 42vh; overflow: auto; background: var(--code-bg); border-bottom: 1px solid var(--line); -webkit-overflow-scrolling: touch; }
+.code { font: 13px/1.6 var(--f-code); padding: 8px 0; min-width: max-content; }
+.ln { display: grid; grid-template-columns: 22px 34px auto; padding-right: 14px; white-space: pre; }
+.ln .ar { text-align: center; font-weight: 700; }
+.ln .no { color: var(--muted); text-align: right; padding-right: 10px; opacity: .7; user-select: none; }
+.ln.cur { background: var(--hl-soft); }
+.ln.cur .ar { color: var(--ink); }
+.ln.cur .ar::before { content: "➜"; }
+.ln.prev { background: var(--prev-soft); }
+.ln.prev .ar { color: var(--ok); }
+.ln.prev .ar::before { content: "✓"; }
+.ln.cur.prev .ar::before { content: "➜"; }
+.tk-kw { color: #8A3FD1; font-weight: 600; } .tk-str { color: #1B7F4C; } .tk-num { color: #C0561B; } .tk-com { color: var(--muted); font-style: italic; }
+.tk-fn { color: var(--accent); } .tk-bi { color: #B0306A; } .tk-dec { color: #B07A00; }
+:root[data-theme="dark"] .tk-kw { color: #C79BFF; } :root[data-theme="dark"] .tk-str { color: #7FD6A4; } :root[data-theme="dark"] .tk-num { color: #FFA86B; } :root[data-theme="dark"] .tk-bi { color: #FF8CC0; } :root[data-theme="dark"] .tk-dec { color: #FFD166; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tk-kw { color: #C79BFF; } :root:not([data-theme="light"]) .tk-str { color: #7FD6A4; } :root:not([data-theme="light"]) .tk-num { color: #FFA86B; } :root:not([data-theme="light"]) .tk-bi { color: #FF8CC0; } :root:not([data-theme="light"]) .tk-dec { color: #FFD166; } }
+
+.narr { padding: 12px 14px; border-bottom: 1px solid var(--line); display: grid; gap: 6px; font-size: 14.5px; min-height: 64px; }
+.narr .nx { display: flex; gap: 8px; }
+.narr .nx > i { font-style: normal; flex: none; width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; font: 700 11px var(--f-code); }
+.narr .nx.next > i { background: var(--hl); color: #14202B; }
+.narr .nx.done > i { background: var(--ok); color: var(--panel); }
+.narr .nx.bad > i { background: var(--err); color: var(--panel); }
+.narr .nx > span { min-width: 0; }
+.narr .chg { color: var(--muted); font-size: 13.5px; }
+.narr .chg b { color: var(--ink); font-family: var(--f-code); font-weight: 600; }
+
+.ctrl { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; padding: 10px 12px 4px; }
+.ctrl button { border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 10px 0; font-size: 17px; cursor: pointer; touch-action: manipulation; }
+.ctrl button.main { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
+.ctrl button:disabled { opacity: .35; }
+.scrub { padding: 6px 14px 12px; }
+.scrub input { width: 100%; accent-color: var(--accent); }
+
+.mem { display: grid; gap: 14px; padding: 14px; border-top: 1px solid var(--line); }
+@media (min-width: 700px) { .mem.split { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); } }
+.mem h3 { font: 600 11px var(--f-code); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.frames, .heap { display: grid; gap: 8px; align-content: start; min-width: 0; }
+.frame { border: 1.5px solid var(--line); border-radius: 12px; overflow: hidden; }
+.frame.top { border-color: var(--accent); }
+.frame .fh { font: 600 12px var(--f-code); padding: 5px 10px; background: var(--code-bg); border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 8px; }
+.frame.top .fh { background: color-mix(in srgb, var(--accent) 14%, var(--panel)); }
+.frame .empty { padding: 6px 10px; color: var(--muted); font-size: 12px; }
+.row { display: grid; grid-template-columns: minmax(60px, max-content) minmax(0, 1fr); gap: 10px; align-items: center; padding: 5px 10px; font: 13px var(--f-code); border-top: 1px dashed var(--line); }
+.row:first-of-type { border-top: 0; }
+.row .k { color: var(--muted); overflow-wrap: anywhere; }
+.row .v { overflow-wrap: anywhere; min-width: 0; }
+.row.flash, .obj.flash { animation: flash 1s ease-out; }
+@keyframes flash { from { background: var(--hl); } to { background: transparent; } }
+.ret { padding: 6px 10px; font: 600 12px var(--f-code); color: var(--ok); border-top: 1px solid var(--line); }
+
+.ref { display: inline-flex; align-items: center; gap: 4px; border: 0; cursor: pointer; padding: 1px 7px 1px 5px; border-radius: 99px; font: 600 12px var(--f-code);
+  background: hsl(var(--h) var(--chip-s) var(--chip-l) / .16); color: hsl(var(--h) var(--chip-s) calc(var(--chip-l) - 8%)); }
+.ref::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: hsl(var(--h) var(--chip-s) var(--chip-l)); }
+.ref .arrow { opacity: .8; }
+
+.obj { border: 1.5px solid hsl(var(--h) var(--chip-s) var(--chip-l) / .55); border-radius: 12px; background: var(--panel); overflow: hidden; scroll-margin: 90px; }
+.obj.pulse { box-shadow: 0 0 0 4px hsl(var(--h) var(--chip-s) var(--chip-l) / .45); }
+.obj .oh { display: flex; align-items: baseline; gap: 8px; padding: 5px 10px; font: 600 12px var(--f-code); background: hsl(var(--h) var(--chip-s) var(--chip-l) / .12); }
+.obj .oh .id { color: hsl(var(--h) var(--chip-s) calc(var(--chip-l) - 8%)); }
+.obj .oh .ty { color: var(--ink); }
+.obj .oh .sub { color: var(--muted); font-weight: 400; margin-left: auto; text-align: right; }
+.obj.exc { border-color: var(--err); }
+.cells { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 10px; }
+.cell { display: grid; justify-items: center; min-width: 34px; }
+.cell .i { font: 10px var(--f-code); color: var(--muted); }
+.cell .b { border: 1px solid var(--line); border-radius: 6px; padding: 2px 7px; font: 13px var(--f-code); background: var(--code-bg); max-width: 100%; overflow-wrap: anywhere; }
+.obj.set .cell .b { border-radius: 99px; }
+.obj.tuple .cell .b { border-style: dashed; }
+.obj .note { padding: 6px 10px; font: 12.5px var(--f-code); color: var(--muted); overflow-wrap: anywhere; }
+.obj .emptyc { padding: 6px 10px; font: 12px var(--f-code); color: var(--muted); }
+
+.out { background: #0F1720; color: #CFE3D8; border-radius: 12px; font: 13px/1.5 var(--f-code); padding: 10px 12px; white-space: pre-wrap; overflow-wrap: anywhere; min-height: 40px; }
+.out .new { color: #FFE27A; }
+.out .cursor { display: inline-block; width: 7px; height: 14px; background: #CFE3D8; vertical-align: -2px; opacity: .6; }
+.err { background: var(--err-soft); color: var(--err); border-radius: 10px; padding: 8px 10px; font: 13px var(--f-code); }
+
+.file { background: var(--code-bg); border: 1px dashed var(--line); border-radius: var(--r); margin-bottom: 10px; overflow-x: auto; }
+.file .fn { font: 600 12px var(--f-code); padding: 8px 12px 0; }
+.file .fn span { color: var(--muted); font-weight: 400; }
+.key { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 16px; margin-bottom: 16px; }
+.key h3 { font: 600 13px var(--f-display); margin-bottom: 6px; }
+.key ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+
+.quiz { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; margin-bottom: 16px; }
+.quiz h3 { font: 600 13px var(--f-display); margin-bottom: 4px; }
+.quiz .q { margin: 0 0 10px; }
+.quiz .opts { display: grid; gap: 6px; }
+.quiz .opts button { text-align: left; border: 1px solid var(--line); background: var(--bg); border-radius: 10px; padding: 9px 12px; cursor: pointer; font: 14px var(--f-code); }
+.quiz .opts button.right { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 15%, var(--panel)); }
+.quiz .opts button.wrong { border-color: var(--err); background: var(--err-soft); }
+.quiz .why { margin-top: 10px; font-size: 14px; }
+
+.done-btn { width: 100%; border: 0; border-radius: 14px; padding: 14px; font: 600 15px var(--f-body); cursor: pointer; background: var(--ok); color: var(--panel); }
+.done-btn.on { background: var(--panel); color: var(--ok); border: 1.5px solid var(--ok); }
+.pn { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.pn a { display: block; text-decoration: none; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; min-width: 0; }
+.pn a small { display: block; color: var(--muted); font-size: 11px; }
+.pn a span { display: block; font-weight: 600; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pn a.nx { text-align: right; grid-column: 2; }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); padding: 0 14px 12px; }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+.legend .l1::before { background: var(--hl); } .legend .l2::before { background: var(--ok); }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<header class="bar">
+  <button class="back" id="back" hidden>‹ Назад</button>
+  <div class="crumb" id="crumb"><b>Python по схеме</b></div>
+  <div class="pct" id="pct"></div>
+</header>
+<main id="app"></main>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function () {
+  "use strict";
+  const DATA = JSON.parse(document.getElementById("data").textContent);
+  const app = document.getElementById("app");
+  const LESSONS = [];
+  DATA.sections.forEach((s, si) => s.lessons.forEach((l, li) => { l.sec = s; l.si = si; l.li = li; LESSONS.push(l); }));
+  const byId = Object.fromEntries(LESSONS.map(l => [l.id, l]));
+
+  // ---------- progress (per-viewer convenience) ----------
+  let done = new Set();
+  try { done = new Set(JSON.parse(localStorage.getItem("pyscheme-done") || "[]")); } catch (e) {}
+  function saveDone() { try { localStorage.setItem("pyscheme-done", JSON.stringify([...done])); } catch (e) {} }
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  // inline markup: `code`, **bold**
+  const md = s => esc(s).replace(/`([^`]+)`/g, "<code>$1</code>").replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");
+  const h = n => (n * 47 + 200) % 360;
+
+  function setBar(crumb, showBack) {
+    document.getElementById("crumb").innerHTML = crumb;
+    document.getElementById("back").hidden = !showBack;
+    const p = Math.round(100 * LESSONS.filter(l => done.has(l.id)).length / LESSONS.length);
+    document.getElementById("pct").textContent = p + "%";
+  }
+  document.getElementById("back").addEventListener("click", () => {
+    const r = route();
+    if (r.type === "lesson") go("s" + (byId[r.id].si + 1));
+    else go("");
+  });
+  function go(hash) { location.hash = hash ? "#" + hash : "#home"; }
+  function route() {
+    const hs = location.hash.slice(1);
+    let m;
+    if ((m = hs.match(/^s(\d+)$/))) return { type: "sec", i: +m[1] - 1 };
+    if ((m = hs.match(/^l(\d+)-(\d+)$/)) && byId[hs.slice(1)]) return { type: "lesson", id: hs.slice(1) };
+    return { type: "home" };
+  }
+  window.addEventListener("hashchange", render);
+
+  function ring(frac) {
+    const r = 9, c = 2 * Math.PI * r;
+    return `<svg class="ring" viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="${r}" fill="none" stroke="var(--line)" stroke-width="3"/>` +
+      (frac > 0 ? `<circle cx="11" cy="11" r="${r}" fill="none" stroke="var(--ok)" stroke-width="3" stroke-linecap="round" stroke-dasharray="${c * frac} ${c}" transform="rotate(-90 11 11)"/>` : "") + `</svg>`;
+  }
+
+  // ---------- home: the scheme tree ----------
+  let openSecs = new Set();
+  try { openSecs = new Set(JSON.parse(localStorage.getItem("pyscheme-open") || "[]")); } catch (e) {}
+  function renderHome() {
+    setBar("<b>Python по схеме</b>", false);
+    const total = LESSONS.length, nd = LESSONS.filter(l => done.has(l.id)).length;
+    const next = LESSONS.find(l => !done.has(l.id)) || LESSONS[0];
+    let html = `<section class="hero">
+      <div class="eyebrow">Интерактивная карта · ${DATA.sections.length} разделов · ${total} уроков</div>
+      <h1>Python по схеме</h1>
+      <p>Каждый урок — это живой пример. Нажимай <b>▶</b> и смотри, как Python выполняет код строка за строкой: какие имена появляются, на какие объекты они указывают и что печатается.</p>
+      <div class="prog"><i style="width:${100 * nd / total}%"></i></div>
+      <div class="meta"><span>изучено ${nd} из ${total}</span></div>
+      <a class="cta" href="#l${next.id}"><small>${nd ? "Продолжить" : "Начать с первого урока"}</small><span>${next.si + 1}.${next.li + 1} ${esc(next.title)} →</span></a>
+    </section>
+    <div class="howto">
+      <div><b>➜ Жёлтая строка</b>выполнится следующей</div>
+      <div><b>✓ Зелёная строка</b>только что выполнилась</div>
+      <div><b>● Цветная метка #3</b>ссылка на объект в памяти</div>
+    </div>
+    <div class="tree"><div class="root">PYTHON</div>`;
+    DATA.sections.forEach((s, si) => {
+      const ls = s.lessons, d = ls.filter(l => done.has(l.id)).length;
+      const open = openSecs.has(si);
+      html += `<div class="sec"><button class="head" data-sec="${si}" aria-expanded="${open}">
+        <span class="num">${si + 1}.</span><span class="nm">${esc(s.title)}</span><span class="cnt">${d}/${ls.length}</span>${ring(ls.length ? d / ls.length : 0)}</button>`;
+      if (open) {
+        html += `<div class="items">`;
+        s.items.forEach(it => {
+          const l = ls.find(l => l.covers.includes(it)) ;
+          if (!l) return;
+          html += `<a href="#l${l.id}">${done.has(l.id) ? '<span class="ok">✓</span>' : ""}<span>${esc(it)}</span><span class="tag">урок ${l.li + 1}</span></a>`;
+        });
+        html += `<a href="#s${si + 1}"><span><b>все уроки раздела →</b></span></a></div>`;
+      }
+      html += `</div>`;
+    });
+    html += `</div>`;
+    app.innerHTML = html;
+    app.querySelectorAll(".head").forEach(b => b.addEventListener("click", () => {
+      const si = +b.dataset.sec;
+      openSecs.has(si) ? openSecs.delete(si) : openSecs.add(si);
+      try { localStorage.setItem("pyscheme-open", JSON.stringify([...openSecs])); } catch (e) {}
+      const y = window.scrollY; renderHome(); window.scrollTo(0, y);
+    }));
+  }
+
+  // ---------- section ----------
+  function renderSection(si) {
+    const s = DATA.sections[si];
+    if (!s) return renderHome();
+    setBar(`<b>${si + 1}. ${esc(s.title)}</b>`, true);
+    let html = `<div class="eyebrow">Раздел ${si + 1} из ${DATA.sections.length}</div><h1>${esc(s.title)}</h1>`;
+    if (s.intro) html += `<p class="sec-intro">${md(s.intro)}</p>`;
+    html += `<div class="lessonlist">`;
+    s.lessons.forEach((l, li) => {
+      html += `<a href="#l${l.id}"><span class="ix">${si + 1}.${li + 1}</span><div><div class="t">${esc(l.title)}</div><div class="c">${esc(l.covers.join(" · "))}</div></div><span class="st">${done.has(l.id) ? "✓" : ""}</span></a>`;
+    });
+    app.innerHTML = html + `</div>`;
+  }
+
+  // ---------- syntax highlight ----------
+  const KW = new Set("False None True and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield match case".split(" "));
+  const BI = new Set("print len range list dict set tuple int float str bool type id isinstance issubclass super object iter next open enumerate zip map filter sorted sum min max abs repr hasattr getattr setattr callable vars property classmethod staticmethod any all round input reversed frozenset Exception ValueError TypeError KeyError IndexError ZeroDivisionError StopIteration AttributeError NotImplementedError RuntimeError".split(" "));
+  function hl(line) {
+    const re = /(#.*$)|("""|'''|f?"(?:[^"\\]|\\.)*"|f?'(?:[^'\\]|\\.)*')|(@[\w.]+)|(\b\d+(?:\.\d+)?\b)|([A-Za-z_]\w*)|(\s+)|(.)/g;
+    let out = "", m, prevDef = false;
+    while ((m = re.exec(line))) {
+      const [t, com, str, dec, num, id] = m;
+      if (com) out += `<span class="tk-com">${esc(com)}</span>`;
+      else if (str) out += `<span class="tk-str">${esc(str)}</span>`;
+      else if (dec) out += `<span class="tk-dec">${esc(dec)}</span>`;
+      else if (num) out += `<span class="tk-num">${esc(num)}</span>`;
+      else if (id) {
+        if (prevDef) { out += `<span class="tk-fn">${esc(id)}</span>`; prevDef = false; }
+        else if (KW.has(id)) { out += `<span class="tk-kw">${id}</span>`; prevDef = id === "def" || id === "class"; }
+        else if (BI.has(id)) out += `<span class="tk-bi">${id}</span>`;
+        else out += esc(id);
+      } else out += esc(t);
+    }
+    return out;
+  }
+
+  // ---------- values ----------
+  function val(c) {
+    if (!c) return "";
+    if (c[0] === "p") return esc(c[1]);
+    return `<button class="ref" style="--h:${h(c[1])}" data-ref="${c[1]}"><span class="arrow">→</span>#${c[1]}</button>`;
+  }
+  const KIND_RU = { list: "список list", tuple: "кортеж tuple", set: "множество", dict: "словарь dict", func: "функция", class: "класс", gen: "генератор", obj: "объект", prim: "", other: "" };
+
+  function objHTML(o, flash) {
+    const cls = `obj ${o.k}${o.exc ? " exc" : ""}${flash ? " flash" : ""}`;
+    let head = "", body = "";
+    const more = o.more ? `<div class="note">… ещё ${o.more}</div>` : "";
+    const rows = (pairs) => pairs.map(([k, v]) => `<div class="row"><span class="k">${k}</span><span class="v">${v}</span></div>`).join("");
+    switch (o.k) {
+      case "list": case "tuple": case "set":
+        head = `<span class="ty">${o.t}</span><span class="sub">${o.k === "list" ? "изменяемый" : o.k === "tuple" ? "неизменяемый" : "без порядка, без повторов"} · длина ${o.items.length + (o.more || 0)}</span>`;
+        body = o.items.length ? `<div class="cells">${o.items.map((c, i) => `<div class="cell">${o.k === "set" ? "" : `<span class="i">${i}</span>`}<span class="b">${val(c)}</span></div>`).join("")}</div>${more}` : `<div class="emptyc">пусто</div>`;
+        break;
+      case "dict":
+        head = `<span class="ty">dict</span><span class="sub">ключ → значение · ${o.pairs.length + (o.more || 0)} шт.</span>`;
+        body = o.pairs.length ? rows(o.pairs.map(([k, v]) => [val(k), val(v)])) + more : `<div class="emptyc">пусто</div>`;
+        break;
+      case "func":
+        head = `<span class="ty">function ${esc(o.name)}${esc(o.sig)}</span>`;
+        if (o.cells) body += rows(Object.entries(o.cells).map(([k, v]) => [`замыкание: ${esc(k)}`, val(v)]));
+        if (o.wraps) body += rows([["оборачивает", val(o.wraps)]]);
+        break;
+      case "class":
+        head = `<span class="ty">class ${esc(o.name)}${o.bases.length ? "(" + esc(o.bases.join(", ")) + ")" : ""}</span>${o.meta ? `<span class="sub">метакласс ${esc(o.meta)}</span>` : ""}`;
+        body = Object.keys(o.attrs).length ? rows(Object.entries(o.attrs).map(([k, v]) => [esc(k), val(v)])) : `<div class="emptyc">нет своих атрибутов</div>`;
+        break;
+      case "obj":
+        head = `<span class="ty">${o.exc ? "исключение" : "экземпляр"} ${esc(o.t)}</span>`;
+        body = Object.keys(o.attrs).length ? rows(Object.entries(o.attrs).map(([k, v]) => [esc(k), val(v)])) : `<div class="emptyc">атрибутов нет</div>`;
+        if (o.items) body += `<div class="cells">${o.items.map((c, i) => `<div class="cell"><span class="i">${i}</span><span class="b">${val(c)}</span></div>`).join("")}</div>`;
+        if (o.pairs) body += rows(o.pairs.map(([k, v]) => [val(k), val(v)]));
+        break;
+      case "gen":
+        head = `<span class="ty">generator ${esc(o.name)}</span><span class="sub">${esc(o.state)}${o.line ? " · строка " + o.line : ""}</span>`;
+        if (o.locals) body = rows(Object.entries(o.locals).map(([k, v]) => [esc(k), val(v)]));
+        break;
+      case "prim":
+        head = `<span class="ty">${esc(o.t)}</span><span class="sub">неизменяемый</span>`;
+        body = `<div class="cells"><span class="cell"><span class="b">${esc(o.v)}</span></span></div>`;
+        break;
+      default:
+        head = `<span class="ty">${esc(o.t)}</span>`;
+        body = `<div class="note">${esc(o.r || "")}</div>` + (o.attrs ? rows(Object.entries(o.attrs).map(([k, v]) => [esc(k), val(v)])) : "");
+    }
+    return `<div class="${cls}" id="obj-${o.n}" style="--h:${h(o.n)}"><div class="oh"><span class="id">#${o.n}</span>${head}</div>${body}</div>`;
+  }
+
+  // ---------- describe what changed ----------
+  function cellText(c) { return c ? (c[0] === "p" ? c[1] : "#" + c[1]) : ""; }
+  function describeChange(L, prev, cur) {
+    const tr = L.trace, out = [];
+    if (!prev) return out;
+    const pf = prev.f.map(i => tr.frames[i]), cf = cur.f.map(i => tr.frames[i]);
+    if (cf.length > pf.length) out.push(`Вызов <b>${esc(cf[cf.length - 1].name)}</b> — для него создан новый кадр со своими переменными.`);
+    if (cf.length < pf.length) out.push(`Кадр <b>${esc(pf[pf.length - 1].name)}</b> закрыт — его локальные имена исчезли, выполнение вернулось туда, откуда был вызов.`);
+    if (cf.length <= pf.length || cf.length > pf.length) {
+      const n = Math.min(cf.length, pf.length);
+      for (let i = 0; i < n; i++) {
+        if (cf[i].name !== pf[i].name) continue;
+        const pm = Object.fromEntries(pf[i].vars), cm = Object.fromEntries(cf[i].vars);
+        for (const [k, v] of cf[i].vars) {
+          if (!(k in pm)) out.push(`Появилось имя <b>${esc(k)}</b> = ${esc(cellText(v))}`);
+          else if (JSON.stringify(pm[k]) !== JSON.stringify(v)) out.push(`<b>${esc(k)}</b>: ${esc(cellText(pm[k]))} → ${esc(cellText(v))}`);
+        }
+        for (const k in pm) if (!(k in cm)) out.push(`Имя <b>${esc(k)}</b> удалено`);
+      }
+    }
+    const ph = new Map(prev.h.map(i => [tr.objs[i].n, i]));
+    for (const i of cur.h) {
+      const o = tr.objs[i];
+      if (ph.has(o.n) && ph.get(o.n) !== i) out.push(`Объект <b>#${o.n}</b> (${esc(o.t)}) изменился внутри.`);
+    }
+    for (const [n] of ph) if (!cur.h.some(i => tr.objs[i].n === n)) out.push(`Объект <b>#${n}</b> больше никто не использует — его уберёт сборщик мусора.`);
+    if (cur.o > prev.o) out.push(`На экран выведено: <b>${esc(tr.out.slice(prev.o, cur.o).trimEnd())}</b>`);
+    return out.slice(0, 6);
+  }
+
+  // ---------- lesson ----------
+  let player = null;
+  function renderLesson(id) {
+    const L = byId[id];
+    const s = L.sec;
+    setBar(`${L.si + 1}. ${esc(s.title)} · <b>${esc(L.title)}</b>`, true);
+    const idx = LESSONS.indexOf(L);
+    const prevL = LESSONS[idx - 1], nextL = LESSONS[idx + 1];
+    let html = `<div class="eyebrow">Урок ${L.si + 1}.${L.li + 1}</div><h1>${esc(L.title)}</h1>
+      <div class="covers">${L.covers.map(c => `<span>${esc(c)}</span>`).join("")}</div>
+      <div class="prose">${L.text.split(/\n\s*\n/).map(p => `<p>${md(p.trim())}</p>`).join("")}</div>`;
+    if (L.analogy) html += `<div class="analogy"><b>ПРЕДСТАВЬ</b>${md(L.analogy)}</div>`;
+    if (L.files_show) html += Object.entries(L.files_show).map(([fn, src]) => `<div class="file"><div class="fn">📄 файл ${esc(fn)} <span>(лежит рядом, выполняется при import)</span></div><div class="code">${src.replace(/\n$/, "").split("\n").map((ln, i) => `<div class="ln"><span class="ar"></span><span class="no">${i + 1}</span><span>${hl(ln) || " "}</span></div>`).join("")}</div></div>`).join("");
+    if (L.code) html += vizShell();
+    if (L.key && L.key.length) html += `<div class="key"><h3>Запомни</h3><ul>${L.key.map(k => `<li>${md(k)}</li>`).join("")}</ul></div>`;
+    if (L.quiz) html += quizHTML(L.quiz);
+    html += `<button class="done-btn ${done.has(L.id) ? "on" : ""}" id="donebtn">${done.has(L.id) ? "✓ Изучено (нажми, чтобы снять)" : "Я понял — отметить как изучено"}</button>
+      <nav class="pn">${prevL ? `<a href="#l${prevL.id}"><small>← назад</small><span>${esc(prevL.title)}</span></a>` : ""}${nextL ? `<a class="nx" href="#l${nextL.id}"><small>дальше →</small><span>${esc(nextL.title)}</span></a>` : ""}</nav>`;
+    app.innerHTML = html;
+    document.getElementById("donebtn").addEventListener("click", () => {
+      if (done.has(L.id)) done.delete(L.id); else { done.add(L.id); }
+      saveDone();
+      if (done.has(L.id) && nextL) go("l" + nextL.id); else renderLesson(id);
+    });
+    if (L.quiz) wireQuiz(L.quiz);
+    if (L.code) startPlayer(L);
+    window.scrollTo(0, 0);
+  }
+
+  function quizHTML(q) {
+    return `<div class="quiz"><h3>Проверь себя</h3><p class="q">${md(q.q)}</p><div class="opts">${q.options.map((o, i) => `<button data-i="${i}">${md(o)}</button>`).join("")}</div><div class="why" id="why" hidden></div></div>`;
+  }
+  function wireQuiz(q) {
+    app.querySelectorAll(".quiz .opts button").forEach(b => b.addEventListener("click", () => {
+      const i = +b.dataset.i;
+      app.querySelectorAll(".quiz .opts button").forEach(x => x.classList.remove("right", "wrong"));
+      b.classList.add(i === q.answer ? "right" : "wrong");
+      app.querySelector(`.quiz .opts button[data-i="${q.answer}"]`).classList.add("right");
+      const why = document.getElementById("why");
+      why.hidden = false;
+      why.innerHTML = (i === q.answer ? "<b>Верно!</b> " : "<b>Не совсем.</b> ") + md(q.why || "");
+    }));
+  }
+
+  function vizShell() {
+    return `<section class="viz" aria-label="Пошаговое выполнение">
+      <div class="viz-top"><span class="eyebrow">Выполнение по шагам</span><span class="stepno" id="stepno"></span></div>
+      <div class="codebox" id="codebox"><div class="code" id="code"></div></div>
+      <div class="narr" id="narr"></div>
+      <div class="ctrl">
+        <button id="b-first" aria-label="В начало">⏮</button>
+        <button id="b-prev" aria-label="Шаг назад">◀</button>
+        <button id="b-next" class="main" aria-label="Шаг вперёд">▶</button>
+        <button id="b-play" aria-label="Автопроигрывание">⏵⏵</button>
+        <button id="b-last" aria-label="В конец">⏭</button>
+      </div>
+      <div class="scrub"><input type="range" id="scrub" min="0" value="0" aria-label="Шаг"></div>
+      <div class="legend"><span class="l1">выполнится сейчас</span><span class="l2">только что выполнилась</span></div>
+      <div class="mem split" id="mem">
+        <div><h3>Имена (переменные по кадрам)</h3><div class="frames" id="frames"></div></div>
+        <div><h3>Объекты в памяти</h3><div class="heap" id="heap"></div></div>
+      </div>
+      <div class="mem" style="padding-top:0;border-top:0"><div><h3>Вывод программы</h3><div class="out" id="out"></div></div><div id="errbox"></div></div>
+    </section>`;
+  }
+
+  function startPlayer(L) {
+    if (player && player.timer) clearInterval(player.timer);
+    const tr = L.trace, steps = tr.steps, lines = L.code.split("\n");
+    const st = { i: 0, timer: null };
+    player = st;
+    const codeEl = document.getElementById("code");
+    codeEl.innerHTML = lines.map((ln, i) => `<div class="ln" data-l="${i + 1}"><span class="ar"></span><span class="no">${i + 1}</span><span>${hl(ln) || " "}</span></div>`).join("");
+    const scrub = document.getElementById("scrub");
+    scrub.max = steps.length - 1;
+    const $ = id => document.getElementById(id);
+
+    function show(i) {
+      st.i = Math.max(0, Math.min(steps.length - 1, i));
+      const cur = steps[st.i], prev = st.i > 0 ? steps[st.i - 1] : null;
+      scrub.value = st.i;
+      $("stepno").textContent = `шаг ${st.i + 1} / ${steps.length}`;
+      codeEl.querySelectorAll(".ln").forEach(el => el.classList.remove("cur", "prev"));
+      if (prev && prev.l && prev.e !== "d") codeEl.querySelector(`.ln[data-l="${prev.l}"]`)?.classList.add("prev");
+      if (cur.e !== "d") {
+        const el = codeEl.querySelector(`.ln[data-l="${cur.l}"]`);
+        if (el) {
+          el.classList.add("cur");
+          const box = $("codebox");
+          const top = el.offsetTop - box.clientHeight / 2 + el.clientHeight;
+          box.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+        }
+      }
+      // narration
+      let narr = "";
+      if (cur.e === "d") narr += `<div class="nx done"><i>✓</i><span><b>Программа завершилась.</b> Справа — итоговое состояние памяти.</span></div>`;
+      else if (cur.e === "r") narr += `<div class="nx done"><i>↩</i><span><b>${esc(cur.fn)}()</b> завершается и возвращает <b>${esc(cellText(cur.rv))}</b>.</span></div>`;
+      else if (cur.e === "x") narr += `<div class="nx bad"><i>!</i><span>Возникло исключение <code>${esc(cur.ex)}</code> в строке ${cur.l}. Python ищет подходящий <code>except</code>.</span></div>`;
+      else {
+        const n = (L.narr || {})[cur.l];
+        narr += `<div class="nx next"><i>${cur.l}</i><span>${n ? md(n) : `Python готовится выполнить строку ${cur.l}.`}</span></div>`;
+      }
+      if (st.i === 0) narr += `<div class="chg">Нажми ▶, чтобы сделать шаг.</div>`;
+      const ch = describeChange(L, prev, cur);
+      if (ch.length) narr += `<div class="chg">${ch.join("<br>")}</div>`;
+      $("narr").innerHTML = narr;
+
+      // frames
+      const pfr = prev ? prev.f.map(k => tr.frames[k]) : [];
+      const frs = cur.f.map(k => tr.frames[k]);
+      $("frames").innerHTML = frs.map((f, fi) => {
+        const pm = pfr[fi] && pfr[fi].name === f.name ? Object.fromEntries(pfr[fi].vars) : {};
+        const rows = f.vars.length ? f.vars.map(([k, v]) => `<div class="row${prev && JSON.stringify(pm[k]) !== JSON.stringify(v) ? " flash" : ""}"><span class="k">${esc(k)}</span><span class="v">${val(v)}</span></div>`).join("") : `<div class="empty">пока нет имён</div>`;
+        const isTop = fi === frs.length - 1;
+        const ret = isTop && cur.e === "r" ? `<div class="ret">↩ return ${val(cur.rv)}</div>` : "";
+        return `<div class="frame${isTop ? " top" : ""}"><div class="fh"><span>${esc(f.name)}</span><span>${isTop && frs.length > 1 ? "активный" : ""}</span></div>${rows}${ret}</div>`;
+      }).join("") || `<div class="frame"><div class="empty">пусто</div></div>`;
+
+      // heap
+      const ph = new Map(prev ? prev.h.map(k => [tr.objs[k].n, k]) : []);
+      $("heap").innerHTML = cur.h.length ? cur.h.map(k => { const o = tr.objs[k]; return objHTML(o, prev && ph.get(o.n) !== k); }).join("")
+        : `<div class="frame"><div class="empty">${L.opts && L.opts.heap_all ? "" : "Числа, строки, True/False/None показаны прямо рядом с именем. "}Здесь появятся списки, словари, функции, классы и объекты.</div></div>`;
+
+      // output
+      const o = tr.out.slice(0, cur.o), po = prev ? Math.min(prev.o, cur.o) : cur.o;
+      $("out").innerHTML = (o ? esc(o.slice(0, po)) + `<span class="new">${esc(o.slice(po))}</span>` : "") + `<span class="cursor"></span>`;
+      $("errbox").innerHTML = cur.e === "d" && tr.error ? `<div class="err">Программа упала: ${esc(tr.error)}</div>` : "";
+
+      $("b-first").disabled = $("b-prev").disabled = st.i === 0;
+      $("b-next").disabled = $("b-last").disabled = st.i === steps.length - 1;
+      if (st.i === steps.length - 1) stop();
+    }
+    function stop() { if (st.timer) { clearInterval(st.timer); st.timer = null; } $("b-play").textContent = "⏵⏵"; }
+    $("b-first").onclick = () => { stop(); show(0); };
+    $("b-prev").onclick = () => { stop(); show(st.i - 1); };
+    $("b-next").onclick = () => { stop(); show(st.i + 1); };
+    $("b-last").onclick = () => { stop(); show(steps.length - 1); };
+    $("b-play").onclick = () => {
+      if (st.timer) return stop();
+      if (st.i === steps.length - 1) show(0);
+      $("b-play").textContent = "⏸";
+      st.timer = setInterval(() => { if (player !== st || !document.body.contains(scrub)) return clearInterval(st.timer); show(st.i + 1); }, 1100);
+    };
+    scrub.oninput = () => { stop(); show(+scrub.value); };
+    document.getElementById("mem").addEventListener("click", onRef);
+    document.getElementById("narr").addEventListener("click", onRef);
+    show(0);
+  }
+  function onRef(e) {
+    const b = e.target.closest(".ref");
+    if (!b) return;
+    const o = document.getElementById("obj-" + b.dataset.ref);
+    if (!o) return;
+    o.scrollIntoView({ behavior: "smooth", block: "center" });
+    o.classList.remove("pulse"); void o.offsetWidth; o.classList.add("pulse");
+    setTimeout(() => o.classList.remove("pulse"), 1400);
+  }
+
+  function render() {
+    if (player && player.timer) { clearInterval(player.timer); player.timer = null; }
+    const r = route();
+    if (r.type === "lesson") renderLesson(r.id);
+    else if (r.type === "sec") { renderSection(r.i); window.scrollTo(0, 0); }
+    else renderHome();
+  }
+  render();
+})();
+</script>
