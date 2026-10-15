@@ -81,19 +81,21 @@ def build():
         for it in sec["items"]:
             if it not in covered:
                 problems.append(f"section {si}: item '{it}' has no lesson")
-    from zones import ZONES
+    from scenes import WORLDS
     deep = {}
     for modname in ("deep_a", "deep_b", "deep_c", "deep_d", "deep_e"):
         try:
             deep.update(importlib.import_module(modname).DEEP)
         except ModuleNotFoundError:
             pass
-    zone_of = {}
-    for zi, z in enumerate(ZONES):
-        for sn in z["sections"]:
-            zone_of[sn - 1] = zi
     for si, sec in enumerate(sections):
-        sec["zone"] = zone_of[si]
+        w = WORLDS[si + 1]
+        sec["zone"] = si
+        sec["world"] = {"name": w["world"], "hue": w["hue"], "kind": w["kind"], "intro": w["intro"], "why": w["why"],
+                        "spots": {k: [v[0], v[1]] for k, v in w["spots"].items()}}
+        for it in sec["items"]:
+            if it not in w["spots"]:
+                problems.append(f"world {si + 1}: item '{it}' has no object in the scene")
         for les in sec["lessons"]:
             extra = deep.get(les["id"])
             if not extra:
@@ -111,7 +113,8 @@ def build():
             for lid in les.get("links", []):
                 if lid not in {l["id"] for s2 in sections for l in s2["lessons"]}:
                     problems.append(f"{les['id']}: unknown link {lid}")
-    zones = [{k: z[k] for k in ("name", "kind", "hue", "intro", "why")} for z in ZONES]
+    zones = [{"name": WORLDS[i + 1]["world"], "kind": WORLDS[i + 1]["kind"], "hue": WORLDS[i + 1]["hue"],
+              "intro": WORLDS[i + 1]["intro"], "why": WORLDS[i + 1]["why"]} for i in range(len(sections))]
     data = {"sections": sections, "zones": zones}
     blob = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     with open(os.path.join(HERE, "app.html"), encoding="utf-8") as fh:

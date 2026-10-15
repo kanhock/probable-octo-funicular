@@ -40,7 +40,7 @@
   :root:not([data-theme="light"]) {
     --bg: #0D1318; --panel: #151D25; --ink: #E2E9EF; --muted: #8E9DAA; --line: #26323D;
     --accent: #6FA2FF; --accent-ink: #0D1318; --hl: #FFD43B; --hl-soft: #3A3317; --prev-soft: #16302A;
-    --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --zs: 26%; --zl: 15%; --hero1: #24498F; --hero2: #5435A8; --glow1: rgb(111 162 255 / .10); --glow2: rgb(168 137 255 / .09); --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
+    --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --zs: 26%; --zl: 15%; --sk-s: 30%; --sk-l: 17%; --gr-s: 24%; --gr-l: 22%; --hero1: #24498F; --hero2: #5435A8; --glow1: rgb(111 162 255 / .10); --glow2: rgb(168 137 255 / .09); --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
     --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25); --chip-l: 68%; --chip-s: 75%;
     color-scheme: dark;
   }
@@ -48,7 +48,7 @@
 :root[data-theme="dark"] {
   --bg: #0D1318; --panel: #151D25; --ink: #E2E9EF; --muted: #8E9DAA; --line: #26323D;
   --accent: #6FA2FF; --accent-ink: #0D1318; --hl: #FFD43B; --hl-soft: #3A3317; --prev-soft: #16302A;
-  --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --zs: 26%; --zl: 15%; --hero1: #24498F; --hero2: #5435A8; --glow1: rgb(111 162 255 / .10); --glow2: rgb(168 137 255 / .09); --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
+  --ok: #45C08D; --ok-ink: #0D1318; --err: #FF7B70; --err-soft: #3A1E1D; --code-bg: #10171D; --flame: #FF9248; --xp: #A889FF; --zs: 26%; --zl: 15%; --sk-s: 30%; --sk-l: 17%; --gr-s: 24%; --gr-l: 22%; --hero1: #24498F; --hero2: #5435A8; --glow1: rgb(111 162 255 / .10); --glow2: rgb(168 137 255 / .09); --grass: #13231A; --grass2: #182C20; --road: #3B4753; --road-edge: #2A343E; --road-line: #C9D3DC; --trail: #FFD43B; --tree: #2F7A4C; --tree2: #266541; --trunk: #6B4630; --rock: #4A5560; --flower: #D9668F;
   --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25); --chip-l: 68%; --chip-s: 75%;
   color-scheme: dark;
 }
@@ -296,7 +296,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
 /* ---------- zones on the map ---------- */
 .z-wall { fill: #F6E7CF; stroke: #B9895A; stroke-width: 1; } .z-roof { fill: #D2553F; } .z-door { fill: #8A5A3B; }
 .z-txt { font: 700 8px var(--f-code); text-anchor: middle; fill: var(--ink); paint-order: stroke; stroke: var(--panel); stroke-width: 2.5px; }
-.z-txt.dark { fill: #14202B; stroke: none; } .z-txt.light { fill: #FFFFFF; stroke: none; } .z-txt.big { font-size: 10px; }
+.z-txt.dark { fill: var(--ink); stroke: none; } .z-txt.light { fill: #FFFFFF; stroke: none; } .z-txt.big { font-size: 10px; }
 .z-txt.dunder { fill: #6E56CF; font-size: 9px; }
 .z-dark { fill: #2C3E57; }
 .z-gear { fill: #C98A3D; } .z-gear.dark { fill: #6E56CF; } .z-hole { fill: var(--panel); }
@@ -411,6 +411,125 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
 .rv-from { font: 600 11px var(--f-code); color: var(--c-ink); text-decoration: none; }
 .rv-end { text-align: center; display: grid; gap: 12px; justify-items: center; padding-top: 30px; }
 .check.big { width: 90px; height: 90px; } .check.big circle { fill: var(--ok); } .check.big path { fill: none; stroke: var(--ok-ink); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+
+
+/* ---------- worlds (scenes) ---------- */
+:root { --sk-s: 70%; --sk-l: 95%; --gr-s: 42%; --gr-l: 86%; }
+.world { background: var(--panel); border: 1px solid var(--line); border-radius: 24px; padding: 14px; margin: 16px 0 6px; box-shadow: var(--shadow); }
+.world.inl { margin: 14px 0 12px; padding: 12px; }
+.w-h { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.w-h span { font: 600 10.5px var(--f-code); letter-spacing: .1em; text-transform: uppercase; color: hsl(var(--zh) 55% 42%); }
+.w-h b { font: 700 18px var(--f-display); text-align: right; }
+.world.inl .w-h b { font-size: 14px; }
+.w-intro { margin: 6px 0 10px; font-size: 14px; color: var(--muted); }
+.scene { position: relative; border-radius: 16px; overflow: hidden; margin-top: 8px; }
+.scene svg.sc { display: block; width: 100%; height: auto; }
+.spots { position: absolute; inset: 0; }
+.sdot { position: absolute; width: 20px; height: 20px; margin: -10px 0 0 -10px; padding: 0; border-radius: 50%; border: 2px solid #FFFFFF; cursor: pointer;
+  display: grid; place-items: center; font: 700 10px/1 var(--f-code); color: #FFFFFF; background: hsl(var(--zh) 72% 42%); box-shadow: 0 2px 6px rgb(0 0 0 / .3); }
+.sdot::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid hsl(var(--zh) 72% 45% / .55); animation: dotp 2.4s ease-out infinite; }
+@keyframes dotp { from { transform: scale(.6); opacity: 1; } to { transform: scale(1.3); opacity: 0; } }
+.sdot.done { background: #1E8F62; } .sdot.done::after { border-color: rgb(30 143 98 / .5); }
+.sdot.on { background: #14202B; transform: scale(1.25); z-index: 2; }
+.sdot.dim { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; opacity: .55; border-width: 1.5px; cursor: default; }
+.sdot.dim::after { display: none; }
+.slegend { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 6px; margin-top: 10px; }
+.slegend:empty { display: none; }
+.lg { display: flex; align-items: center; gap: 7px; text-align: left; border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 6px 8px; cursor: pointer; font: 500 12.5px/1.2 var(--f-body); color: var(--ink); min-width: 0; }
+.lg span { min-width: 0; overflow-wrap: anywhere; }
+.lg i { flex: none; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font: 700 9.5px var(--f-code); font-style: normal; color: #FFFFFF; background: hsl(var(--zh) 72% 42%); }
+.lg.done i { background: #1E8F62; }
+.lg.on { border-color: hsl(var(--zh) 72% 42%); background: color-mix(in srgb, hsl(var(--zh) 70% 50%) 12%, var(--panel)); }
+.si-h b i { font-style: normal; display: inline-grid; place-items: center; width: 18px; height: 18px; margin-right: 6px; border-radius: 50%; font: 700 9.5px var(--f-code); color: #FFFFFF; background: hsl(var(--zh) 72% 42%); vertical-align: 1px; }
+.spill-old { position: absolute; border: 0; cursor: pointer; white-space: nowrap; font: 600 10.5px/1 var(--f-body); color: #14202B; background: rgb(255 255 255 / .94); padding: 5px 8px; border-radius: 99px; box-shadow: 0 2px 8px rgb(0 0 0 / .18), 0 0 0 1px rgb(0 0 0 / .06); transition: transform .12s; }
+.spill.done { background: #E3F6EC; color: #145F43; }
+.spill.on { background: #14202B; color: #FFFFFF; }
+.spill:active { transform: scale(.95); }
+.scene.mini .spill { font-size: 11px; }
+.sinfo { margin-top: 10px; background: color-mix(in srgb, hsl(var(--zh) 60% 50%) 9%, var(--panel)); border-radius: 16px; padding: 10px 14px; min-height: 52px; font-size: 14.5px; }
+.sinfo:empty { display: none; }
+.sinfo p { margin: 4px 0; }
+.sinfo code { font: .9em var(--f-code); background: var(--code-bg); border: 1px solid var(--line); border-radius: 5px; padding: 0 4px; }
+.si-hint { color: var(--muted); font-size: 13.5px; }
+.si-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.si-h b { font: 600 15px var(--f-code); }
+.si-ok { font: 600 11px var(--f-code); color: var(--ok); }
+.si-go { display: grid; grid-template-columns: 1fr auto; gap: 0 10px; align-items: center; margin-top: 8px; text-decoration: none; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; }
+.si-go small { font: 600 10.5px var(--f-code); color: var(--muted); }
+.si-go span { grid-row: 2; font-weight: 600; font-size: 14px; }
+.si-go i { grid-row: 1 / span 2; grid-column: 2; font-style: normal; font-size: 18px; color: var(--accent); }
+.w-why { margin-top: 10px; font-size: 14px; }
+.w-why summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.w-why p { margin: 6px 0 0; color: var(--muted); }
+.road .lbl2.wemb { display: flex; gap: 8px; align-items: center; max-width: calc(64% - 20px); padding: 6px 10px 6px 6px; }
+.road .lbl2.r.wemb { flex-direction: row-reverse; padding: 6px 6px 6px 10px; }
+.road .lbl2 em { display: block; font: 600 9.5px var(--f-code); font-style: normal; letter-spacing: .04em; color: var(--c-ink); text-transform: uppercase; }
+.road .lbl2 .emb { flex: none; border-radius: 10px; }
+svg.sc text { font-family: var(--f-code); }
+.sc-sky { fill: hsl(var(--zh) var(--sk-s) var(--sk-l)); }
+.sc-ground { fill: hsl(var(--zh) var(--gr-s) var(--gr-l)); }
+.sc .ink { stroke: #1D2A36; stroke-width: 1.4; stroke-linejoin: round; }
+.sc .lite { opacity: .75; } .sc .dark { filter: brightness(.82); }
+.sc .tx { fill: #14202B; } .sc .tw { fill: #FFFFFF; } .sc .tm { fill: var(--muted); } .sc .tc { fill: var(--ink); } .sc .tg { fill: #7CF0B0; }
+.f-blue { fill: #5B9BF8; } .f-blue2 { fill: #2F6FD8; } .f-green { fill: #3CC48F; } .f-green2 { fill: #1E9C6C; } .f-yellow { fill: #FFCF4D; } .f-orange { fill: #FF9447; }
+.f-red { fill: #F2625F; } .f-pink { fill: #F47BB0; } .f-purple { fill: #9479F2; } .f-teal { fill: #34B7C4; } .f-paper { fill: #FFFDF7; } .f-paper2 { fill: #EFE6D6; }
+.f-grey { fill: #C9D2DA; } .f-dark { fill: #2C3E57; } .f-wood { fill: #C99A5B; } .f-glass { fill: rgb(180 220 255 / .55); } .f-cloud { fill: rgb(255 255 255 / .85); } .f-sky { fill: #EAF4FF; } .f-skin { fill: #F2C29B; }
+.sc .ar { stroke: #E5484D; stroke-width: 2.4; stroke-linecap: round; } .sc .ar-h { fill: #E5484D; }
+.sc .brk { fill: none; stroke: #F76B15; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.sc .road { fill: none; stroke: #6E7B87; stroke-width: 20; stroke-linecap: round; stroke-linejoin: round; } .sc .road-l { fill: none; stroke: #FFFFFF; stroke-width: 2; stroke-dasharray: 7 8; }
+.sc .ring { fill: none; stroke: #6E7B87; stroke-width: 18; } .sc .ring-l { fill: none; stroke: #FFFFFF; stroke-width: 2; stroke-dasharray: 7 8; }
+.sc .pole { stroke: #8A5A3B; stroke-width: 3; stroke-linecap: round; } .sc .pole-thick { fill: none; stroke: #2C3E57; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.sc .ln, .sc .ink-l { stroke: #1D2A36; stroke-width: 1.6; stroke-linecap: round; fill: none; }
+.sc .tick { fill: none; stroke: #FFFFFF; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.sc .wave { fill: none; stroke: #F2625F; stroke-width: 1.5; }
+.sc .string, .sc .thread, .sc .rope { fill: none; stroke: #8A5A3B; stroke-width: 1.8; stroke-dasharray: 0; }
+.sc .thread { stroke: #E5484D; stroke-dasharray: 4 3; } .sc .rope { stroke-dasharray: 5 3; stroke-width: 2.2; }
+.sc .nonebox { fill: none; stroke: var(--muted); stroke-width: 1.6; stroke-dasharray: 4 3; }
+.sc .bp { fill: none; stroke: rgb(255 255 255 / .55); stroke-width: 1.5; stroke-linecap: round; }
+.sc .frame { fill: none; stroke: #1D2A36; stroke-width: 1.4; stroke-dasharray: 3 2; }
+.sc .trunk { fill: none; stroke: #8A5A3B; stroke-width: 12; stroke-linecap: round; } .sc .branch { fill: none; stroke: #8A5A3B; stroke-width: 6; stroke-linecap: round; }
+.sc .glow-ring { fill: none; stroke: #9479F2; stroke-width: 2; opacity: .35; }
+.sc .water { fill: none; stroke: #5B9BF8; stroke-width: 2; stroke-linecap: round; }
+.sc .ribbon { stroke: #FFCF4D; stroke-width: 3; }
+.sc .flash { fill: #FFFFFF; opacity: 0; }
+.sc .dash { stroke: #8E9AA6; stroke-width: 1.5; stroke-dasharray: 3 3; }
+.sc .tile { filter: drop-shadow(0 2px 3px rgb(0 0 0 / .12)); }
+.sc .belt { animation: belt 3s linear infinite; }
+@keyframes belt { from { transform: translateX(-12px); } to { transform: translateX(12px); } }
+
+
+.sc .ar2 { stroke: #2F6FD8; stroke-width: 2.2; stroke-linecap: round; } .sc .ar2-h { fill: #2F6FD8; }
+.sc .edge { stroke: #1D2A36; stroke-width: 2; }
+.sc .mro { fill: none; stroke: #FF9447; stroke-width: 2.6; stroke-dasharray: 6 4; stroke-linecap: round; }
+.sc .stitch { stroke: #1D2A36; stroke-width: 1.2; stroke-dasharray: 2 2; }
+.sc .cable { fill: none; stroke: #2C3E57; stroke-width: 2.4; stroke-linecap: round; }
+.sc .cable2 { fill: none; stroke: #F2625F; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 8 4; }
+.sc .outline { fill: rgb(255 255 255 / .35); stroke: var(--ink); stroke-width: 1.8; stroke-dasharray: 6 4; }
+.sc .stamp { fill: none; stroke: #FFFFFF; stroke-width: 1.4; }
+.sc .sig { fill: none; stroke: #2F6FD8; stroke-width: 1.8; stroke-linecap: round; }
+.sc .wire { fill: none; stroke-width: 2.6; stroke-linecap: round; }
+.sc .w-blue { stroke: #5B9BF8; } .sc .w-pink { stroke: #F47BB0; } .sc .w-green { stroke: #3CC48F; } .sc .w-orange { stroke: #FF9447; } .sc .w-yellow { stroke: #E5B22E; } .sc .w-teal { stroke: #34B7C4; }
+.sc .strip { stroke: #EFE6D6; stroke-width: 2.5; stroke-linecap: round; }
+.f-sea { fill: #4C9BE8; } .sc .wave2 { fill: none; stroke: #FFFFFF; stroke-width: 2; opacity: .6; }
+.sc .cont-l { stroke: rgb(0 0 0 / .18); stroke-width: 1.2; }
+.sc .rope2 { stroke: #8A5A3B; stroke-width: 2.4; }
+.sc .net { fill: none; stroke: #2C3E57; stroke-width: 1; opacity: .7; }
+.sc .tube { fill: none; stroke: #9AA7B3; stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; opacity: .8; }
+.sc .writeline { stroke: #2F6FD8; stroke-width: 2; stroke-linecap: round; }
+.sc .river { fill: none; stroke: #4C9BE8; stroke-width: 26; stroke-linecap: round; } .sc .river-l { fill: none; stroke: #9CCBF5; stroke-width: 2; stroke-dasharray: 10 10; }
+.sc .ramp { stroke: #C99A5B; stroke-width: 6; stroke-linecap: round; }
+.sc .stream { fill: none; stroke: #4C9BE8; stroke-width: 8; stroke-linecap: round; }
+.f-water { fill: #8EC5F5; }
+.sc .slot-empty { fill: none; stroke: #FFFFFF; stroke-width: 1.4; stroke-dasharray: 4 3; }
+.sc .field { fill: #F1F6FB; stroke: #9AA7B3; stroke-width: 1; }
+.sc .lamin { fill: rgb(255 255 255 / .7); stroke: #9CCBF5; stroke-width: 2; }
+.sc .snow { stroke: #2F6FD8; stroke-width: 1.8; stroke-linecap: round; }
+.f-rock { fill: #6C5A99; } .f-clay { fill: #E8A66B; } .f-stone { fill: #7D8794; }
+.sc .rope3 { fill: none; stroke: #8A5A3B; stroke-width: 2; stroke-dasharray: 5 3; }
+.f-crys1 { fill: #8E7CF0; } .f-crys2 { fill: #4CC3D9; }
+.sc .cyc { fill: none; stroke: #E5484D; stroke-width: 2; }
+.sc .street { fill: none; stroke: rgb(255 255 255 / .55); stroke-width: 14; }
+.f-mount2 { fill: hsl(var(--zh) 10% 70% / .45); } .f-snow { fill: #FFFFFF; }
 
 /* ---------- road map ---------- */
 .seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 4px; gap: 4px; margin: 4px 0 14px; }
@@ -920,7 +1039,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
   function route() {
     const hs = location.hash.slice(1);
     let m;
-    if (hs === "awards" || hs === "profile" || hs === "review") return { type: hs };
+    if (hs === "awards" || hs === "profile" || hs === "review" || hs === "gallery") return { type: hs };
     if ((m = hs.match(/^s(\d+)$/))) return { type: "sec", i: +m[1] - 1 };
     if ((m = hs.match(/^l(\d+)-(\d+)$/)) && byId[hs.slice(1)]) return { type: "lesson", id: hs.slice(1) };
     return { type: "home" };
@@ -967,6 +1086,452 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
 
   // ---------- road map: a walker moves along a winding road of stops ----------
   function seeded(str) { let x = 0; for (const c of str) x = (x * 31 + c.charCodeAt(0)) >>> 0; return () => { x = (x * 1664525 + 1013904223) >>> 0; return x / 4294967296; }; }
+  // ---------- worlds: one illustrated scene per section; every scheme item is an object in the scene ----------
+  const SK = (() => {
+    const n = v => Math.round(v * 10) / 10;
+    const R = (x, y, w, h, c, rx = 4) => `<rect x="${n(x)}" y="${n(y)}" width="${n(w)}" height="${n(h)}" rx="${rx}" class="${c}"/>`;
+    const C = (x, y, r, c) => `<circle cx="${n(x)}" cy="${n(y)}" r="${r}" class="${c}"/>`;
+    const E = (x, y, rx, ry, c) => `<ellipse cx="${n(x)}" cy="${n(y)}" rx="${rx}" ry="${ry}" class="${c}"/>`;
+    const P = (d, c) => `<path d="${d}" class="${c}"/>`;
+    const L = (x1, y1, x2, y2, c = "ln") => `<line x1="${n(x1)}" y1="${n(y1)}" x2="${n(x2)}" y2="${n(y2)}" class="${c}"/>`;
+    const T = (x, y, s, c = "tx", size = 10, anchor = "middle", w = 600) => `<text x="${n(x)}" y="${n(y)}" class="${c}" font-size="${size}" text-anchor="${anchor}" font-weight="${w}">${esc(s)}</text>`;
+    const G = (x, y, body, extra = "") => `<g transform="translate(${n(x)},${n(y)})${extra}">${body}</g>`;
+    const A = s => reduceMotion ? "" : s;
+    function arrow(x1, y1, x2, y2, c = "ar", bend = 0) {
+      const mx = (x1 + x2) / 2 - (y2 - y1) * bend, my = (y1 + y2) / 2 + (x2 - x1) * bend;
+      const ang = Math.atan2(y2 - my, x2 - mx), hx = x2 - Math.cos(ang) * 7, hy = y2 - Math.sin(ang) * 7;
+      const l = ang + 2.6, r2 = ang - 2.6;
+      return `<path d="M${n(x1)},${n(y1)} Q${n(mx)},${n(my)} ${n(hx)},${n(hy)}" class="${c}" fill="none"/><path d="M${n(x2)},${n(y2)} L${n(x2 + Math.cos(l) * 8)},${n(y2 + Math.sin(l) * 8)} L${n(x2 + Math.cos(r2) * 8)},${n(y2 + Math.sin(r2) * 8)}Z" class="${c}-h"/>`;
+    }
+    const crate = (x, y, w, h, fill, label, size = 12, lc = "tx") => P(`M${x},${y} l8,-8 h${w} l-8,8 Z`, fill + " ink lite") + P(`M${x + w},${y} l8,-8 v${h} l-8,8 Z`, fill + " ink dark") + R(x, y, w, h, fill + " ink", 2) + (label !== "" ? T(x + w / 2, y + h / 2 + size * .36, label, lc, size) : "");
+    const tag = (x, y, s, fill = "f-yellow") => { const w = 14 + s.length * 6.6; return G(x, y, `${R(0, 0, w, 18, fill + " ink", 5)}${C(7, 9, 2.2, "f-sky")}${T(w / 2 + 3, 12.5, s, "tx", 10)}`); };
+    const gear = (x, y, Rr, cnt, c, spin, rev) => G(x, y, `<path d="${gearPath(Rr, Rr * .76, cnt)}" class="${c} ink${spin ? " spin" : ""}${rev ? " rev" : ""}"/>${C(0, 0, Rr * .3, "f-sky ink")}`);
+    const sign = (x, y, s, fill = "f-paper") => { const w = 12 + s.length * 6.2; return G(x, y, `${L(0, 0, 0, -16, "pole")}${R(-w / 2, -30, w, 15, fill + " ink", 3)}${T(0, -19, s, "tx", 9)}`); };
+    const house = (x, y, w, h, wall = "f-paper", roof = "f-red") => G(x, y, `${R(0, -h, w, h, wall + " ink", 2)}${P(`M-4,${-h} L${w / 2},${-h - w * .45} L${w + 4},${-h}Z`, roof + " ink")}${R(w / 2 - 4, -12, 8, 12, "f-wood ink", 1)}`);
+    const tree = (x, y, s = 1) => G(x, y, `${R(-2.5, -8, 5, 10, "f-wood", 2)}${C(0, -17, 11, "f-green")}${C(-7, -11, 7, "f-green2")}${C(7, -12, 7, "f-green2")}`, ` scale(${s})`);
+    const cloud = (x, y, s = 1) => G(x, y, `${E(0, 0, 18, 8, "f-cloud")}${C(-7, -5, 8, "f-cloud")}${C(6, -6, 9, "f-cloud")}`, ` scale(${s})`);
+    const person = (x, y, color, s = 1) => `<g transform="translate(${x},${y}) scale(${s})" style="--shirt:${color}">${heroMarkup(false)}</g>`;
+    const ball = (x, y, r, s, fill = "f-paper", size = 9) => C(x, y, r, fill + " ink") + T(x, y + size * .36, s, "tx", size);
+    const chip = (x, y, s, fill = "f-paper", size = 9) => { const w = 10 + s.length * size * .62; return R(x, y, w, 15, fill + " ink", 4) + T(x + w / 2, y + 11, s, "tx", size); };
+    const bg = (h, ground) => `<rect x="0" y="0" width="360" height="${h}" class="sc-sky"/>` + (ground ? `<rect x="0" y="${ground}" width="360" height="${h - ground}" class="sc-ground"/>` : "");
+    return { R, C, E, P, L, T, G, A, arrow, crate, tag, gear, sign, house, tree, cloud, person, ball, chip, bg };
+  })();
+
+  // small 40×40 icons used in gallery-style worlds
+  const ICO = (() => {
+    const { R, C, P, L, T, G, A } = SK;
+    return {
+      factory: () => P("M2,38 V18 L12,24 V18 L22,24 V10 H30 V38Z", "f-orange ink") + R(31, 6, 6, 32, "f-grey ink", 1) + R(6, 28, 6, 6, "f-sky ink", 1) + R(16, 28, 6, 6, "f-sky ink", 1),
+      factory2: () => P("M1,38 V20 L9,25 V12 H16 V38Z", "f-blue ink") + P("M21,38 V20 L29,25 V12 H36 V38Z", "f-pink ink") + R(4, 29, 5, 5, "f-sky ink", 1) + R(24, 29, 5, 5, "f-sky ink", 1),
+      crown: () => P("M4,30 L6,12 L14,22 L20,8 L26,22 L34,12 L36,30Z", "f-yellow ink") + R(4, 30, 32, 6, "f-orange ink", 2) + C(20, 8, 2.5, "f-red ink"),
+      crane: () => P("M8,38 V6 H36 M8,10 L18,6 M30,6 V16", "pole-thick") + R(24, 16, 12, 7, "f-teal ink", 1) + R(14, 30, 22, 8, "f-orange ink", 1) + R(18, 23, 14, 7, "f-blue ink", 1),
+      plug: () => R(4, 14, 14, 14, "f-grey ink", 3) + L(18, 18, 24, 18, "ink-l") + L(18, 24, 24, 24, "ink-l") + R(24, 12, 12, 18, "f-yellow ink", 3) + C(30, 18, 1.5, "f-dark") + C(30, 24, 1.5, "f-dark"),
+      facade: () => R(4, 10, 32, 28, "f-paper ink", 2) + P("M2,10 L20,2 L38,10Z", "f-red ink") + [8, 16, 24].map(x => R(x, 16, 6, 8, "f-sky ink", 1)).join("") + R(16, 28, 8, 10, "f-wood ink", 1),
+      guard: () => P("M20,4 L34,9 V20 C34,29 27,35 20,38 C13,35 6,29 6,20 V9Z", "f-blue ink") + P("M14,20 l4,4 l8,-9", "tick"),
+      knight: () => P("M10,36 H32 V31 H28 C29,22 30,14 22,7 L19,4 L18,9 C12,11 9,16 10,20 L16,19 C14,24 13,28 13,31 H10Z", "f-dark ink") + C(19, 13, 1.5, "f-paper"),
+      tower: () => P("M20,10 L12,38 M20,10 L28,38 M14,30 H26 M16,22 H24", "pole-thick") + C(20, 8, 3, "f-red ink") + A(`<circle cx="20" cy="8" r="6" class="wave"><animate attributeName="r" values="4;16" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.6s" repeatCount="indefinite"/></circle>`),
+      remote: () => R(11, 3, 18, 34, "f-dark ink", 5) + C(20, 11, 4, "f-red ink") + [17, 23, 29].map(y => R(15, y, 4, 4, "f-grey", 1) + R(21, y, 4, 4, "f-grey", 1)).join(""),
+      light: () => R(13, 2, 14, 34, "f-dark ink", 5) + C(20, 9, 4, "f-red") + C(20, 19, 4, "f-yellow") + C(20, 29, 4, "f-green"),
+      shelves: () => R(4, 4, 32, 34, "f-wood ink", 2) + [12, 22, 32].map(y => L(4, y, 36, y, "ink-l")).join("") + R(8, 6, 6, 6, "f-blue ink", 1) + R(18, 15, 8, 7, "f-orange ink", 1) + R(10, 25, 7, 7, "f-green ink", 1) + R(24, 25, 8, 7, "f-pink ink", 1),
+      wheel: () => C(20, 20, 15, "f-grey ink") + C(20, 20, 9, "f-sky ink") + L(20, 11, 20, 29, "ink-l") + L(11, 20, 29, 20, "ink-l") + R(6, 34, 8, 4, "f-dark", 1) + R(26, 34, 8, 4, "f-dark", 1),
+      safe: () => R(4, 4, 32, 32, "f-grey ink", 4) + C(20, 20, 8, "f-paper ink") + L(20, 20, 25, 16, "ink-l") + R(28, 8, 5, 5, "f-green ink", 1) + R(28, 26, 5, 5, "f-red ink", 1),
+      cars: () => P("M2,20 h14 l3,-5 h6 l3,5 h0 v6 h-26z", "f-blue ink") + C(7, 27, 2.5, "f-dark") + C(22, 27, 2.5, "f-dark") + P("M12,34 h14 l4,-6 h6 l2,6 v5 h-26z", "f-red ink") + C(16, 39, 2.5, "f-dark") + C(32, 39, 2.5, "f-dark"),
+      voices: () => R(2, 4, 16, 10, "f-paper ink", 3) + T(10, 12, "Гав", "tx", 6.5) + R(22, 4, 16, 10, "f-paper ink", 3) + T(30, 12, "Мяу", "tx", 6.5) + R(14, 26, 12, 10, "f-red ink", 3) + L(16, 26, 9, 15, "ink-l") + L(24, 26, 31, 15, "ink-l"),
+      engine: () => P("M2,24 h8 l4,-8 h14 l4,8 h6 v10 h-36z", "f-teal ink") + R(14, 22, 12, 9, "f-orange ink", 1) + C(9, 34, 3, "f-dark") + C(31, 34, 3, "f-dark"),
+      bus: () => R(2, 10, 36, 22, "f-yellow ink", 4) + [6, 14, 22].map(x => R(x, 14, 6, 7, "f-sky ink", 1)).join("") + C(10, 33, 3, "f-dark") + C(30, 33, 3, "f-dark") + R(30, 15, 5, 14, "f-wood ink", 1),
+      whistle: () => P("M4,18 h16 a8,8 0 1 1 -2,8 h-14z", "f-grey ink") + P("M30,10 q6,-4 8,0 M31,6 q6,-4 7,-1", "ink-l") + C(23, 22, 2, "f-dark"),
+      handoff: () => R(4, 18, 12, 14, "f-blue ink", 3) + R(24, 18, 12, 14, "f-green ink", 3) + C(10, 12, 4, "f-skin ink") + C(30, 12, 4, "f-skin ink") + R(15, 21, 10, 7, "f-paper ink", 1),
+    };
+  })();
+
+  const SCENE_ART = (() => {
+    const { R, C, E, P, L, T, G, A, arrow, crate, tag, gear, sign, house, tree, cloud, person, ball, chip, bg } = SK;
+    return [
+    // 1. Базовая модель языка
+    () => ({ h: 260, emb: [14, 40, 180, 110], art: bg(260, 222) + cloud(310, 26) + cloud(196, 18, .7) +
+        tag(14, 52, "age") + tag(18, 116, "years", "f-pink") +
+        arrow(58, 62, 106, 88, "ar", -.15) + arrow(66, 124, 106, 112, "ar", .1) +
+        crate(108, 74, 70, 58, "f-paper", "17", 22) + R(112, 116, 26, 13, "f-blue2 ink", 3) + T(125, 126, "int", "tw", 8.5) + T(150, 146, "id 0x7f…", "tm", 7.5) +
+        R(26, 172, 124, 50, "f-teal ink", 10) + P("M50,172 l-6,-10 h18 l-6,10Z", "f-grey ink") + P("M92,172 l-6,-10 h18 l-6,10Z", "f-grey ink") +
+        ball(53, 150, 10, "17") + ball(95, 150, 10, "1") + gear(88, 197, 15, 10, "f-yellow", true) + T(88, 201, "+", "tx", 12) +
+        R(150, 192, 22, 9, "f-grey ink", 3) + ball(186, 196, 11, "18", "f-yellow") +
+        R(228, 44, 120, 102, "f-paper ink", 8) + T(238, 66, "age = age + 1", "tx", 10, "start") + T(238, 88, "if age > 17:", "tx", 10, "start") +
+        T(252, 106, "print('ok')", "tx", 10, "start") + T(252, 124, "vote()", "tx", 10, "start") + P("M246,96 h-4 v32 h4", "brk") +
+        R(228, 180, 64, 40, "f-dark ink", 8) + C(260, 200, 12, "f-grey ink") + C(260, 200, 6, "f-dark") + R(236, 174, 14, 8, "f-grey ink", 2) +
+        A(`<rect x="230" y="182" width="60" height="36" rx="8" class="flash"><animate attributeName="opacity" values="0;0;.8;0" dur="3s" repeatCount="indefinite"/></rect>`) +
+        G(300, 172, R(0, 0, 50, 58, "f-paper ink", 3) + R(5, 5, 40, 34, "f-blue2", 2) + T(25, 25, "age → 18", "tw", 7.5) + T(25, 51, "снимок", "tx", 7.5), " rotate(6)"),
+      spots: { "Переменная": [16, 50], "Ссылка": [84, 70], "Объект": [112, 76], "Значение": [174, 94], "Тип": [108, 130], "Выражение": [88, 226], "Оператор": [88, 197], "Инструкция": [232, 48], "Блок кода": [236, 128], "Состояние": [322, 176] } }),
+
+    // 2. Типы данных
+    () => ({ h: 280, emb: [10, 30, 180, 100], art: bg(280, 250) + R(6, 112, 348, 7, "f-wood ink", 2) + R(6, 236, 348, 7, "f-wood ink", 2) +
+        crate(16, 62, 44, 46, "f-blue", "42", 15, "tw") +
+        G(98, 108, P("M-18,0 h36 l-6,-10 h-24z", "f-grey ink") + L(0, -10, 0, -38, "pole") + E(0, -40, 22, 5, "f-yellow ink") + R(-14, -28, 28, 12, "f-dark ink", 3) + T(0, -19, "3.14…", "tg", 8)) +
+        G(140, 64, R(0, 0, 40, 44, "f-paper ink", 6) + R(14, 8, 12, 28, "f-grey ink", 6) + C(20, 15, 6, "f-green ink") + T(20, -6, "True / False", "tc", 8)) +
+        P("M196,74 C230,92 262,92 296,74", "string") + ["к", "о", "т"].map((ch, i) => C(214 + i * 34, 85 - (i === 1 ? 3 : 0), 12, "f-pink ink") + T(214 + i * 34, 89 - (i === 1 ? 3 : 0), ch, "tx", 11) + T(214 + i * 34, 106, String(i), "tm", 8)).join("") +
+        G(318, 108, R(-16, -14, 32, 14, "f-grey ink", 2) + R(-14, -50, 28, 36, "nonebox", 3) + T(0, -28, "None", "tm", 8)) +
+        [0, 1, 2].map(i => G(16 + i * 42, 232, R(0, -30, 38, 26, "f-orange ink", 3) + C(8, -2, 4, "f-dark") + C(30, -2, 4, "f-dark") + T(19, -36, String(i), "tm", 8) + R(6, -24, 26, 12, "f-paper ink", 2) + T(19, -15, ["'a'", "'b'", "'c'"][i], "tx", 8))).join("") +
+        L(54, 218, 58, 218, "ink-l") + L(96, 218, 100, 218, "ink-l") +
+        [0, 1].map(i => G(150 + i * 38, 232, R(0, -32, 34, 28, "f-teal ink", 3) + C(7, -2, 4, "f-dark") + C(27, -2, 4, "f-dark") + R(12, -24, 10, 9, "f-yellow ink", 2) + P("M14,-24 v-3 a3,3 0 0 1 6,0 v3", "ink-l"))).join("") +
+        P("M240,232 C230,232 228,190 244,186 C252,176 270,176 278,186 C294,190 292,232 282,232Z", "f-paper2 ink") + C(254, 214, 6, "f-blue ink") + C(268, 204, 6, "f-pink ink") + C(270, 222, 6, "f-green ink") +
+        G(300, 236, [0, 1].map(i => [0, 1].map(j => R(i * 26, -84 + j * 40, 24, 38, "f-grey ink", 3) + C(i * 26 + 19, -65 + j * 40, 1.6, "f-dark") + R(i * 26 + 4, -80 + j * 40, 16, 9, "f-paper ink", 2) + T(i * 26 + 12, -73 + j * 40, ["'x'", "'y'"][i] + ["", ""][j], "tx", 6.5)).join("")).join("")) +
+        G(256, 14, R(0, 0, 92, 40, "f-blue2 ink", 4) + P("M8,10 h30 M8,18 h46 M8,26 h22", "bp") + T(66, 31, "Point(x, y)", "tw", 8) + C(46, 0, 3, "f-red ink")),
+      spots: { "int": [16, 60], "float": [76, 64], "bool": [140, 64], "str": [196, 72], "None": [304, 60], "list": [62, 188], "tuple": [150, 202], "set": [242, 190], "dict": [300, 150], "пользовательские типы": [256, 16] } }),
+
+    // 3. Управление выполнением
+    () => ({ h: 280, emb: [8, 10, 160, 140], art: bg(280, 0) +
+        P("M70,150 V100 M70,100 L28,34 M70,100 V28 M70,100 L116,36", "road") + P("M70,150 V100 M70,100 L28,34 M70,100 V28 M70,100 L116,36", "road-l") +
+        sign(28, 48, "if", "f-green") + sign(70, 42, "elif", "f-yellow") + sign(116, 50, "else", "f-orange") +
+        C(214, 74, 34, "ring") + C(214, 74, 34, "ring-l") + P("M244,58 L300,22", "road") + P("M244,58 L300,22", "road-l") + sign(310, 40, "break", "f-red") +
+        R(198, 106, 32, 8, "f-wood ink", 3) + P("M196,108 q18,-16 36,0", "brk") + T(214, 128, "continue", "tm", 8) + sign(214, 66, "n > 0", "f-paper") +
+        A(`<circle r="5" class="f-red ink"><animateMotion dur="4s" repeatCount="indefinite" path="M214,40 a34,34 0 1,1 -0.1,0"/></circle>`) +
+        G(276, 102, R(0, 0, 70, 46, "f-purple ink", 8) + C(16, 18, 7, "f-dark") + R(30, 11, 14, 14, "f-dark", 1) + P("M54,26 l7,-13 l7,13z", "f-dark") + T(35, 40, "match", "tw", 8.5)) +
+        R(14, 210, 156, 14, "f-grey ink", 7) + [24, 50, 76, 102, 128, 154].map(x => C(x, 217, 4, "f-dark")).join("") +
+        `<g class="${reduceMotion ? "" : "belt"}">` + [0, 1, 2].map(i => crate(26 + i * 44, 186, 22, 20, ["f-blue", "f-pink", "f-yellow"][i], String(i + 1), 9)).join("") + `</g>` +
+        person(186, 224, "#12A594", .9) + T(92, 244, "for x in items", "tm", 8.5) +
+        G(222, 170, R(0, 0, 72, 54, "f-orange ink", 8) + R(10, -16, 52, 16, "f-grey ink", 3) + A(`<rect x="12" y="-14" width="48" height="10" rx="2" class="f-dark"><animate attributeName="y" values="-14;-4;-14" dur="1.4s" repeatCount="indefinite"/></rect>`) + T(36, 22, "[1,2,3]", "tx", 8) + T(36, 40, "→ [1,4,9]", "tx", 8)) +
+        G(318, 248, P("M-10,0 L0,-26 L10,0Z", "f-orange ink") + R(-12, -2, 24, 4, "f-paper ink", 1) + L(-20, 4, 20, 4, "dash")),
+      spots: { "if / elif / else": [70, 100], "while": [180, 74], "break": [290, 30], "continue": [238, 112], "match": [278, 104], "for": [24, 186], "comprehensions": [224, 172], "pass": [334, 238] } }),
+
+    // 4. Функции
+    () => ({ h: 300, emb: [110, 40, 160, 150], art: bg(300, 270) +
+        G(10, 14, R(0, 0, 96, 60, "f-blue2 ink", 4) + T(48, 18, "def greet(", "tw", 8.5) + T(48, 30, "name,", "tw", 8.5) + T(48, 42, "greeting):", "tw", 8.5) + P("M10,50 h30 M50,50 h36", "bp")) +
+        G(262, 12, R(0, 0, 86, 46, "f-paper2 ink", 4) + T(43, 16, "global", "tx", 9) + T(43, 32, "counter = 0", "tx", 8)) +
+        R(120, 92, 136, 112, "f-orange ink", 12) + R(140, 112, 96, 56, "f-glass ink", 6) + T(188, 132, "local", "tm", 8) + T(188, 152, "result = …", "tx", 8.5) +
+        P("M146,92 l-10,-22 h32 l-10,22Z", "f-grey ink") + P("M206,92 l-10,-22 h32 l-10,22Z", "f-grey ink") + T(152, 66, "name", "tc", 8) + T(212, 66, "greeting", "tc", 8) +
+        A(`<g><animateTransform attributeName="transform" type="translate" values="0,-6;0,8;0,-6" dur="2.4s" repeatCount="indefinite"/>`) + ball(152, 46, 11, "Аня", "f-pink", 7.5) + A(`</g>`) +
+        gear(188, 186, 12, 10, "f-yellow", true) + R(256, 172, 34, 12, "f-grey ink", 4) + crate(290, 188, 52, 28, "f-yellow", "Привет", 8) +
+        P("M120,128 l-28,-14 v40 l28,-14", "f-grey ink") + [0, 1, 2, 3].map(i => C(84 + (i % 2) * 8, 108 + i * 8, 4, "f-pink ink")).join("") +
+        G(24, 268, [0, 1, 2].map(i => R(0, -32 - i * 22, 60, 20, "f-wood ink", 3) + T(30, -18 - i * 22, ["unit=", "note=", "k="][i], "tx", 8)).join("")) +
+        P("M256,112 h18 a6,6 0 0 1 6,6 v34 a6,6 0 0 1 -6,6 h-18z", "f-yellow ink") + T(268, 138, "count", "tx", 6.5) +
+        G(140, 268, R(0, -42, 66, 42, "f-orange ink", 6) + R(10, -32, 46, 26, "f-orange ink lite", 4) + R(20, -24, 26, 14, "f-orange ink", 3) + T(33, -14, "f(1)", "tx", 7)) +
+        G(300, 82, R(0, 0, 48, 66, "f-teal ink", 8) + C(24, 20, 8, "f-red ink") + T(24, 23, "II", "tw", 8) + R(14, 40, 20, 10, "f-dark", 2)) + A(`<circle cx="324" cy="158" r="5" class="f-yellow ink"><animate attributeName="cy" values="150;176" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0" dur="1.6s" repeatCount="indefinite"/></circle>`) +
+        G(232, 268, R(0, -30, 44, 30, "f-pink ink", 3) + L(22, -30, 22, 0, "ribbon") + L(0, -15, 44, -15, "ribbon") + T(22, -36, "@", "tc", 12)) +
+        G(300, 268, R(0, -12, 34, 12, "f-grey ink", 3) + T(17, -2, "λ", "tx", 11)),
+      spots: { "def": [14, 16], "параметры": [182, 72], "аргументы": [166, 40], "return": [292, 188], "область видимости": [142, 114], "local / global": [264, 14], "*args": [88, 126], "**kwargs": [24, 176], "lambda": [302, 256], "замыкания": [262, 112], "рекурсия": [142, 228], "генераторы": [302, 84], "декораторы": [234, 240] } }),
+
+    // 5. Объектная модель
+    () => ({ h: 270, emb: [120, 50, 120, 150], art: bg(270, 236) + R(0, 0, 360, 14, "f-paper2", 0) +
+        R(150, 170, 64, 66, "f-paper2 ink", 3) + R(144, 162, 76, 10, "f-paper ink", 3) + R(160, 206, 44, 14, "f-dark ink", 3) + T(182, 216, "list", "tw", 8) +
+        crate(160, 104, 44, 52, "f-purple", "[1,2]", 9, "tw") + A(`<circle cx="186" cy="120" r="46" class="glow-ring"><animate attributeName="r" values="40;54;40" dur="3s" repeatCount="indefinite"/></circle>`) +
+        L(166, 156, 140, 182, "ink-l") + R(98, 182, 54, 14, "f-yellow ink", 4) + T(125, 192, "len = 2", "tx", 8) +
+        C(222, 190, 8, "f-red ink") + R(214, 200, 16, 6, "f-grey ink", 2) +
+        G(236, 112, R(0, 0, 62, 40, "f-blue ink", 4) + T(31, 14, "ПАСПОРТ", "tw", 7) + T(31, 30, "id 1404…", "tw", 8)) +
+        person(52, 236, "#E5484D") + person(94, 236, "#3776AB", .92) + P("M58,196 C100,140 130,120 162,118", "thread") + P("M100,200 C120,170 140,150 164,140", "thread") +
+        G(300, 236, R(0, -150, 52, 150, "f-wood ink", 4) + [0, 1, 2, 3, 4].map(i => R(6, -142 + i * 28, 40, 22, "f-paper2 ink", 3) + T(26, -128 + i * 28, ["x→", "f→", "Cls→", "m→", "…"][i], "tx", 7.5)).join("")) +
+        tree(20, 236, .8),
+      spots: { "объект": [182, 104], "identity": [238, 114], "type": [160, 208], "attribute": [98, 182], "method": [222, 190], "ссылка": [112, 158], "пространство имён": [302, 90] } }),
+
+    // 6. Классы
+    () => ({ h: 290, emb: [10, 14, 170, 110], art: bg(290, 230) +
+        G(10, 18, R(0, 0, 120, 74, "f-blue2 ink", 4) + T(60, 18, "class Dog:", "tw", 9) + T(60, 34, "sound = 'Гав'", "tw", 8) + T(60, 48, "def bark(self)", "tw", 8) + P("M12,60 h40 M62,60 h46", "bp") + R(-6, 76, 132, 6, "f-wood ink", 2) + L(10, 82, 4, 120, "pole") + L(110, 82, 116, 120, "pole")) +
+        G(142, 30, R(0, 0, 44, 44, "f-orange ink", 6) + R(8, 44, 28, 10, "f-grey ink", 2) + T(22, 26, "cls()", "tx", 8.5)) +
+        G(16, 128, R(0, 0, 44, 20, "f-red ink", 4) + R(18, -4, 8, 6, "f-dark", 2) + T(22, 14, "tools", "tw", 7.5)) +
+        house(196, 196, 52, 44, "f-paper", "f-red") + house(270, 196, 52, 44, "f-paper", "f-blue2") + T(222, 214, "rex", "tc", 9) + T(296, 214, "bim", "tc", 9) +
+        R(206, 168, 12, 12, "f-yellow ink", 2) + R(280, 168, 12, 12, "f-sky ink", 2) + R(232, 182, 7, 7, "f-paper ink", 1) + T(235, 188, "я", "tx", 6) +
+        R(252, 184, 10, 12, "f-teal ink", 2) + R(326, 184, 10, 12, "f-teal ink", 2) + L(257, 196, 257, 206, "pole") + L(331, 196, 331, 206, "pole") +
+        G(268, 262, E(0, 0, 30, 9, "f-sky ink") + R(-4, -26, 8, 26, "f-grey ink", 2) + C(0, -28, 6, "f-sky ink") + A(`<path d="M0,-34 q-10,-8 -16,6 M0,-34 q10,-8 16,6" class="water"><animate attributeName="opacity" values=".4;1;.4" dur="2s" repeatCount="indefinite"/></path>`) + T(0, 22, "sound", "tc", 8)) +
+        person(170, 230, "#F76B15", .9) + R(150, 196, 18, 12, "f-wood ink", 2) +
+        R(10, 252, 160, 12, "f-grey ink", 6) + R(20, 222, 34, 28, "frame", 2) + T(37, 270, "__new__", "tm", 7.5) + R(76, 222, 34, 28, "f-paper ink", 2) + R(82, 230, 8, 8, "f-yellow", 1) + T(93, 270, "__init__", "tm", 7.5) + house(128, 250, 30, 26) + arrow(56, 236, 72, 236) + arrow(112, 236, 124, 236),
+      spots: { "class": [12, 20], "экземпляр": [262, 150], "атрибут класса": [268, 236], "атрибут экземпляра": [331, 190], "метод экземпляра": [204, 166], "classmethod": [142, 30], "staticmethod": [16, 128], "__init__": [170, 196], "self": [246, 186], "создание объектов": [90, 236] } }),
+
+    // 7. ООП: столпы и связи
+    () => {
+      const items = [["Абстракция", "wheel", "руль вместо мотора"], ["Инкапсуляция", "safe", "данные в сейфе"], ["Наследование", "cars", "спорткар от машины"], ["Полиморфизм", "voices", "одна кнопка — разный голос"],
+        ["Композиция", "engine", "мотор внутри"], ["Агрегация", "bus", "игроки в автобусе"], ["Ассоциация", "whistle", "свисток на время"], ["Делегирование", "handoff", "передал задачу"]];
+      let art = bg(300, 0), spots = {};
+      items.forEach(([name, ic, cap], i) => {
+        const x = 10 + (i % 4) * 86, y = 14 + Math.floor(i / 4) * 142;
+        art += G(x, y, R(0, 0, 80, 124, i < 4 ? "f-paper ink tile" : "f-paper2 ink tile", 10) + G(16, 18, `<g transform="scale(1.2)">${ICO[ic]()}</g>`) + T(40, 96, cap.split(" ").slice(0, 2).join(" "), "tx", 7.5) + T(40, 108, cap.split(" ").slice(2).join(" "), "tx", 7.5));
+        spots[name] = [x + 40, y + 76];
+      });
+      art += T(180, 148, "четыре столпа ↑   ·   связи между объектами ↓", "tm", 8);
+      return { h: 300, emb: [10, 14, 166, 124], art, spots };
+    },
+    ];
+  })();
+
+  {
+    const { R, C, E, P, L, T, G, A, arrow, crate, tag, gear, sign, house, tree, cloud, person, ball, chip, bg } = SK;
+    const node = (x, y, s, fill = "f-paper") => R(x - 17, y - 12, 34, 24, fill + " ink", 7) + T(x, y + 4, s, "tx", 11);
+    const duck = (x, y) => G(x, y, E(0, -12, 16, 11, "f-yellow ink") + C(12, -26, 8, "f-yellow ink") + P("M19,-27 l9,2 l-9,3z", "f-orange ink") + C(14, -28, 1.4, "f-dark") + P("M-6,-14 q6,-8 12,0", "ink-l"));
+    const robot = (x, y) => G(x, y, R(-11, -30, 22, 26, "f-grey ink", 4) + R(-9, -48, 18, 15, "f-grey ink", 4) + C(-4, -41, 2, "f-dark") + C(4, -41, 2, "f-dark") + L(0, -48, 0, -55, "ink-l") + C(0, -57, 2.5, "f-red ink") + R(-8, -4, 6, 6, "f-dark", 1) + R(2, -4, 6, 6, "f-dark", 1));
+    const bubble = (x, y, s, fill = "f-paper") => { const w = 12 + s.length * 6.2; return G(x, y, R(-w / 2, -16, w, 16, fill + " ink", 7) + P("M-3,0 l3,6 l3,-6", fill + " ink") + T(0, -5, s, "tx", 9)); };
+    const mesh = (x, y, w, h) => { let d = ""; for (let i = 0; i <= w; i += 12) d += `M${x + i},${y} l6,${h}`; for (let i = 0; i <= w; i += 12) d += `M${x + i},${y} l-6,${h}`; return P(d, "net") + P(`M${x},${y} H${x + w}`, "ink-l"); };
+
+    SCENE_ART.push(
+    // 8. Наследование
+    () => ({ h: 280, emb: [0, 30, 170, 220], art: bg(280, 246) +
+        P("M84,250 C86,206 80,176 86,146", "trunk") + P("M85,160 C70,130 48,110 28,96 M85,156 C102,126 124,108 142,94 M86,150 C86,120 86,92 86,70", "branch") +
+        C(28, 84, 22, "f-green") + C(144, 82, 22, "f-green") + C(86, 56, 26, "f-green2") + C(18, 96, 7, "f-red ink") + C(36, 102, 7, "f-red ink") + C(150, 98, 7, "f-yellow ink") + C(136, 102, 7, "f-yellow ink") + C(86, 74, 6, "f-yellow ink") +
+        R(54, 222, 64, 18, "f-wood ink", 5) + T(86, 235, "Vehicle", "tx", 9) + chip(6, 114, "Bike", "f-paper", 8.5) + chip(120, 114, "Truck", "f-paper", 8.5) + T(32, 144, "wheels = 2", "tc", 8) + T(146, 144, "wheels = 4", "tm", 8) +
+        arrow(36, 152, 62, 218, "ar2", .25) + T(30, 194, "super()", "tc", 8.5) +
+        L(270, 40, 220, 92, "edge") + L(270, 40, 320, 92, "edge") + L(220, 112, 270, 160, "edge") + L(320, 112, 270, 160, "edge") +
+        node(270, 30, "A") + node(220, 102, "B") + node(320, 102, "C") + node(270, 172, "D", "f-yellow") +
+        P("M262,160 C236,148 226,130 224,116 C246,120 296,120 316,116 C306,84 288,58 276,44", "mro") +
+        [[246, 150, "1"], [228, 124, "2"], [298, 124, "3"], [296, 70, "4"]].map(([x, y, s]) => C(x, y, 7, "f-orange ink") + T(x, y + 3.5, s, "tx", 8.5)).join("") +
+        R(222, 196, 44, 16, "f-pink ink", 8) + T(244, 207, "JSON", "tx", 8) + R(274, 196, 46, 16, "f-teal ink", 8) + T(297, 207, "Greet", "tx", 8) + L(244, 196, 262, 184, "stitch") + L(297, 196, 280, 184, "stitch") +
+        T(270, 236, "class D(JSON, Greet, B, C)", "tc", 8),
+      spots: { "базовый класс": [60, 222], "дочерний класс": [122, 114], "переопределение": [28, 98], "super()": [58, 170], "множественное наследование": [254, 166], "MRO": [306, 84], "mixins": [216, 204] } }),
+
+    // 9. Полиморфизм
+    () => ({ h: 270, emb: [20, 70, 190, 140], art: bg(270, 206) +
+        P("M0,0 h40 q-10,90 6,200 h-46z", "f-red") + P("M360,0 h-40 q10,90 -6,200 h46z", "f-red") + R(0, 0, 360, 12, "f-red ink", 0) +
+        R(0, 206, 360, 64, "f-wood", 0) + L(0, 206, 360, 206, "ink-l") +
+        L(180, 150, 180, 206, "pole-thick") + L(166, 206, 194, 206, "pole-thick") + R(173, 132, 14, 20, "f-dark ink", 6) +
+        duck(66, 206) + robot(116, 206) + person(240, 206, "#E5484D") + bubble(70, 160, "Кря") + bubble(116, 140, "Бип") + bubble(240, 144, "Привет") +
+        T(180, 124, "sound()", "tc", 9) +
+        G(276, 150, L(10, 0, 10, 56, "pole") + L(0, 56, 20, 56, "pole") + P("M-14,0 h48 l-6,-34 h-36z", "f-paper ink") + T(10, -14, "area()", "tx", 8) + C(0, -24, 3, "f-blue") + C(10, -26, 3, "f-pink") + C(20, -23, 3, "f-green")) +
+        R(110, 236, 140, 16, "f-dark ink", 5) + [126, 156, 186, 216].map(x => R(x, 240, 14, 8, "f-yellow ink", 2)).join("") + P("M133,236 C130,220 110,214 96,214 M223,236 C226,220 250,214 262,214", "cable") +
+        G(52, 26, R(0, 0, 60, 44, "f-paper ink", 4) + T(30, 14, "ПРОПУСК", "tx", 7.5) + T(30, 28, "✓ sound()", "tx", 8) + T(30, 39, "✓ draw()", "tx", 8)) +
+        G(270, 22, R(0, 0, 70, 30, "f-purple ink", 4) + C(14, 15, 7, "f-dark") + R(30, 8, 14, 14, "f-dark", 1) + P("M54,22 l7,-13 l7,13z", "f-dark") + A(`<path d="M54,-4 l7,-13 l7,13z" class="f-yellow ink"><animate attributeName="opacity" values="1;1;0" dur="2s" repeatCount="indefinite"/><animateTransform attributeName="transform" type="translate" values="0,-6;0,22" dur="2s" repeatCount="indefinite"/></path>`)),
+      spots: { "duck typing": [96, 176], "переопределение методов": [282, 120], "общий интерфейс": [114, 236], "протоколы": [56, 30], "structural typing": [274, 24] } }),
+
+    // 10. Абстракция и интерфейсы
+    () => ({ h: 270, emb: [20, 40, 170, 130], art: bg(270, 0) + R(0, 210, 360, 60, "f-wood", 0) + L(0, 210, 360, 210, "ink-l") +
+        G(26, 56, R(0, 0, 130, 100, "outline", 10) + T(65, 20, "Payment", "tc", 10) + R(14, 38, 50, 30, "outline", 4) + T(39, 57, "pay()", "tc", 9) + T(39, 82, "?", "tc", 12) + R(78, 38, 38, 30, "f-green ink", 4) + T(97, 57, "log()", "tx", 8.5)) +
+        G(150, 62, C(0, 0, 18, "f-red ink") + C(0, 0, 13, "stamp") + T(0, 4, "ABC", "tw", 9), " rotate(-14)") +
+        G(196, 34, R(0, 0, 66, 92, "f-wood ink", 4) + R(6, 10, 54, 76, "f-paper ink", 2) + R(22, 4, 22, 10, "f-grey ink", 3) + T(33, 30, "Protocol", "tx", 7.5) + T(33, 48, "☑ save()", "tx", 8) + T(33, 64, "☑ load()", "tx", 8)) +
+        G(276, 40, R(0, 0, 70, 70, "f-dark ink", 8) + [["pay", "f-green"], ["refund", "f-orange"], ["status", "f-blue"]].map(([s, c], i) => R(8, 8 + i * 20, 54, 15, c + " ink", 4) + T(35, 19 + i * 20, s, "tx", 8)).join("")) +
+        G(186, 156, P("M0,8 h150 v70 h-150z", "f-paper2 ink") + E(0, 43, 6, 35, "f-paper ink") + E(150, 43, 6, 35, "f-paper ink") + T(75, 26, "КОНТРАКТ", "tx", 8.5) + P("M20,38 h110 M20,48 h96 M20,58 h104", "ink-l") + P("M84,70 q8,-10 16,0 t16,0", "sig") + C(30, 68, 8, "f-red ink")),
+      spots: { "abstract base class": [30, 60], "ABC": [166, 46], "@abstractmethod": [44, 98], "Protocol": [204, 40], "интерфейс": [282, 46], "контракт": [196, 168] } }),
+
+    // 11. Специальные методы
+    () => {
+      const rows = [["print(obj)", "__str__"], ["repr(obj)", "__repr__"], ["len(obj)", "__len__"], ["obj[k]", "__getitem__"], ["obj[k] = v", "__setitem__"], ["for x in obj", "__iter__"],
+        ["next(it)", "__next__"], ["a == b", "__eq__"], ["a < b", "__lt__"], ["a + b", "__add__"], ["obj()", "__call__"], ["in · if · hash", "..."]];
+      const cols = ["f-blue", "f-pink", "f-green", "f-orange", "f-yellow", "f-teal"];
+      let art = bg(340, 0) + R(160, 12, 24, 316, "f-dark ink", 6), spots = {};
+      rows.forEach(([key, dn], i) => {
+        const y = 28 + i * 26;
+        art += R(10, y - 10, 104, 20, "f-paper ink", 6) + T(62, y + 4, key, "tx", 9) +
+          P(`M114,${y} C140,${y} 140,${y} 160,${y} M184,${y} C210,${y} 214,${y} 236,${y}`, "wire " + cols[i % 6].replace("f-", "w-")) + C(172, y, 3.5, "f-yellow") +
+          R(236, y - 10, 82, 20, "f-purple ink", 6) + T(277, y + 4, dn === "..." ? "…" : dn, "tw", 9) + gear(334, y, 8, 8, "f-grey", true, i % 2 === 1);
+        spots[dn] = [238, y - 9];
+      });
+      art += A(`<circle r="3" class="f-yellow"><animateMotion dur="2.6s" repeatCount="indefinite" path="M114,28 H236"/></circle><circle r="3" class="f-yellow"><animateMotion dur="2.6s" begin="1.3s" repeatCount="indefinite" path="M114,262 H236"/></circle>`);
+      return { h: 340, emb: [0, 10, 200, 130], art, spots };
+    },
+
+    // 12. Дескрипторы
+    () => ({ h: 270, emb: [40, 60, 220, 150], art: bg(270, 220) +
+        R(10, 14, 340, 40, "f-teal ink", 6) + T(180, 39, "class Product:  price = Positive()", "tw", 10) +
+        G(18, 66, R(0, 0, 70, 66, "f-paper ink", 4) + T(35, 14, "устав", "tx", 8) + T(35, 30, "__get__", "tx", 8) + T(35, 43, "__set__", "tx", 8) + T(35, 56, "__delete__", "tx", 8)) +
+        P("M100,218 V110 a24,24 0 0 1 48,0 V218", "f-grey ink arch") + A(`<rect x="104" y="112" width="40" height="3" class="f-red"><animate attributeName="y" values="112;210;112" dur="2.4s" repeatCount="indefinite"/></rect>`) +
+        chip(30, 120, "price = 250 ✓", "f-green", 8) + chip(40, 142, "-1 ✗", "f-red", 8) +
+        R(160, 96, 64, 122, "f-paper ink", 6) + R(166, 104, 52, 34, "f-glass ink", 4) + person(192, 210, "#2B66CF", .95) + T(192, 92, "охрана", "tc", 8) +
+        G(236, 112, R(0, 0, 66, 40, "f-paper2 ink", 6) + R(8, 8, 50, 20, "f-sky ink", 4) + T(33, 22, "→ 250", "tx", 9)) +
+        G(308, 218, R(0, -36, 40, 36, "f-dark ink", 4) + R(4, -44, 32, 8, "f-grey ink", 2) + P("M8,0 v12 M16,0 v16 M24,0 v10 M32,0 v14", "strip")) +
+        G(18, 218, R(0, -54, 60, 54, "f-orange ink", 6) + P("M-4,-54 L30,-68 L64,-54Z", "f-red ink") + T(30, -30, "property", "tx", 8.5) + T(30, -16, "типовой", "tx", 7)),
+      spots: { "__set__": [102, 120], "__get__": [240, 114], "__delete__": [312, 186], "property": [22, 166], "descriptor protocol": [24, 70] } }),
+
+    // 13. Property
+    () => ({ h: 260, emb: [30, 30, 200, 160], art: bg(260, 0) + R(0, 150, 360, 110, "f-wood", 0) + L(0, 150, 360, 150, "ink-l") +
+        person(180, 150, "#12A594", 1.2) + R(20, 30, 320, 120, "f-glass ink", 6) + L(120, 30, 120, 150, "ink-l") + L(240, 30, 240, 150, "ink-l") +
+        R(126, 112, 108, 38, "f-paper2 ink", 6) + T(180, 128, "окно выдачи", "tx", 8) +
+        G(132, 44, R(0, 0, 96, 22, "f-dark ink", 5) + T(48, 15, "баланс: 100", "tg", 9)) +
+        G(40, 160, R(0, 0, 70, 50, "f-paper ink", 6) + R(14, 8, 42, 6, "f-dark", 2) + T(35, 28, "сумма > 0?", "tx", 8) + C(35, 42, 5, "f-yellow ink")) + A(`<circle cx="75" cy="150" r="6" class="f-yellow ink"><animate attributeName="cy" values="140;166" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0" dur="1.8s" repeatCount="indefinite"/></circle>`) +
+        G(268, 168, R(0, 0, 60, 40, "f-paper ink", 6) + C(30, 18, 11, "f-red ink") + T(30, 36, "закрыть", "tx", 7)) +
+        G(296, 52, R(-14, 6, 28, 22, "f-yellow ink", 4) + P("M-8,6 v-6 a8,8 0 0 1 16,0 v6", "ink-l") + T(0, 46, "только", "tc", 7.5) + T(0, 56, "чтение", "tc", 7.5)),
+      spots: { "getter": [130, 40], "setter": [46, 166], "deleter": [276, 176], "управление доступом к атрибутам": [284, 60] } }),
+
+    // 14. Метаклассы
+    () => ({ h: 270, emb: [10, 30, 200, 190], art: bg(270, 236) +
+        G(16, 70, R(0, 0, 112, 130, "f-purple ink", 10) + T(56, 30, "type", "tw", 16) + gear(56, 76, 22, 12, "f-yellow", true) + R(30, 108, 52, 14, "f-dark ink", 3)) +
+        P("M42,70 l-10,-20 h48 l-10,20Z", "f-grey ink") + chip(18, 20, "name", "f-paper", 8) + chip(62, 14, "bases", "f-paper", 8) + chip(108, 22, "dict", "f-paper", 8) +
+        R(128, 176, 220, 12, "f-grey ink", 6) + [140, 170, 200, 230, 260, 290, 320].map(x => C(x, 182, 3.5, "f-dark")).join("") +
+        `<g class="${reduceMotion ? "" : "belt"}">` + G(150, 140, R(0, 0, 44, 34, "f-blue2 ink", 3) + T(22, 21, "class A", "tw", 7.5)) + G(212, 140, R(0, 0, 44, 34, "f-blue2 ink", 3) + T(22, 21, "class B", "tw", 7.5)) + `</g>` +
+        G(186, 60, L(0, 0, 0, 46, "pole-thick") + R(-16, 46, 32, 12, "f-orange ink", 3) + R(-26, -8, 52, 12, "f-dark ink", 3) + A(`<animateTransform attributeName="transform" type="translate" values="186,52;186,64;186,52" dur="1.6s" repeatCount="indefinite"/>`)) +
+        G(252, 34, R(0, 0, 96, 92, "f-pink ink", 10) + T(48, 22, "Meta", "tw", 12) + R(14, 34, 68, 44, "f-paper ink", 3) + T(48, 50, "registry", "tx", 8) + T(48, 66, "csv, json", "tx", 8)) +
+        person(318, 236, "#8E4EC6", .95) + G(296, 212, C(0, 0, 9, "f-glass ink") + L(6, 6, 14, 14, "pole-thick")),
+      spots: { "type": [20, 76], "class creation": [64, 42], "metaclass": [256, 40], "__new__": [204, 112], "__init_subclass__": [300, 196] } }),
+
+    // 15. Модули и пакеты
+    () => ({ h: 280, emb: [150, 40, 210, 200], art: bg(280, 0) + R(0, 210, 360, 70, "f-sea", 0) + A(`<path d="M0,226 q15,-6 30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0" class="wave2"><animateTransform attributeName="transform" type="translate" values="0,0;-30,0" dur="3s" repeatCount="indefinite"/></path>`) +
+        R(0, 176, 128, 34, "f-wood ink", 0) + L(20, 210, 20, 236, "pole") + L(100, 210, 100, 236, "pole") +
+        P("M36,176 V24 H150 M36,32 L70,24 M140,24 V60", "pole-thick") + R(124, 60, 32, 20, "f-orange ink", 2) + T(140, 74, "math", "tx", 8) +
+        L(110, 24, 110, 96, "ink-l") + R(100, 96, 20, 14, "f-yellow ink", 2) + T(110, 106, "pi", "tx", 8) +
+        P("M168,206 L182,230 H340 L354,206Z", "f-dark ink") + L(300, 206, 300, 120, "pole-thick") + P("M300,122 L338,132 L300,142Z", "f-red ink") + T(316, 116, "__main__", "tc", 7.5) +
+        [[178, 170, "f-teal", "geometry"], [236, 170, "f-blue", "tools"], [178, 136, "f-pink", "shop"]].map(([x, y, c, s]) => R(x, y, 54, 34, c + " ink", 2) + P(`M${x + 10},${y + 4} v26 M${x + 20},${y + 4} v26 M${x + 30},${y + 4} v26 M${x + 40},${y + 4} v26`, "cont-l") + R(x + 6, y + 10, 42, 13, "f-paper ink", 2) + T(x + 27, y + 20, s, "tx", 7.5)).join("") +
+        G(232, 128, R(0, 0, 50, 24, "f-yellow ink", 3) + T(25, 10, "__name__", "tx", 6.5) + T(25, 19, "'tools'", "tx", 6.5)) +
+        G(312, 166, R(0, 0, 34, 36, "f-paper ink", 2) + T(17, 12, "__init__", "tx", 6) + P("M6,18 h22 M6,24 h18 M6,30 h20", "ink-l")) +
+        G(150, 184, R(0, 0, 22, 18, "f-paper ink", 2) + P("M4,6 h14 M4,10 h12 M4,14 h10", "ink-l")),
+      spots: { "module": [180, 172], "package": [214, 226], "import": [44, 36], "from ... import": [124, 96], "__name__": [230, 126], "__main__": [302, 128], "__init__.py": [310, 164], "namespace": [152, 186] } }),
+
+    // 16. Исключения
+    () => ({ h: 290, emb: [40, 40, 220, 180], art: bg(290, 262) + [0, 1, 2, 3, 4, 5].map(i => P(`M${i * 60},0 L${i * 60 + 30},40 L${i * 60 + 60},0Z`, i % 2 ? "f-paper" : "f-red")).join("") +
+        L(30, 84, 30, 262, "pole-thick") + L(330, 84, 330, 262, "pole-thick") + L(30, 86, 330, 86, "rope2") + T(180, 104, "try:", "tc", 9) +
+        person(176, 86, "#F76B15", .9) + L(150, 66, 202, 62, "pole-thick") +
+        A(`<g><animateTransform attributeName="transform" type="translate" values="0,0;0,96" dur="2.2s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0" dur="2.2s" repeatCount="indefinite"/>`) + C(246, 110, 10, "f-red ink") + T(246, 114, "!", "tw", 11) + A(`</g>`) +
+        mesh(60, 212, 240, 16) + R(130, 232, 100, 16, "f-paper ink", 4) + T(180, 244, "except ValueError", "tx", 8) +
+        G(268, 46, R(0, 0, 80, 26, "f-yellow ink", 6) + T(40, 17, "else: браво!", "tx", 8.5)) +
+        G(30, 262, L(0, 0, 0, -50, "pole") + P("M0,-50 h24 l-6,8 l6,8 h-24z", "f-red ink") + T(14, 10, "raise", "tc", 8)) +
+        G(76, 262, L(0, 0, 0, -44, "pole") + P("M0,-44 h74 l-6,7 l6,7 h-74z", "f-purple ink") + T(36, -36, "NotEnoughMoney", "tw", 6.5) + T(22, 10, "своя ошибка", "tc", 7)) +
+        person(316, 262, "#12A594", .8) + L(300, 262, 286, 230, "pole") + P("M276,262 h20 l-4,-10 h-12z", "f-wood ink") + T(314, 284, "finally", "tc", 8),
+      spots: { "try": [64, 86], "Exception": [246, 110], "except": [126, 240], "else": [266, 44], "finally": [326, 240], "raise": [30, 206], "custom exceptions": [76, 206] } }),
+    );
+  }
+
+  {
+    const { R, C, E, P, L, T, G, A, arrow, crate, tag, gear, sign, house, tree, cloud, person, ball, chip, bg } = SK;
+
+    SCENE_ART.push(
+    // 17. Файлы и I/O
+    () => ({ h: 270, emb: [0, 40, 200, 170], art: bg(270, 230) +
+        P("M60,60 V24 H300 V150", "tube") + A(`<circle r="6" class="f-yellow ink"><animateMotion dur="3s" repeatCount="indefinite" path="M60,60 V24 H300 V150"/></circle>`) + T(180, 18, "поток данных", "tm", 8) +
+        R(14, 60, 92, 170, "f-wood ink", 6) + [0, 1, 2].map(i => R(22, 108 + i * 40, 76, 32, "f-paper2 ink", 4) + R(52, 120 + i * 40, 16, 5, "f-dark", 2)).join("") +
+        P("M22,66 h108 v36 h-108z", "f-paper2 ink") + R(30, 58, 30, 14, "f-paper ink", 1) + R(66, 56, 30, 14, "f-paper ink", 1) + T(76, 92, "open()", "tx", 8.5) +
+        G(84, 168, R(-6, -2, 12, 14, "f-yellow ink", 3) + P("M-4,-2 v-5 a4,4 0 0 1 8,0 v5", "ink-l") + L(6, 6, 20, 6, "pole-thick") + C(22, 6, 4, "f-yellow ink")) +
+        R(126, 200, 180, 10, "f-wood ink", 3) + L(140, 210, 140, 230, "pole") + L(292, 210, 292, 230, "pole") +
+        G(140, 164, P("M0,4 h70 v30 h-70z", "f-paper ink") + E(0, 19, 5, 15, "f-paper2 ink") + P("M10,14 h48 M10,22 h40", "ink-l") + C(48, 6, 12, "f-glass ink") + L(56, 14, 70, 28, "pole-thick")) +
+        G(234, 160, R(0, 0, 60, 40, "f-paper ink", 2) + A(`<path d="M8,14 h0" class="writeline"><animate attributeName="d" values="M8,14 h0;M8,14 h44" dur="2s" repeatCount="indefinite"/></path>`) + P("M8,24 h36", "ink-l") + P("M40,-24 q10,10 2,30 l-4,-2 q4,-16 2,-28z", "f-purple ink")) +
+        G(300, 50, R(0, 0, 50, 104, "f-teal ink", 4) + C(42, 54, 3, "f-yellow ink") + P("M0,10 h-14 l-8,10", "pole-thick") + T(25, 120, "закроется", "tm", 7) + T(25, 130, "сама", "tm", 7)) +
+        person(276, 230, "#3776AB", .9),
+      spots: { "open()": [28, 70], "read()": [146, 172], "write()": [234, 162], "close()": [80, 166], "with": [306, 56], "context manager": [258, 204], "streams": [120, 24] } }),
+
+    // 18. Контекстные менеджеры
+    () => ({ h: 250, emb: [40, 40, 280, 170], art: bg(250, 214) +
+        R(70, 50, 230, 150, "f-grey ink", 10) + R(110, 64, 150, 122, "f-sky ink", 6) + T(185, 82, "with resource as r:", "tx", 9) + person(185, 180, "#F76B15", .95) +
+        G(70, 50, R(0, 20, 40, 110, "f-teal ink", 6) + C(20, 34, 6, "f-green ink") + T(20, 80, "вход", "tw", 8) + A(`<path d="M-30,96 h22" class="ar"><animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/></path>`)) + arrow(30, 146, 66, 146) +
+        G(260, 50, R(0, 20, 40, 110, "f-orange ink", 6) + C(20, 34, 6, "f-yellow ink") + A(`<circle cx="20" cy="34" r="6" class="f-red"><animate attributeName="opacity" values="0;1;0" dur="1.2s" repeatCount="indefinite"/></circle>`) + T(20, 80, "выход", "tx", 8)) + arrow(304, 146, 340, 146) +
+        T(185, 228, "выход срабатывает всегда — даже при аварии", "tm", 8) +
+        G(10, 16, R(0, 0, 54, 26, "f-dark ink", 6) + T(27, 17, "toolbelt", "tw", 7.5)) + R(10, 46, 54, 60, "f-paper ink", 6) + T(37, 62, "suppress", "tx", 7) + T(37, 78, "redirect", "tx", 7) + T(37, 94, "@cm", "tx", 7),
+      spots: { "__enter__": [74, 76], "__exit__": [264, 76], "with": [124, 70], "contextlib": [14, 50] } }),
+
+    // 19. Итераторы и генераторы
+    () => ({ h: 280, emb: [0, 20, 220, 180], art: bg(280, 0) + R(0, 0, 360, 280, "sc-ground", 0) +
+        E(80, 70, 70, 40, "f-water ink") + [[48, 62], [80, 80], [110, 60], [70, 52]].map(([x, y], i) => R(x - 8, y - 6, 16, 12, ["f-orange", "f-pink", "f-yellow", "f-green"][i] + " ink", 2)).join("") + T(80, 30, "[3, 1, 4, 1]", "tc", 8.5) +
+        P("M120,100 C150,130 120,170 170,184 S290,170 330,236 L360,250", "river") + P("M120,100 C150,130 120,170 170,184 S290,170 330,236 L360,250", "river-l") +
+        P("M114,96 l20,26", "ramp") +
+        G(170, 182, A(`<animateTransform attributeName="transform" type="translate" values="170,182;170,178;170,182" dur="2s" repeatCount="indefinite"/>`) + P("M-22,-4 h44 l-8,12 h-28z", "f-wood ink") + L(0, -4, 0, -26, "pole") + P("M0,-26 l16,6 l-16,6z", "f-red ink") + L(-26, 4, -14, -2, "pole-thick") + L(26, 4, 14, -2, "pole-thick")) +
+        G(246, 196, R(-4, -24, 8, 40, "f-grey ink", 2) + R(18, -24, 8, 40, "f-grey ink", 2) + R(4, -8, 14, 6, "f-dark", 1) + T(11, -30, "yield", "tc", 8)) +
+        G(318, 176, `<g class="spin">${C(0, 0, 26, "f-wood ink")}${[0, 45, 90, 135].map(a => `<line x1="0" y1="0" x2="${(26 * Math.cos(a * Math.PI / 180)).toFixed(1)}" y2="${(26 * Math.sin(a * Math.PI / 180)).toFixed(1)}" class="ink-l"/><line x1="0" y1="0" x2="${(-26 * Math.cos(a * Math.PI / 180)).toFixed(1)}" y2="${(-26 * Math.sin(a * Math.PI / 180)).toFixed(1)}" class="ink-l"/>`).join("")}</g>` + R(14, -40, 34, 40, "f-paper2 ink", 3) + P("M10,-40 L31,-56 L52,-40Z", "f-red ink")) +
+        P("M250,40 C270,70 300,70 330,110", "stream") + T(286, 38, "(x*x for x in data)", "tc", 7.5),
+      spots: { "iterable": [24, 70], "iter()": [126, 112], "iterator": [172, 160], "next()": [194, 178], "yield": [246, 176], "generator": [334, 146], "generator expression": [266, 58] } }),
+
+    // 20. Декораторы
+    () => ({ h: 260, emb: [100, 40, 200, 170], art: bg(260, 226) +
+        R(10, 204, 340, 14, "f-grey ink", 7) + [24, 64, 104, 144, 184, 224, 264, 304, 336].map(x => C(x, 211, 3.5, "f-dark")).join("") +
+        `<g class="${reduceMotion ? "" : "belt"}">` + crate(20, 172, 28, 26, "f-blue", "f", 11, "tw") + crate(62, 172, 28, 26, "f-teal", "g", 11, "tw") + `</g>` +
+        G(100, 90, R(0, 0, 80, 80, "f-orange ink", 10) + T(40, 26, "map(f,", "tx", 9) + T(40, 40, "data)", "tx", 9) + gear(40, 60, 12, 10, "f-yellow", true) + P("M-14,70 l14,-10", "pole-thick")) +
+        G(196, 104, R(0, 0, 80, 68, "f-pink ink", 10) + T(40, 22, "обёртка", "tw", 9) + R(24, 32, 32, 26, "f-blue ink", 3) + L(40, 32, 40, 58, "ribbon") + L(24, 45, 56, 45, "ribbon")) +
+        G(236, 24, R(-18, 0, 36, 14, "f-dark ink", 3) + L(0, 14, 0, 46, "pole-thick") + R(-14, 46, 28, 18, "f-red ink", 4) + T(0, 60, "@", "tw", 13) + A(`<animateTransform attributeName="transform" type="translate" values="236,24;236,34;236,24" dur="1.4s" repeatCount="indefinite"/>`)) +
+        crate(300, 172, 34, 28, "f-pink", "f'", 11, "tw") + L(317, 172, 317, 200, "ribbon") +
+        G(286, 20, R(0, 0, 64, 64, "f-wood ink", 4) + L(0, 22, 64, 22, "ink-l") + L(0, 44, 64, 44, "ink-l") + T(32, 16, "wraps", "tx", 7.5) + T(32, 38, "lru_cache", "tx", 7) + T(32, 60, "partial", "tx", 7.5)),
+      spots: { "функция как объект": [34, 170], "функция высшего порядка": [104, 94], "decorator": [200, 110], "@decorator": [252, 74], "functools": [290, 24] } }),
+
+    // 21. Типизация
+    () => ({ h: 290, emb: [10, 80, 200, 90], art: bg(290, 0) +
+        R(10, 50, 340, 12, "f-grey ink", 6) + `<g class="${reduceMotion ? "" : "belt"}">` + [["int", "f-orange"], ["str", "f-pink"], ["list[int]", "f-yellow"], ["dict[str, int]", "f-teal"]].map(([s, c], i) => G(24 + i * 80, 20, R(0, 0, 60, 28, c + " ink", 3) + R(8, 8, 44, 12, "f-paper ink", 2) + T(30, 17.5, s, "tx", 7))).join("") + `</g>` +
+        G(14, 92, R(0, 0, 100, 64, "f-dark ink", 8) + R(8, 22, 38, 30, "f-orange ink", 4) + T(27, 41, "int", "tx", 9) + T(50, 41, "|", "tw", 12) + R(54, 22, 38, 30, "f-pink ink", 4) + T(73, 41, "str", "tx", 9) + T(50, 14, "int | str", "tw", 8)) +
+        G(128, 92, R(0, 0, 100, 64, "f-dark ink", 8) + R(8, 22, 38, 30, "f-pink ink", 4) + T(27, 41, "str", "tx", 9) + R(54, 22, 38, 30, "slot-empty", 4) + T(73, 41, "None", "tw", 7.5) + T(50, 14, "Optional[str]", "tw", 7.5)) +
+        G(242, 92, R(0, 0, 106, 64, "f-dark ink", 8) + P("M12,24 h36 l6,14 l-6,14 h-36z", "f-yellow ink") + T(30, 42, "light", "tx", 8) + P("M58,24 h36 v28 h-36 l8,-14z", "f-paper ink") + T(78, 42, "dark", "tx", 8) + T(53, 14, "Literal", "tw", 8)) +
+        G(14, 184, R(0, 0, 80, 70, "f-blue2 ink", 6) + T(40, 18, "Box[T]", "tw", 9) + R(16, 28, 48, 32, "f-sky ink", 4)) +
+        G(104, 196, L(0, -8, 0, 4, "ink-l") + R(-14, 4, 28, 20, "f-yellow ink", 5) + C(-7, 14, 2, "f-sky") + T(3, 18, "T", "tx", 11)) +
+        G(140, 178, P("M0,90 V24 a26,26 0 0 1 52,0 V90", "f-grey ink arch") + T(26, 14, "draw()?", "tc", 8) + A(`<rect x="4" y="40" width="44" height="3" class="f-green"><animate attributeName="y" values="30;84;30" dur="2.2s" repeatCount="indefinite"/></rect>`)) +
+        G(208, 182, R(0, 0, 66, 84, "f-paper ink", 3) + T(33, 14, "Movie", "tx", 8.5) + R(8, 22, 50, 14, "field", 2) + T(33, 32, "title: str", "tx", 7) + R(8, 44, 50, 14, "field", 2) + T(33, 54, "year: int", "tx", 7)) +
+        G(284, 190, R(0, 0, 66, 70, "f-teal ink", 6) + T(33, 16, "@dataclass", "tw", 7.5) + R(8, 24, 50, 38, "f-paper ink", 3) + T(33, 40, "Movie(…)", "tx", 7.5) + T(33, 54, "repr ✓", "tx", 7)),
+      spots: { "type hints": [30, 22], "Union": [20, 96], "Optional": [134, 96], "Literal": [248, 96], "Generic": [20, 188], "TypeVar": [124, 204], "Protocol": [146, 214], "TypedDict": [214, 186], "dataclass": [290, 194] } }),
+
+    // 22. Dataclass
+    () => ({ h: 260, emb: [10, 30, 230, 180], art: bg(260, 228) +
+        G(14, 52, R(0, 0, 96, 120, "f-teal ink", 12) + T(48, 26, "@dataclass", "tw", 10) + gear(48, 72, 18, 10, "f-yellow", true) + R(24, 102, 48, 10, "f-dark", 3)) +
+        G(124, 46, R(0, 0, 104, 92, "f-paper ink", 3) + T(52, 16, "class Order:", "tx", 8.5) + R(8, 26, 88, 16, "field", 2) + T(52, 37, "item: str", "tx", 8) + R(8, 48, 88, 16, "f-yellow ink", 2) + T(52, 59, "qty: int = 1", "tx", 8) + R(8, 70, 88, 16, "field", 2) + T(52, 81, "tags: list", "tx", 8)) +
+        arrow(110, 110, 122, 110) +
+        G(250, 120, R(0, 0, 92, 60, "f-sky ink", 8) + R(4, 4, 84, 52, "lamin", 6) + T(46, 26, "Point(1, 2)", "tx", 8.5) + T(46, 44, "frozen=True", "tx", 7.5) + P("M76,-6 l0,14 M69,1 l14,0 M71,-4 l10,10 M81,-4 l-10,10", "snow")) +
+        G(140, 166, R(0, 0, 96, 40, "f-dark ink", 8) + R(10, -6, 76, 8, "f-paper ink", 2) + R(14, 30, 68, 30, "f-paper ink", 2) + T(48, 42, "__init__", "tx", 7.5) + T(48, 52, "__repr__ __eq__", "tx", 6.5) + C(84, 12, 3, "f-green")),
+      spots: { "@dataclass": [20, 58], "fields": [136, 76], "default": [226, 110], "frozen": [256, 126], "автоматическая генерация методов": [146, 172] } }),
+
+    // 23. Память и выполнение
+    () => ({ h: 300, emb: [10, 100, 330, 160], art: bg(300, 268) + P("M0,0 H360 V20 L340,34 L326,18 L300,40 L280,20 L250,32 L224,16 L200,36 L170,18 L140,34 L110,16 L80,30 L54,14 L28,32 L0,18Z", "f-rock") +
+        G(120, 46, R(0, 0, 54, 34, "f-clay ink", 10) + T(27, 21, "list", "tx", 8.5) + T(27, 46, "глина", "tc", 7.5) + R(66, 0, 54, 34, "f-stone ink", 3) + T(93, 21, "str", "tw", 8.5) + T(93, 46, "камень", "tc", 7.5)) +
+        [["main", "f-blue"], ["f()", "f-teal"], ["g()", "f-orange"]].map(([s, c], i) => R(16, 230 - i * 34, 96, 28, c + " ink", 6) + T(64, 248 - i * 34, s, "tx", 9)).join("") + R(10, 258, 108, 8, "f-dark", 3) + T(64, 150, "стек", "tc", 9) +
+        P("M112,244 C150,240 170,214 196,208", "rope3") + P("M112,210 C150,200 190,180 222,176", "rope3") + P("M112,176 C140,170 200,150 262,150", "rope3") +
+        [[204, 206, "[1, 2]", "f-crys1"], [232, 172, "'hi'", "f-crys2"], [272, 148, "Dog", "f-crys1"]].map(([x, y, s, c]) => P(`M${x - 14},${y + 12} L${x - 8},${y - 16} L${x},${y - 26} L${x + 8},${y - 16} L${x + 14},${y + 12}Z`, c + " ink") + T(x, y + 26, s, "tc", 8)).join("") +
+        G(282, 122, R(0, 0, 44, 16, "f-yellow ink", 8) + T(22, 11.5, "refs: 2", "tx", 7.5)) +
+        G(300, 214, C(0, 0, 10, "f-crys2 ink") + C(28, 0, 10, "f-crys2 ink") + P("M8,-6 q6,-10 12,0 M20,6 q-6,10 -12,0", "cyc")) +
+        G(316, 268, R(-10, -28, 20, 22, "f-grey ink", 4) + C(-4, -20, 2, "f-dark") + C(4, -20, 2, "f-dark") + R(-8, -6, 16, 6, "f-dark", 2) + L(10, -16, 26, -2, "pole") + P("M22,0 h10 l-2,-6 h-6z", "f-wood ink")) +
+        T(196, 290, "создан → используется → 0 ссылок → убран", "tm", 8) + P("M126,282 h140", "dash"),
+      spots: { "stack": [20, 172], "heap": [218, 140], "reference": [150, 222], "garbage collector": [300, 196], "reference counting": [330, 128], "mutability": [124, 48], "object lifecycle": [88, 286] } }),
+
+    // 24. Архитектура кода
+    () => ({ h: 290, emb: [0, 20, 240, 170], art: bg(290, 0) + R(0, 0, 360, 290, "sc-ground", 0) + P("M0,140 H360 M180,0 V290", "street") +
+        [["данные", 20, "f-blue"], ["логика", 100, "f-orange"], ["интерфейс", 180, "f-pink"]].map(([s, x, c]) => G(x, 30, R(0, 0, 70, 90, c + " ink", 6) + T(35, 16, s, "tw", 8.5) + R(8, 26, 54, 56, "f-paper ink", 3))).join("") +
+        [0, 1, 2].map(i => R(108, 60 + i * 18, 54, 14, "f-orange ink", 2)).join("") + T(135, 70, "заказ", "tx", 7) + T(135, 88, "оплата", "tx", 7) + T(135, 106, "скидка", "tx", 7) +
+        P("M90,70 C94,64 96,64 100,70 M170,80 C174,74 176,74 180,80", "cable") +
+        G(258, 30, [["UI", "f-pink"], ["сервис", "f-orange"], ["данные", "f-blue"]].map(([s, c], i) => R(0, i * 30, 90, 28, c + " ink", 3) + T(45, i * 30 + 18, s, "tx", 8.5)).join("")) +
+        G(186, 98, R(0, 0, 14, 18, "f-paper ink", 3) + C(5, 7, 1.5, "f-dark") + C(9, 7, 1.5, "f-dark")) +
+        G(24, 190, R(0, 0, 50, 44, "f-dark ink", 6) + T(25, 18, "тест", "tw", 8) + T(25, 32, "генер.", "tw", 7.5)) + P("M74,212 C110,212 120,170 132,122", "cable2") + T(110, 250, "питание снаружи", "tm", 7.5) +
+        G(132, 120, R(-4, 0, 8, 10, "f-yellow ink", 2)) +
+        [[220, 230, "f-red"], [252, 230, "f-blue"], [284, 230, "f-yellow"], [236, 206, "f-green"], [268, 206, "f-orange"], [252, 182, "f-purple"]].map(([x, y, c]) => R(x, y, 30, 22, c + " ink", 3) + C(x + 8, y - 1, 3.5, c + " ink") + C(x + 22, y - 1, 3.5, c + " ink")).join(""),
+      spots: { "separation of concerns": [24, 34], "cohesion": [112, 62], "coupling": [174, 78], "dependency": [132, 124], "dependency injection": [80, 210], "interface": [188, 100], "abstraction layer": [262, 34], "modularity": [254, 186] } }),
+
+    // 25. Design patterns
+    () => {
+      const pats = [["Factory", "factory"], ["Abstract Factory", "factory2"], ["Singleton", "crown"], ["Builder", "crane"], ["Adapter", "plug"], ["Facade", "facade"],
+        ["Proxy", "guard"], ["Strategy", "knight"], ["Observer", "tower"], ["Command", "remote"], ["State", "light"], ["Repository", "shelves"]];
+      let art = bg(330, 0) + P("M0,330 L110,120 L150,170 L230,40 L360,250 V330Z", "f-mount2") + P("M210,74 L230,40 L250,74 L240,68 L230,78 L220,68Z", "f-snow"), spots = {};
+      pats.forEach(([name, ic], i) => {
+        const x = 10 + (i % 4) * 86, y = 14 + Math.floor(i / 4) * 104;
+        art += G(x, y, R(0, 0, 80, 92, "f-paper ink tile", 14) + G(18, 12, `<g transform="scale(1.1)">${ICO[ic]()}</g>`) + T(40, 76, name === "Abstract Factory" ? "Abstract F." : name, "tx", 8.5));
+        spots[name] = [x + 8, y + 8];
+      });
+      return { h: 330, emb: [10, 14, 166, 92], art, spots };
+    },
+    );
+  }
+
+  // ---------- world view: interactive scene with labelled objects ----------
+  const sceneCache = {};
+  function sceneData(si) { if (!sceneCache[si]) sceneCache[si] = SCENE_ART[si] ? SCENE_ART[si]() : null; return sceneCache[si]; }
+  function lessonForItem(si, item) { return DATA.sections[si].lessons.find(l => l.covers.includes(item)); }
+  function emblem(si, size = 46) {
+    const sc = sceneData(si);
+    if (!sc) return "";
+    const [x, y, w, h] = sc.emb;
+    return `<svg class="emb sc" style="--zh:${DATA.sections[si].world.hue}" viewBox="${x} ${y} ${w} ${h}" width="${size}" height="${Math.round(size * h / w)}" aria-hidden="true" preserveAspectRatio="xMidYMid slice">${sc.art}</svg>`;
+  }
+  function sceneHTML(si, opts = {}) {
+    const sc = sceneData(si), w = DATA.sections[si].world;
+    if (!sc) return "";
+    return `<div class="scene${opts.mini ? " mini" : ""}" data-si="${si}" style="--zh:${w.hue}">
+      <svg class="sc" viewBox="0 0 360 ${sc.h}" aria-hidden="true">${sc.art}</svg><div class="spots"></div></div><div class="slegend" data-si="${si}"></div>`;
+  }
+  function mountScene(box, si, opts = {}) {
+    const sc = sceneData(si), sec = DATA.sections[si], w = sec.world;
+    const el = box.querySelector(`.scene[data-si="${si}"]`), leg = box.querySelector(`.slegend[data-si="${si}"]`);
+    if (!el || !sc) return;
+    const layer = el.querySelector(".spots");
+    const info = opts.info ? box.querySelector(opts.info) : null;
+    const show = opts.highlight ? new Set(opts.highlight) : null;
+    const items = sec.items.filter(it => sc.spots[it]);
+    const num = {};
+    let k = 0;
+    items.forEach(it => { if (!show || show.has(it)) num[it] = ++k; });
+    function layout() {
+      const W = el.clientWidth, f = W / 360;
+      layer.innerHTML = items.map(it => {
+        const [x, y] = sc.spots[it], L = lessonForItem(si, it), dn = L && isDone(L.id);
+        return num[it] ? `<button class="sdot${dn ? " done" : ""}" data-item="${esc(it)}" style="left:${(x * f).toFixed(1)}px;top:${(y * f).toFixed(1)}px" aria-label="${esc(it)}">${dn ? "✓" : num[it]}</button>`
+          : `<span class="sdot dim" style="left:${(x * f).toFixed(1)}px;top:${(y * f).toFixed(1)}px"></span>`;
+      }).join("");
+    }
+    if (leg) leg.innerHTML = items.filter(it => num[it]).map(it => {
+      const L = lessonForItem(si, it), dn = L && isDone(L.id);
+      return `<button class="lg${dn ? " done" : ""}" data-item="${esc(it)}"><i>${dn ? "✓" : num[it]}</i><span>${esc(it)}</span></button>`;
+    }).join("");
+    function explain(it) {
+      const L = lessonForItem(si, it), t = w.spots[it];
+      if (info) info.innerHTML = `<div class="si-h"><b><i>${num[it] || ""}</i>${esc(it)}</b>${L && isDone(L.id) ? '<span class="si-ok">изучено ✓</span>' : ""}</div><p>${md(t ? t[1] : "")}</p>` +
+        (L ? `<a class="si-go press" href="#l${L.id}"><small>Урок ${L.si + 1}.${L.li + 1}</small><span>${esc(L.title)}</span><i>→</i></a>` : "");
+      [layer, leg].forEach(c => c && c.querySelectorAll("[data-item]").forEach(p => p.classList.toggle("on", p.dataset.item === it)));
+    }
+    const pick = e => { const b = e.target.closest("[data-item]"); if (b) explain(b.dataset.item); };
+    layer.onclick = pick;
+    if (leg) leg.onclick = pick;
+    layout();
+    el._relayout = layout;
+    if (opts.first && num[opts.first]) explain(opts.first);
+  }
   // ---------- road map: zones (worlds) with gates, landmarks and a walker ----------
   const gearPath = (R, r, n) => { let d = ""; for (let i = 0; i < n * 2; i++) { const a = Math.PI * i / n, rr = i % 2 ? r : R, a2 = Math.PI * (i + 1) / n; d += (i ? "L" : "M") + (rr * Math.cos(a)).toFixed(1) + "," + (rr * Math.sin(a)).toFixed(1) + "L" + (rr * Math.cos(a2)).toFixed(1) + "," + (rr * Math.sin(a2)).toFixed(1); } return d + "Z"; };
   const tree = `<rect x="-2.5" y="-6" width="5" height="12" rx="2" class="t-trunk"/><circle cy="-15" r="11" class="t-tree"/><circle cx="-6" cy="-10" r="7" class="t-tree2"/><circle cx="6" cy="-11" r="7" class="t-tree2"/>`;
@@ -990,15 +1555,15 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
 
   function buildRoad(el, cfg) {
     const W = Math.round(el.clientWidth) || 358;
-    const n = cfg.stops.length, dy = 132, GATE = 260;
+    const n = cfg.stops.length, dy = cfg.compact ? 150 : 132, GATE = cfg.compact ? 0 : 260;
     const zoneOf = cfg.zoneOf || (() => -1);
     const X = i => (i % 2 === 0 ? .22 : .78) * W;
     const P = [], gates = [];
-    let y = 26 + (zoneOf(0) >= 0 ? GATE + 30 : 0) + 74;
+    let y = 26 + (zoneOf(0) >= 0 && !cfg.compact ? GATE : 0) + 74 + (cfg.compact ? 70 : 0);
     for (let i = 0; i < n; i++) {
       const z = zoneOf(i);
       if (i > 0 && z !== zoneOf(i - 1)) y += GATE;
-      if (z >= 0 && (i === 0 || z !== zoneOf(i - 1))) gates.push({ z, i, y: i === 0 ? 12 : y - dy - GATE + 70 });
+      if (z >= 0 && (i === 0 || z !== zoneOf(i - 1))) gates.push({ z, i, y: cfg.compact ? (i === 0 ? 0 : y - dy / 2 + 10) : i === 0 ? 12 : y - dy - GATE + 70 });
       P.push([X(i), y]);
       y += dy;
     }
@@ -1023,7 +1588,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     // scenery
     const r = seeded(cfg.key);
     const kindAt = yy => { let k = "meadow"; gates.forEach(g => { if (yy >= bandTop(g)) k = Z[g.z].kind; }); return k; };
-    const gateBox = yy => gates.some(g => g.i === 0 ? yy < 290 : yy > g.y - 30 && yy < g.y + 262);
+    const gateBox = yy => !cfg.compact && gates.some(g => g.i === 0 ? yy < 290 : yy > g.y - 30 && yy < g.y + 262);
     let scene = "";
     const put = (x, yy) => { if (gateBox(yy)) return; const kind = kindAt(yy); scene += `<g transform="translate(${x.toFixed(1)},${yy.toFixed(1)})">${PROPS[kind](r(), r)}</g>`; };
     for (let i = 0; i <= n; i++) {
@@ -1035,7 +1600,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     // landmarks: one meaningful scene per zone, on the free "plaza" between the gate and the zone's first stop
     let under = "", over = "";
     const segPts = k => { const out = []; for (let j = 0; j <= 60; j++) out.push([j / 60, ...segAt(k, j / 60)]); return out; };
-    gates.forEach(g => {
+    if (!cfg.compact) gates.forEach(g => {
       const z = Z[g.z], k = g.i;
       if (k >= n) return;
       const py = g.i === 0 ? 210 : g.y + 200;
@@ -1091,12 +1656,12 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
       <path class="rd-edge" d="${fullD}"/><path class="rd" d="${fullD}"/><path class="rd-line" d="${fullD}"/><path class="rd-trail" id="trail" d="${walkD}"/>
       ${segs.map(d => `<path class="seg-h" d="${d}"/>`).join("")}${over}${flag}${stopsSVG}</svg>
       <svg class="herosvg" id="herosvg" style="--shirt:${USER ? USER.color : COLORS[0]}" viewBox="-24 -54 48 60" width="48" height="60" aria-hidden="true">${heroMarkup(true)}</svg>`;
-    html += gates.map(g => { const z = Z[g.z]; return `<div class="zgate" style="--zh:${z.hue};top:${g.y}px"><div class="zg-top"><span class="zg-n">Зона ${g.z + 1} из ${Z.length}</span><button class="zg-why" aria-expanded="false">Зачем?</button></div><b>${esc(z.name)}</b><p>${esc(z.intro)}</p><p class="zg-more" hidden>${esc(z.why)}</p></div>`; }).join("");
+    if (!cfg.compact) html += gates.map(g => { const z = Z[g.z]; return `<div class="zgate" style="--zh:${z.hue};top:${g.y}px"><div class="zg-top"><span class="zg-n">Зона ${g.z + 1} из ${Z.length}</span><button class="zg-why" aria-expanded="false">Зачем?</button></div><b>${esc(z.name)}</b><p>${esc(z.intro)}</p><p class="zg-more" hidden>${esc(z.why)}</p></div>`; }).join("");
     html += cfg.stops.map((s, i) => {
       const [x, yy] = P[i], left = x < W / 2;
       const pos = left ? `left:${x + 32}px` : `right:${W - x + 32}px`;
       return `<a class="stoplink" href="${s.href}" style="left:${x}px;top:${yy}px" aria-label="${esc(s.title)}"></a>` +
-        `<a class="lbl2 sh ${left ? "" : "r"} ${s.state}" href="${s.href}" style="--sh:${s.hue};bottom:${H - yy - 10}px;${pos}"><b>${esc(s.title)}</b><small>${esc(s.sub)}</small></a>`;
+        `<a class="lbl2 sh ${left ? "" : "r"} ${s.state}${s.emb ? " wemb" : ""}" href="${s.href}" style="--sh:${s.hue};bottom:${H - yy - 10}px;${pos}">${s.emb || ""}<span>${s.world ? `<em>${esc(s.world)}</em>` : ""}<b>${esc(s.title)}</b><small>${esc(s.sub)}</small></span></a>`;
     }).join("");
     const fl = fin[0] < W / 2;
     html += `<div class="lbl2 fin ${fl ? "" : "r"}" style="top:${fin[1] - 34}px;${fl ? `left:${fin[0] + 4}px` : `right:${W - fin[0] + 4}px`}"><b>${esc(cfg.finish)}</b><small>${cfg.allDone ? "ты дошёл!" : "финиш"}</small></div>`;
@@ -1218,8 +1783,8 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
       const curS = allDone ? null : DATA.sections[cur];
       const pos = allDone ? DATA.sections.length : cur + curS.lessons.filter(l => isDone(l.id)).length / curS.lessons.length;
       const rd = buildRoad(document.getElementById("road"), {
-        key: "home", pos, allDone, follow: true, cont: "#l" + next.id, finish: "Вся схема Python", zoneOf: i => DATA.sections[i].zone,
-        stops: DATA.sections.map((s, si) => { const d = s.lessons.filter(l => isDone(l.id)).length; return { title: s.title, sub: `${si + 1} · ${d} из ${s.lessons.length} уроков`, href: "#s" + (si + 1), hue: secHue(si), num: si + 1, state: d === s.lessons.length ? "done" : si === cur ? "cur" : "" }; }),
+        key: "home", pos, allDone, follow: true, cont: "#l" + next.id, finish: "Вся схема Python", zoneOf: i => i, compact: true,
+        stops: DATA.sections.map((s, si) => { const d = s.lessons.filter(l => isDone(l.id)).length; return { title: s.title, world: `Мир ${si + 1} · ${s.world.name}`, emb: emblem(si, 52), sub: `${d} из ${s.lessons.length} уроков`, href: "#s" + (si + 1), hue: secHue(si), num: si + 1, state: d === s.lessons.length ? "done" : si === cur ? "cur" : "" }; }),
       });
       document.getElementById("findme").onclick = rd.find;
     }
@@ -1384,12 +1949,16 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     let html = `<div class="sh" style="--sh:${secHue(si)}"><div class="sec-head"><div class="eyebrow" style="color:var(--c-ink)">Раздел ${si + 1} из ${DATA.sections.length}</div><h1>${esc(s.title)}</h1>`;
     if (s.intro) html += `<p class="sec-intro">${md(s.intro)}</p>`;
     html += `<div class="secbar"><div class="xpbar"><i style="width:${100 * d / s.lessons.length}%"></i></div>${d}/${s.lessons.length}</div></div>
+      <section class="world" style="--zh:${s.world.hue}"><div class="w-h"><span>Мир ${si + 1} из ${DATA.sections.length}</span><b>${esc(s.world.name)}</b></div><p class="w-intro">${md(s.world.intro)}</p>
+        ${sceneHTML(si)}<div class="sinfo" id="sinfo"><p class="si-hint">Нажми на подпись в мире — узнаешь, что означает этот предмет и в каком уроке он разобран.</p></div>
+        <details class="w-why"><summary>Зачем этот мир</summary><p>${md(s.world.why)}</p></details></section>
       <div class="roadhead" style="margin-top:18px"><h2>Путь раздела</h2><button id="findme">Где я?</button></div><div class="road" id="road"></div></div>`;
     app.innerHTML = html;
+    mountScene(app, si, { info: "#sinfo" });
     const ni = next ? s.lessons.indexOf(next) : s.lessons.length;
     const nextGlobal = next || LESSONS.find(l => !isDone(l.id)) || s.lessons[0];
     const rd = buildRoad(document.getElementById("road"), {
-      key: "s" + si, pos: ni, allDone: !next, follow: false, zoneOf: () => s.zone, cont: "#l" + nextGlobal.id, finish: si + 1 < DATA.sections.length ? "Дальше: " + DATA.sections[si + 1].title : "Конец схемы",
+      key: "s" + si, pos: ni, allDone: !next, follow: false, zoneOf: () => s.zone, compact: true, cont: "#l" + nextGlobal.id, finish: si + 1 < DATA.sections.length ? "Дальше: " + DATA.sections[si + 1].title : "Конец схемы",
       stops: s.lessons.map((l, li) => ({ title: l.title, sub: l === next ? `следующий · +${XP.l} XP` : l.covers.join(" · "), href: "#l" + l.id, hue: secHue(si), num: li + 1, state: isDone(l.id) ? "done" : l === next ? "cur" : "" })),
     });
     document.getElementById("findme").onclick = rd.find;
@@ -1506,6 +2075,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     let html = `<div class="sh" style="--sh:${secHue(L.si)}"><div class="lhead"><div class="eyebrow">Урок ${L.si + 1}.${L.li + 1} · ${esc(s.title)}</div><h1>${esc(L.title)}</h1>
       <div class="covers">${L.covers.map(c => `<span>${esc(c)}</span>`).join("")}</div></div>
       <div class="prose">${L.text.split(/\n\s*\n/).map(p => `<p>${md(p.trim())}</p>`).join("")}</div>`;
+    html += `<section class="world inl" style="--zh:${s.world.hue}"><div class="w-h"><span>Где это в мире</span><b>${esc(s.world.name)}</b></div>${sceneHTML(L.si, { mini: true })}<div class="sinfo" id="linfo"></div></section>`;
     if (L.analogy) html += `<div class="analogy"><div class="ic">${ICON.bulb}</div><div><b>ПРЕДСТАВЬ</b>${md(L.analogy)}</div></div>`;
     if (L.files_show) html += Object.entries(L.files_show).map(([fn, src]) => `<div class="file"><div class="fn">файл ${esc(fn)} <span>(лежит рядом, выполняется при import)</span></div><div class="code">${src.replace(/\n$/, "").split("\n").map((ln, i) => `<div class="ln"><span class="ar"></span><span class="no">${i + 1}</span><span>${hl(ln) || " "}</span></div>`).join("")}</div></div>`).join("");
     if (L.code) html += vizShell(L);
@@ -1529,6 +2099,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     });
     wireChecks(L);
     updateGate(L);
+    mountScene(app, L.si, { info: "#linfo", highlight: L.covers, first: L.covers[0] });
     const nt = document.getElementById("note"), ns = document.getElementById("note-st");
     let ntT = null;
     nt.addEventListener("input", () => {
@@ -1927,6 +2498,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
   let lastW = innerWidth;
   window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => {
     if (player && player.redraw) player.redraw();
+    document.querySelectorAll(".scene").forEach(sc => sc._relayout && sc._relayout());
     if (Math.abs(innerWidth - lastW) > 30 && document.getElementById("road")) { lastW = innerWidth; const y = scrollY; render(); scrollTo(0, y); }
   }, 120); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => player && player.redraw && player.redraw());
@@ -1946,6 +2518,7 @@ body.with-tabs main { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0
     else if (r.type === "awards") { renderAwards(); window.scrollTo(0, 0); }
     else if (r.type === "profile") { renderProfile(); window.scrollTo(0, 0); }
     else if (r.type === "review") { renderReview(); window.scrollTo(0, 0); }
+    else if (r.type === "gallery") { setBar("<b>Миры</b>", true, null); app.innerHTML = DATA.sections.map((s, si) => `<section class="world" style="--zh:${s.world.hue}"><div class="w-h"><span>Мир ${si + 1}</span><b>${esc(s.world.name)}</b></div>${sceneHTML(si)}<div class="sinfo" id="gi${si}"></div></section>`).join(""); DATA.sections.forEach((s, si) => mountScene(app, si, { info: "#gi" + si })); }
     else renderHome();
   }
   async function boot() {
